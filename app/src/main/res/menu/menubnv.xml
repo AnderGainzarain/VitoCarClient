@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bnvBuscarViaje"
+        android:icon="@drawable/baseline_search_24"
+        android:title="Buscar Viaje" />
+    <item
+        android:id="@+id/bnvViajesPublicados"
+        android:icon="@drawable/baseline_directions_car_24"
+        android:title="Viajes Publicados" />
+    <item
+        android:id="@+id/bnvPublicarViaje"
+        android:icon="@drawable/baseline_add_24"
+        android:title="Publicar Viaje" />
+    <item
+        android:id="@+id/bnvReservas"
+        android:icon="@drawable/baseline_card_travel_24"
+        android:title="Viajes Reservados" />
+    <item
+        android:id="@+id/bnvPerfil"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Perfil" />
+</menu>
