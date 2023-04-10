@@ -1,4 +1,4 @@
-package com.ander.vitocarclient;
+package com.ander.vitocarclient.Controller;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ander.vitocarclient.R;
 
 /**
  * A simple {@link Fragment} subclass.

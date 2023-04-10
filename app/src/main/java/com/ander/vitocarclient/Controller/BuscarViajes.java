@@ -1,10 +1,12 @@
-package com.ander.vitocarclient;
+package com.ander.vitocarclient.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import com.ander.vitocarclient.R;
 
 public class BuscarViajes extends AppCompatActivity {
     private Spinner sOrigen;
