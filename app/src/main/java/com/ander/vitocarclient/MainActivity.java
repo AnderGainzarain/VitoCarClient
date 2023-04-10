@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -23,15 +24,17 @@ public class MainActivity extends AppCompatActivity {
         tb.setTitle("Buscar Viaje");
         // change the action bar with the toolbar
         setSupportActionBar(tb);
-        // Set te fragment layout to show the buscar viaje fragment to show by deffault
-        getSupportFragmentManager().beginTransaction().add(R.id.flMain, new BuscarViaje()).commit();
+        // Set buscar viaje as the default option
+        bnv.setSelectedItemId(R.id.bnvBuscarViaje);
+        //getSupportFragmentManager().beginTransaction().add(R.id.flMain, new BuscarViajes()).commit();
 
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                  switch (item.getItemId()){
                      case R.id.bnvBuscarViaje:
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new BuscarViaje()).commit();
+                         startActivity(new Intent(getApplicationContext(), BuscarViajes.class));
+                         overridePendingTransition(0,0);
                          tb.setTitle("Buscar Viaje");
                          return true;
                      case R.id.bnvPerfil:
