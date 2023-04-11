@@ -12,6 +12,9 @@
         android:theme="@style/Theme.VitoCarClient"
         tools:targetApi="31">
         <activity
+            android:name=".VerViajes"
+            android:exported="false" />
+        <activity
             android:name=".Controller.BuscarViajes"
             android:exported="false" />
         <activity
