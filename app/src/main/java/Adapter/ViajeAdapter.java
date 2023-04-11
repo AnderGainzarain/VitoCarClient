@@ -36,7 +36,7 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
         holder.origen.setText(viajes.get(position).getOrigen());
         holder.destino.setText(viajes.get(position).getDestino());
         holder.fecha.setText(viajes.get(position).getFechaSalida());
-        holder.precio.setText(viajes.get(position).getPrecioString());
+        holder.precio.setText(viajes.get(position).getPrecioString()+ "€");
     }
 
     @Override
