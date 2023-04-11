@@ -36,7 +36,7 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
         holder.origen.setText(viajes.get(position).getOrigen());
         holder.destino.setText(viajes.get(position).getDestino());
         holder.fecha.setText(viajes.get(position).getFechaSalida());
-        holder.precio.setText(viajes.get(position).getPrecio());
+        holder.precio.setText(viajes.get(position).getPrecioString());
     }
 
     @Override
@@ -54,7 +54,7 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
             super(itemView);
             origen = itemView.findViewById(R.id.origen);
             destino = itemView.findViewById(R.id.destino);
-            fecha = itemView.findViewById(R.id.tvFechaSalida);
+            fecha = itemView.findViewById(R.id.fecha);
             precio = itemView.findViewById(R.id.precio);
 
         }
