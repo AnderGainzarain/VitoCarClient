@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
                          tb.setTitle("Viajes Reservados");
                          return true;
                      case R.id.bnvViajesPublicados:
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new VerViajes()).commit();
+                         startActivity(new Intent(getApplicationContext(), VerViajes.class));
+                         overridePendingTransition(0,0);
                          tb.setTitle("Viajes Publicados");
                          return true;
 
