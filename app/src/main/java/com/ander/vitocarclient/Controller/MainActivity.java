@@ -26,16 +26,16 @@ public class MainActivity extends AppCompatActivity {
         // change the action bar with the toolbar
         setSupportActionBar(tb);
         // Set buscar viaje as the default option
-        bnv.setSelectedItemId(R.id.bnvBuscarViaje);
-        //getSupportFragmentManager().beginTransaction().add(R.id.flMain, new BuscarViajes()).commit();
+        //bnv.setSelectedItemId(R.id.bnvBuscarViaje);
+        getSupportFragmentManager().beginTransaction().add(R.id.flMain, new Buscar()).commit();
 
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                  switch (item.getItemId()){
                      case R.id.bnvBuscarViaje:
-                         startActivity(new Intent(getApplicationContext(), BuscarViajes.class));
-                         overridePendingTransition(0,0);
+                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new Buscar()).commit();
+
                          tb.setTitle("Buscar Viaje");
                          return true;
                      case R.id.bnvPerfil:
