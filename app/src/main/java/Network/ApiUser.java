@@ -13,4 +13,5 @@ public interface ApiUser {
     Call<User> getUserData();
     @GET("api/usuarios/{dni}/viajes")
     Call<List<Viaje>> getMisViajes(@Path("dni") int dni);
+
 }
