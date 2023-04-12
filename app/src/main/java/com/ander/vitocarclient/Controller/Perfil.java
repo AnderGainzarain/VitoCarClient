@@ -61,24 +61,28 @@ public class Perfil extends Fragment {
         Call<User> call = ApiClient.getClient().create(ApiUser.class).getUser(dni);
         call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 user = response.body();
                 // Show the viajes in the text views
                 String Coche;
-                String Nombre = "Nombre: " + user.getNombre();
-                String Apellido = "Apellido: " + user.getApellido();
-                String Mail = "Mail: " + user.getMail();
-                String Telefono = "Telefono: " + String.valueOf(user.getTelefono());
-                nombre.setText(Nombre);
-                apellido.setText(Apellido);
-                mail.setText(Mail);
-                telefono.setText(Telefono);
-                if(user.getCoche()==null){
-                    Coche = "No hay coche registrado";
-                } else{
-                    Coche = "Coche: " + user.getCoche();
+                if(user == null){
+                    Toast.makeText(getContext(),"No hay sesion iniciada", Toast.LENGTH_SHORT).show();
+                } else {
+                    String Nombre = "Nombre: " + user.getNombre();
+                    String Apellido = "Apellido: " + user.getApellido();
+                    String Mail = "Mail: " + user.getMail();
+                    String Telefono = "Telefono: " + String.valueOf(user.getTelefono());
+                    nombre.setText(Nombre);
+                    apellido.setText(Apellido);
+                    mail.setText(Mail);
+                    telefono.setText(Telefono);
+                    if(user.getCoche()==null){
+                        Coche = "No hay coche registrado";
+                    } else{
+                        Coche = "Coche: " + user.getCoche();
+                    }
+                    coche.setText(Coche);
                 }
-                coche.setText(Coche);
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
