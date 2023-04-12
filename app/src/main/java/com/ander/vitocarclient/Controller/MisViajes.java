@@ -60,8 +60,12 @@ public class MisViajes extends Fragment {
                 // Show the viajes in the recycler view
                 if(response.isSuccessful()){
                     viajes=response.body();
-                    adapter = new ViajeAdapter(viajes,getContext());
-                    rv.setAdapter(adapter);
+                    if(viajes.isEmpty()){
+                        Toast.makeText(getContext(),"No hay viajes publicados", Toast.LENGTH_LONG).show();
+                    }else{
+                        adapter = new ViajeAdapter(viajes,getContext());
+                        rv.setAdapter(adapter);
+                    }
                 }
             }
 
