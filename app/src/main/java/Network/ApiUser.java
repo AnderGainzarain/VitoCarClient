@@ -10,7 +10,7 @@ import retrofit2.http.Path;
 
 public interface ApiUser {
     @GET("api/usuarios/{dni}")
-    Call<List<Viaje>> getUsuario(@Path("dni") int dni);
+    Call<User> getUser(@Path("dni") int dni);
     @GET("api/usuarios/{dni}/viajes")
     Call<List<Viaje>> getMisViajes(@Path("dni") int dni);
 
