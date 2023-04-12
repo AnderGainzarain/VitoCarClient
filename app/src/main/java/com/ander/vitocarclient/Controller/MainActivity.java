@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         // change the action bar with the toolbar
         setSupportActionBar(tb);
         // Set buscar viaje as the default option
-        //bnv.setSelectedItemId(R.id.bnvBuscarViaje);
         getSupportFragmentManager().beginTransaction().add(R.id.flMain, new Buscar()).commit();
 
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                  switch (item.getItemId()){
                      case R.id.bnvBuscarViaje:
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new Buscar()).commit();
-
                          tb.setTitle("Buscar Viaje");
                          return true;
                      case R.id.bnvPerfil:
@@ -51,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
                          tb.setTitle("Viajes Reservados");
                          return true;
                      case R.id.bnvViajesPublicados:
-                         startActivity(new Intent(getApplicationContext(), VerViajes.class));
-                         overridePendingTransition(0,0);
+                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new MisViajes()).commit();
                          tb.setTitle("Viajes Publicados");
                          return true;
 

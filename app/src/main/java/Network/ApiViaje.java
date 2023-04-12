@@ -9,4 +9,5 @@ import retrofit2.http.GET;
 public interface ApiViaje {
     @GET("api/viajes")
     Call<List<Viaje>> getViajes();
+
 }
