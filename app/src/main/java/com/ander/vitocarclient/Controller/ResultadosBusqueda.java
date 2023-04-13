@@ -63,7 +63,6 @@ public class ResultadosBusqueda extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
     public void busqueda(){
-        System.out.println("Origen: " + queryData.get("origen") + "\n Destino: " + queryData.get("destino") + "\n fechaSalida: " + queryData.get("fechaSalida"));
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"),queryData.get("fechaSalida"));
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
