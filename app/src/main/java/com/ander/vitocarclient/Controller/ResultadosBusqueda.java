@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +33,7 @@ public class ResultadosBusqueda extends Fragment {
     private List<Viaje> viajes;
     private ViajeAdapter adapter;
     private RecyclerView rv;
-    private Map<String,String> queryData;
+    private Map<String,String> queryData = new HashMap<>();
     public ResultadosBusqueda() {
         // Required empty public constructor
     }
@@ -40,8 +41,16 @@ public class ResultadosBusqueda extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getParentFragmentManager().setFragmentResultListener("query", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                queryData.put("origen",result.getString("origen"));
+                queryData.put("destino", result.getString("destino"));
+                queryData.put("fechaSalida",result.getString("fechaSalida"));
+                System.out.println((result.getString("origen") + "\n" + result.getString("destino") + "\n" + result.getString("fechaSalida")));
+            }
+        });
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,11 +59,12 @@ public class ResultadosBusqueda extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        rv = view.findViewById(R.id.rvVerReservas);
+        rv = view.findViewById(R.id.rvResultadosBusqueda);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         busqueda();
     }
     public void busqueda(){
+        //System.out.println("Origen: " + queryData.get("origen") + "\n Destino: " + queryData.get("destino") + "\n fechaSalida: " + queryData.get("fechaSalida"));
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"),queryData.get("fechaSalida"));
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
@@ -78,8 +88,4 @@ public class ResultadosBusqueda extends Fragment {
             }
         });
     }
-    public void updateQuery(Map<String,String> data) {
-        queryData=data;
-    }
-
 }

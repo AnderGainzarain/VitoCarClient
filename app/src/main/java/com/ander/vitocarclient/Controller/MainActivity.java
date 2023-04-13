@@ -20,6 +20,8 @@ public class MainActivity<Busacar> extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Create the fragment so it can listen to the result of the search query
+        Buscar buscar = new Buscar();
         setContentView(R.layout.activity_main);
         // Get the bnv and toolbar
         tb = findViewById(R.id.toolbar1);
@@ -29,8 +31,7 @@ public class MainActivity<Busacar> extends AppCompatActivity {
         // change the action bar with the toolbar
         setSupportActionBar(tb);
         // Set buscar viaje as the default option
-        getSupportFragmentManager().beginTransaction().add(R.id.flMain, new Buscar()).commit();
-
+        getSupportFragmentManager().beginTransaction().add(R.id.flMain, buscar).commit();
         bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -55,14 +56,9 @@ public class MainActivity<Busacar> extends AppCompatActivity {
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new MisViajes()).commit();
                          tb.setTitle("Viajes Publicados");
                          return true;
-
                  }
                 return false;
             }
         });
-    }
-    public void setQuery(Map<String, String> query){
-        ResultadosBusqueda resultadosBusqueda = (ResultadosBusqueda) getSupportFragmentManager().findFragmentByTag("fragment_buscar");
-        resultadosBusqueda.updateQuery(query);
     }
 }

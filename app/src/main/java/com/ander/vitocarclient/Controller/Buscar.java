@@ -1,5 +1,6 @@
 package com.ander.vitocarclient.Controller;
 
+import android.accessibilityservice.GestureDescription;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,12 +20,6 @@ import com.ander.vitocarclient.R;
 
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
- */
 public class Buscar extends Fragment {
 
     private Spinner sOrigen;
@@ -32,6 +27,7 @@ public class Buscar extends Fragment {
     private final String[] ciudades = {"Vitoria", "Donostia", "Bilbo"};
     private EditText fecha;
     private Button buscar;
+    private Map<String,String> queryData;
     public Buscar() {
         // Required empty public constructor
     }
@@ -53,37 +49,39 @@ public class Buscar extends Fragment {
         buscar = view.findViewById(R.id.btnBuscar);
         // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
+        ArrayAdapter<String> adaptadord = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
-        sDestino.setAdapter(adaptador);
-        // Set tge event listener to buscar
-        buscar.setOnClickListener(Search);
+        sDestino.setAdapter(adaptadord);
+        // Set the event listener to buscar
+        buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do something when the button is clicked
+                String origen = sOrigen.getSelectedItem().toString();
+                String destino = sDestino.getSelectedItem().toString();
+                String fechaSalida = fecha.getText().toString();
+                // imput data controll
+                if (fechaSalida.isEmpty()){
+                    Toast.makeText(getContext(),"Introduzca una fecha, por favor", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(origen.equals(destino)){
+                    Toast.makeText(getContext(),"El origen y el destino no pueden ser el mismo", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                // send an error if the date is a date earlier than today
+
+                // store the query data
+                Bundle bundle = new Bundle();
+                bundle.putString("origen", origen);
+                bundle.putString("destino", destino);
+                bundle.putString("fechaSalida", fechaSalida);
+                getParentFragmentManager().setFragmentResult("query", bundle);
+                // change the fragment
+                getParentFragmentManager().beginTransaction().replace(R.id.flMain, new ResultadosBusqueda()).commit();
+            }
+        });
+
     }
-    private View.OnClickListener Search = new View.OnClickListener() {
-        public void onClick(View v) {
-            // do something when the button is clicked
-            String origen = sOrigen.getSelectedItem().toString();
-            String destino = sDestino.getSelectedItem().toString();
-            String fechaSalida = fecha.getText().toString();
-            // imput data controll
-            if (fechaSalida == null){
-                Toast.makeText(getContext(),"Introduzca una fecha, por favor", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if(origen==destino){
-                Toast.makeText(getContext(),"El origen y el destino no pueden ser el mismo", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            Map<String,String> data = new HashMap<>();
-            data.put("origen",origen);
-            System.out.println(data.get("origen"));
-            data.put("destnino", destino);
-            System.out.println(data.get("destino"));
-            data.put("fechaSalida", fechaSalida);
-            System.out.println(data.get("fechaSalida"));
-            ((MainActivity) getActivity()).setQuery(data);
-
-        }
-    };
 }
