@@ -12,5 +12,8 @@ public interface ApiViaje {
     Call<List<Viaje>> getViajes();
     @GET("api/viajes/{dni}/pasajero")
     Call<List<Viaje>> getMisReservas(@Path("dni") int dni);
-
+    @GET("api/viajes/viajeConcreto")
+    Call<List<Viaje>> getViajeConcreto(@Path("origen") String origen,
+                                       @Path("destino") String destino,
+                                       @Path("fechaSalida") String fechaSalida);
 }
