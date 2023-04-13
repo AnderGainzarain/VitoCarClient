@@ -4,16 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.ander.vitocarclient.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Map;
+
+public class MainActivity<Busacar> extends AppCompatActivity {
     private Toolbar tb;
     private BottomNavigationView bnv;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,5 +60,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+    public void setQuery(Map<String, String> query){
+        ResultadosBusqueda resultadosBusqueda = (ResultadosBusqueda) getSupportFragmentManager().findFragmentByTag("fragment_buscar");
+        resultadosBusqueda.updateQuery(query);
     }
 }

@@ -55,7 +55,7 @@ public class Buscar extends Fragment {
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
         sDestino.setAdapter(adaptador);
-        view.setOnClickListener(Search);
+        buscar.setOnClickListener(Search);
     }
     private View.OnClickListener Search = new View.OnClickListener() {
         public void onClick(View v) {
@@ -67,9 +67,8 @@ public class Buscar extends Fragment {
             data.put("origen",origen);
             data.put("destnino", destino);
             data.put("fechaSalida", fechaSalida);
-
+            ((MainActivity) getActivity()).setQuery(data);
 
         }
     };
-
 }
