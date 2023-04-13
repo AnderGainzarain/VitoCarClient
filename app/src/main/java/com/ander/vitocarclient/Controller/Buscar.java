@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.ander.vitocarclient.R;
 
@@ -55,6 +56,7 @@ public class Buscar extends Fragment {
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
         sDestino.setAdapter(adaptador);
+        // Set tge event listener to buscar
         buscar.setOnClickListener(Search);
     }
     private View.OnClickListener Search = new View.OnClickListener() {
@@ -63,10 +65,23 @@ public class Buscar extends Fragment {
             String origen = sOrigen.getSelectedItem().toString();
             String destino = sDestino.getSelectedItem().toString();
             String fechaSalida = fecha.getText().toString();
+            // imput data controll
+            if (fechaSalida == null){
+                Toast.makeText(getContext(),"Introduzca una fecha, por favor", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if(origen==destino){
+                Toast.makeText(getContext(),"El origen y el destino no pueden ser el mismo", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             Map<String,String> data = new HashMap<>();
             data.put("origen",origen);
+            System.out.println(data.get("origen"));
             data.put("destnino", destino);
+            System.out.println(data.get("destino"));
             data.put("fechaSalida", fechaSalida);
+            System.out.println(data.get("fechaSalida"));
             ((MainActivity) getActivity()).setQuery(data);
 
         }
