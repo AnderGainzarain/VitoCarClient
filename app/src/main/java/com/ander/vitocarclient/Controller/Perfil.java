@@ -87,7 +87,7 @@ public class Perfil extends Fragment {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(),"Ha ocurrido un error de conexion", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Vista.ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }
         });
     }

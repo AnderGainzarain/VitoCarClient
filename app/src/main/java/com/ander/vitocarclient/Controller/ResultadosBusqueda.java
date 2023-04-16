@@ -68,10 +68,10 @@ public class ResultadosBusqueda extends Fragment {
             @Override
             public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
                 // Show the viajes in the recycler view
-                if(response.isSuccessful()){
+               if(response.isSuccessful()){
                     viajes=response.body();
                     if(viajes.isEmpty()){
-                        Toast.makeText(getContext(),"No hay viajes reservados", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),Vista.ToastControll.noHayBusqueda(), Toast.LENGTH_LONG).show();
                     }else{
                         adapter = new ViajeAdapter(viajes,getContext());
                         rv.setAdapter(adapter);
@@ -82,7 +82,7 @@ public class ResultadosBusqueda extends Fragment {
             @Override
             public void onFailure(Call<List<Viaje>> call, Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(),"Ha ocurrido un error de conexion", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), Vista.ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }
         });
     }
