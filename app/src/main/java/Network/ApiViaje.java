@@ -14,5 +14,5 @@ public interface ApiViaje {
     @GET("api/viajes/viajeConcreto")
     Call<List<Viaje>> getViajeConcreto(@Query("origen") String origen,
                                        @Query("destino") String destino,
-                                       @Query("fechaSalida") String fechaSalida);
+                                       @Query("fecha") String fechaSalida);
 }
