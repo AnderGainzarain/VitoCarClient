@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.R;
 
 import java.util.HashMap;
@@ -63,7 +64,7 @@ public class ResultadosBusqueda extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
     public void busqueda(){
-        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"),queryData.get("fechaSalida"));
+        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), DateManager.parseDate(queryData.get("fechaSalida"),"00:00:00"));
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
             public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {

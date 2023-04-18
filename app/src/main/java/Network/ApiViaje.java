@@ -1,5 +1,6 @@
 package Network;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import Model.Viaje;
@@ -16,7 +17,7 @@ public interface ApiViaje {
     @GET("api/viajes/viajeConcreto")
     Call<List<Viaje>> getViajeConcreto(@Query("origen") String origen,
                                        @Query("destino") String destino,
-                                       @Query("fecha") String fechaSalida);
+                                       @Query("fecha") LocalDateTime fechaSalida);
     @POST("api/viajes/publicar/{dni}")
     Call<Viaje> publicarViaje(@Path("dni") int dni, @Body Viaje viaje);
 }

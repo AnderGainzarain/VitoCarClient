@@ -125,7 +125,7 @@ public class PublicarViaje extends Fragment {
                 if(response.isSuccessful()){
                     Viaje viaje = response.body();
                     if (viaje!=null)
-                    Toast.makeText(getContext(),Vista.ToastControll.viajePublicado(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),Vista.ToastControll.viajePublicado(), Toast.LENGTH_LONG).show();
                 }
             }
 
