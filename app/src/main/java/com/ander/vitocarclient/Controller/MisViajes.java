@@ -19,6 +19,7 @@ import com.ander.vitocarclient.R;
 import java.util.List;
 
 import Adapter.ViajeAdapter;
+import Model.ActiveUser;
 import Model.Viaje;
 import Network.ApiClient;
 import Network.ApiUser;
@@ -33,7 +34,7 @@ public class MisViajes extends Fragment {
     private List<Viaje> viajes;
     private RecyclerView rv;
     private ViajeAdapter adapter;
-    private int dni = 2222;
+    private ActiveUser au = ActiveUser.getActiveUser();
 
     public MisViajes() {
         // Required empty public constructor
@@ -50,9 +51,9 @@ public class MisViajes extends Fragment {
         // Bind the recycler view
         rv = view.findViewById(R.id.rvMisViajes);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        showMisViajes();
+        showMisViajes(1111);
     }
-    public void showMisViajes(){
+    public void showMisViajes(int dni){
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(dni);
         call.enqueue(new Callback<List<Viaje>>() {
             @Override

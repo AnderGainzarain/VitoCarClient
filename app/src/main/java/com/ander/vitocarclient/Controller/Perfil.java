@@ -20,6 +20,7 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 import Adapter.ViajeAdapter;
+import Model.ActiveUser;
 import Model.User;
 import Model.Viaje;
 import Network.ApiClient;
@@ -32,7 +33,7 @@ import retrofit2.Response;
 public class Perfil extends Fragment {
 
     private User user;
-    private int dni = 2222;
+    private ActiveUser au = ActiveUser.getActiveUser();
     private TextView nombre;
     private TextView apellido;
     private TextView mail;
@@ -55,7 +56,7 @@ public class Perfil extends Fragment {
         mail = view.findViewById(R.id.mail);
         telefono = view.findViewById(R.id.telefono);
         coche = view.findViewById(R.id.coche);
-        showUser(dni);
+        showUser(2222);
     }
     public void showUser(int dni){
         Call<User> call = ApiClient.getClient().create(ApiUser.class).getUser(dni);

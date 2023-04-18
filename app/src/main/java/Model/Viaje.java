@@ -71,4 +71,11 @@ public class Viaje {
     public String getPrecioString(){
         return String.valueOf(precio);
     }
+
+    public Viaje(int precio, String origen, String destino, String fechaSalida) {
+        this.precio = precio;
+        this.origen = origen;
+        this.destino = destino;
+        this.fechaSalida = fechaSalida;
+    }
 }

@@ -19,6 +19,7 @@ import com.ander.vitocarclient.R;
 import java.util.List;
 
 import Adapter.ViajeAdapter;
+import Model.ActiveUser;
 import Model.Viaje;
 import Network.ApiClient;
 import Network.ApiUser;
@@ -32,7 +33,7 @@ public class VerReservas extends Fragment {
     private List<Viaje> viajes;
     private RecyclerView rv;
     private ViajeAdapter adapter;
-    private int dni = 3333;
+    private ActiveUser au = ActiveUser.getActiveUser();
 
     public VerReservas() {
         // Required empty public constructor
@@ -50,9 +51,9 @@ public class VerReservas extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rv = view.findViewById(R.id.rvVerReservas);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        showReservas();
+        showReservas(3333);
     }
-    public void showReservas(){
+    public void showReservas(int dni){
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(dni);
         call.enqueue(new Callback<List<Viaje>>() {
             @Override

@@ -11,5 +11,7 @@ public class ToastControll {
     }
     public static String noViajesReservados(){return "No has hecho ninguna reserva";}
     public static String noHayBusqueda(){return "no hay viajes que coincidan con los valores de busqueda";}
-
+    public static String fechaVacia(){return "Introduzca una fecha, por favor";}
+    public static String origenDestinoIguales(){return "El origen y el destino no pueden ser el mismo";}
+    public static String precioMenorUno(){return "El coste no puede ser menor que 1€";}
 }
