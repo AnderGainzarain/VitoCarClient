@@ -16,4 +16,6 @@ public class ToastControll {
     public static String precioMenorUno(){return "El coste no puede ser menor que 1€";}
 
     public static String precioVacio() {return "Por favor introduzca un precio";}
+
+    public static String fechaPasada() {return "La fecha de salida ya ha pasado";}
 }
