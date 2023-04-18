@@ -59,7 +59,7 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
             origen = itemView.findViewById(R.id.origen);
             destino = itemView.findViewById(R.id.destino);
             fecha = itemView.findViewById(R.id.fecha);
-            precio = itemView.findViewById(R.id.precio);
+            precio = itemView.findViewById(R.id.etPrecioPublicar);
 
         }
     }

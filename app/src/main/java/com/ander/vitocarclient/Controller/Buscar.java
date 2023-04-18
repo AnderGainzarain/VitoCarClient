@@ -1,6 +1,5 @@
 package com.ander.vitocarclient.Controller;
 
-import android.accessibilityservice.GestureDescription;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import com.ander.vitocarclient.R;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import Vista.ToastControll;
@@ -45,10 +43,10 @@ public class Buscar extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         // Get the spinners from the xml
-        sOrigen = view.findViewById(R.id.sOrigen);
-        sDestino = view.findViewById(R.id.sDestino);
+        sOrigen = view.findViewById(R.id.sOrigenBuscar);
+        sDestino = view.findViewById(R.id.sDestinoBuscar);
         // get the date from the xml
-        fecha = view.findViewById(R.id.etFecha);
+        fecha = view.findViewById(R.id.etFechaBuscar);
         buscar = view.findViewById(R.id.btnBuscar);
         // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);

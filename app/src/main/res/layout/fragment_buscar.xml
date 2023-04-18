@@ -10,33 +10,33 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tvOrigen"
+            android:id="@+id/tvOrigenBuscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="164dp"
             android:layout_marginBottom="30dp"
             android:text="Origen: "
-            app:layout_constraintBottom_toTopOf="@+id/tvDestino"
+            app:layout_constraintBottom_toTopOf="@+id/tvDestinoBuscar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.26"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvDestino"
+            android:id="@+id/tvDestinoBuscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="29dp"
             android:text="Destino:"
-            app:layout_constraintBottom_toTopOf="@+id/tvFechaSalida"
+            app:layout_constraintBottom_toTopOf="@+id/tvFechaSalidaBuscar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.26"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvOrigen" />
+            app:layout_constraintTop_toBottomOf="@+id/tvOrigenBuscar" />
 
         <TextView
-            android:id="@+id/tvFechaSalida"
+            android:id="@+id/tvFechaSalidaBuscar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
@@ -46,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.26"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDestino" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDestinoBuscar" />
 
         <Button
             android:id="@+id/btnBuscar"
@@ -59,19 +59,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/sOrigen"
+            android:id="@+id/sOrigenBuscar"
             android:layout_width="142dp"
             android:layout_height="20dp"
             android:layout_marginTop="164dp"
             android:layout_marginBottom="29dp"
-            app:layout_constraintBottom_toTopOf="@+id/sDestino"
+            app:layout_constraintBottom_toTopOf="@+id/sDestinoBuscar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.862"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/sDestino"
+            android:id="@+id/sDestinoBuscar"
             android:layout_width="140dp"
             android:layout_height="19dp"
             android:layout_marginTop="29dp"
@@ -80,10 +80,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.856"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sOrigen" />
+            app:layout_constraintTop_toBottomOf="@+id/sOrigenBuscar" />
 
         <EditText
-            android:id="@+id/etFecha"
+            android:id="@+id/etFechaBuscar"
             android:layout_width="169dp"
             android:layout_height="49dp"
             android:layout_marginTop="40dp"
@@ -94,7 +94,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.847"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDestino"
+            app:layout_constraintTop_toBottomOf="@+id/tvDestinoBuscar"
             app:layout_constraintVertical_bias="0.592" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

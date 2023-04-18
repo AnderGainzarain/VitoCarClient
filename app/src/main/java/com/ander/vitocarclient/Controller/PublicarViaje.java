@@ -17,18 +17,11 @@ import android.widget.Toast;
 
 import com.ander.vitocarclient.R;
 
-import java.util.List;
-
-import Adapter.ViajeAdapter;
 import Model.ActiveUser;
 import Model.Viaje;
 import Network.ApiClient;
-import Network.ApiUser;
 import Network.ApiViaje;
 import Vista.ToastControll;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PublicarViaje extends Fragment {
 
@@ -59,18 +52,18 @@ public class PublicarViaje extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         // Get the spinners from the xml
-        sOrigen = view.findViewById(R.id.sOrigen);
-        sDestino = view.findViewById(R.id.sDestino);
-        // get the date from the xml
-        fecha = view.findViewById(R.id.etFecha);
-        precio = view.findViewById(R.id.tvPrecio);
-        publicar = view.findViewById(R.id.btnPublicar);
+        sOrigen = view.findViewById(R.id.sOrigenPublicar);
+        sDestino = view.findViewById(R.id.sDestinoPublicar);
+        // get the date and precio from the xml
+        fecha = view.findViewById(R.id.etFechaSalidaPublicar);
+        precio = view.findViewById(R.id.etPrecioPublicar);
         // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
         sDestino.setAdapter(adaptador);
-        // Set the event listener to buscar
+        // Set the event listener to publicar
+        publicar = view.findViewById(R.id.btnPublicar);
         publicar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

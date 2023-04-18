@@ -33,7 +33,7 @@
         android:text="fecha" />
 
     <TextView
-        android:id="@+id/precio"
+        android:id="@+id/etPrecioPublicar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15px"
