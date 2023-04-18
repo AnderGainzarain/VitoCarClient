@@ -20,6 +20,9 @@ import com.ander.vitocarclient.R;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import Vista.ToastControll;
+
 public class Buscar extends Fragment {
 
     private Spinner sOrigen;
@@ -63,11 +66,11 @@ public class Buscar extends Fragment {
                 String fechaSalida = fecha.getText().toString();
                 // imput data controll
                 if (fechaSalida.isEmpty()){
-                    Toast.makeText(getContext(),"Introduzca una fecha, por favor", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ToastControll.fechaVacia(), Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(origen.equals(destino)){
-                    Toast.makeText(getContext(),"El origen y el destino no pueden ser el mismo", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),ToastControll.origenDestinoIguales(), Toast.LENGTH_LONG).show();
                     return;
                 }
                 // send an error if the date is a date earlier than today
