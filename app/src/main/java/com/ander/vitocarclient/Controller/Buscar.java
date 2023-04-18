@@ -52,10 +52,9 @@ public class Buscar extends Fragment {
         buscar = view.findViewById(R.id.btnBuscar);
         // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
-        ArrayAdapter<String> adaptadord = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
-        sDestino.setAdapter(adaptadord);
+        sDestino.setAdapter(adaptador);
         // Set the event listener to buscar
         buscar.setOnClickListener(new View.OnClickListener() {
             @Override
