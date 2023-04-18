@@ -14,14 +14,14 @@ public class ActiveUser {
     //Constructor
     private ActiveUser(){
     }
-    public static void initialize(Integer dni, int ptelefono, String pmail, String pnombre, String papellido, String pfoto, String coche){
-            DNI = dni;
-            telefono = ptelefono;
-            mail = pmail;
-            nombre = pnombre;
-            apellido = papellido;
-            foto = pfoto;
-            Coche = coche;
+    public static void initialize(User user){
+            DNI = user.getDNI();
+            telefono = user.getTelefono();
+            mail = user.getMail();
+            nombre = user.getNombre();
+            apellido = user.getApellido();
+            foto = user.getFoto();
+            Coche = user.getCoche();
     }
     public Integer getDNI() {
         return DNI;

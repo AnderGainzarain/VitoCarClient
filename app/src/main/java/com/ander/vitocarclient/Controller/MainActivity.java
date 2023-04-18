@@ -80,7 +80,7 @@ public class MainActivity<Busacar> extends AppCompatActivity {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 User user = response.body();
                 assert user != null;
-                ActiveUser.initialize(user.getDNI(),user.getTelefono(),user.getMail(),user.getNombre(), user.getApellido(),user.getFoto(),user.getCoche());
+                ActiveUser.initialize(user);
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
