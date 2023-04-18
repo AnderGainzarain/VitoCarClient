@@ -1,5 +1,7 @@
 package Model;
 
+import java.time.LocalDateTime;
+
 public class Viaje {
     // Atributes
     private Integer idViaje;
@@ -46,10 +48,6 @@ public class Viaje {
 
     public String getFechaSalida() {
         return fechaSalida;
-    }
-
-    public void String(String fechaSalida) {
-        this.fechaSalida = fechaSalida;
     }
 
     public User getConductor() {

@@ -18,4 +18,7 @@ public class ToastControll {
     public static String precioVacio() {return "Por favor introduzca un precio";}
 
     public static String fechaPasada() {return "La fecha de salida ya ha pasado";}
+
+    public static String viajePublicado() { return "Viaje publciado con exito";}
+    public static String errorPublicar() {return "Error al publicar";}
 }

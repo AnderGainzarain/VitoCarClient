@@ -17,6 +17,6 @@ public interface ApiViaje {
     Call<List<Viaje>> getViajeConcreto(@Query("origen") String origen,
                                        @Query("destino") String destino,
                                        @Query("fecha") String fechaSalida);
-    @POST("api/publicar/{dni}")
-    void publicarViaje(@Path("dni") int dni, @Body Viaje viaje);
+    @POST("api/viajes/publicar/{dni}")
+    Call<Viaje> publicarViaje(@Path("dni") int dni, @Body Viaje viaje);
 }

@@ -31,7 +31,7 @@ public class MainActivity<Busacar> extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // initialize the active user for testing
-        startUser();
+       // startUser();
         // Create the fragment so it can listen to the result of the search query
         Buscar buscar = new Buscar();
         setContentView(R.layout.activity_main);

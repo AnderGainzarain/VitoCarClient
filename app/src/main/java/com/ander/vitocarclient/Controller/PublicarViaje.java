@@ -21,14 +21,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
+
+import java.time.LocalDateTime;
 
 import Model.ActiveUser;
 import Model.Viaje;
 import Network.ApiClient;
 import Network.ApiViaje;
 import Vista.ToastControll;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PublicarViaje extends Fragment {
 
@@ -84,6 +90,7 @@ public class PublicarViaje extends Fragment {
                 String origen = sOrigen.getSelectedItem().toString();
                 String destino = sDestino.getSelectedItem().toString();
                 String fechaSalida = fecha.getText().toString();
+                String horaSalida = hora.getText().toString();
                 // Check if the precio is introduced
                 if(precio.getText().toString().equals("")){
                     Toast.makeText(getContext(),ToastControll.precioVacio(), Toast.LENGTH_LONG).show();
@@ -92,7 +99,7 @@ public class PublicarViaje extends Fragment {
                     String coste = precio.getText().toString();
                     if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
 
-                    publicarViaje(origen,destino,fechaSalida,Integer.parseInt(coste));
+                    publicarViajes(origen,destino,fechaSalida,horaSalida,Integer.parseInt(coste));
                 }
             }
         });
@@ -109,9 +116,24 @@ public class PublicarViaje extends Fragment {
             }
         });
     }
-    public void publicarViaje(String origen, String destino, String fechaSalida, int coste) {
-        Viaje viaje = new Viaje(coste, origen, destino, fechaSalida);
-        ApiClient.getClient().create(ApiViaje.class).publicarViaje(au.getDNI(), viaje);
+    public void publicarViajes(String origen, String destino, String fechaSalida, String hora, int coste) {
+        Viaje viaje = new Viaje(coste, origen, destino, fechaSalida + " " + hora);
+        Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).publicarViaje(1111, viaje);
+        call.enqueue(new Callback<Viaje>() {
+            @Override
+            public void onResponse(Call<Viaje> call, Response<Viaje> response) {
+                if(response.isSuccessful()){
+                    Viaje viaje = response.body();
+                    if (viaje!=null)
+                    Toast.makeText(getContext(),Vista.ToastControll.viajePublicado(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Viaje> call, Throwable t) {
+                Toast.makeText(getContext(),Vista.ToastControll.errorPublicar() + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 
@@ -120,7 +142,8 @@ public class PublicarViaje extends Fragment {
         DatePickerDialog date = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                fecha.setText(dateFormat(dayOfMonth)+"/"+dateFormat(month+1)+"/"+year);
+                fecha.setText(year+"-"+ dateFormat(month+1) +"-"+dateFormat(dayOfMonth));
+
             }
         }, 2023, 01,28 );
         date.show();

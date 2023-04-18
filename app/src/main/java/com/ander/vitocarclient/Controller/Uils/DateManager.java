@@ -1,16 +1,24 @@
 package com.ander.vitocarclient.Controller.Uils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class DateManager {
-    /*public LocalDateTime parseDate (String date) throws ParseException {
-        String pattern = "dd/MM/yyyy HH:mm:ss";
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern);
-        LocalDateTime ldt = LocalDateTime.ofInstant(formatter.parse(date).toInstant(), ZoneId.systemDefault());
-        return ldt;
-    }*//*
+   public static LocalDateTime parseDate(String date, String time) {
+       return LocalDateTime.parse(date + "T" + time);
+    }
     public Boolean passedDate(String date){
-        LocalDateTime dateTime = parseDate(date);
-        if (dateTime.isBefore(LocalDateTime.now())) return false;
-        else return true;
-    }*/
+       // Get the current time
+        LocalDateTime now = LocalDateTime.now();
+        // Cast the fecha to a date type
+        LocalDateTime Fecha = LocalDateTime.parse(date);
+        //Check if the fecha has passed
+        if (Fecha.isBefore(now)) {
+            return false;
+        }else
+            return true;
+    }
 
 }
