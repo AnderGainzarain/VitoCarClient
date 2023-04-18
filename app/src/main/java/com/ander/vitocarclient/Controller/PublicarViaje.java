@@ -73,10 +73,10 @@ public class PublicarViaje extends Fragment {
                 String origen = sOrigen.getSelectedItem().toString();
                 String destino = sDestino.getSelectedItem().toString();
                 String fechaSalida = fecha.getText().toString();
-                int coste = Integer.parseInt(precio.getText().toString());
+                String coste = precio.getText().toString();
                 if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
 
-                publicarViaje(origen,destino,fechaSalida,coste);
+                publicarViaje(origen,destino,fechaSalida,Integer.parseInt(coste));
             }
         });
     }

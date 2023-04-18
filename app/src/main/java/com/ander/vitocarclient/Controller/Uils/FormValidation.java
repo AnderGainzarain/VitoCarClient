@@ -23,11 +23,17 @@ public class FormValidation {
         // todo: check if the date has passed
         return true;
     }
-    public static Boolean validate(Context context, String origen, String destino, String fechaSalida, int precio){
+    public static Boolean validate(Context context, String origen, String destino, String fechaSalida, String precio){
         if (validate(context,origen,destino,fechaSalida).equals(false))
             return false;
         else{
-            if(precio < 1){
+            // Check if the precio is introduced
+            if(precio == ""){
+                Toast.makeText(context,ToastControll.precioVacio(), Toast.LENGTH_LONG).show();
+                return false;
+            }
+            // check if the precio is valid
+            if(Integer.parseInt(precio) < 1){
                 Toast.makeText(context,ToastControll.precioMenorUno(), Toast.LENGTH_LONG).show();
                 return false;
             }
