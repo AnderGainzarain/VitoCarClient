@@ -6,10 +6,11 @@ import Vista.ToastControll;
 
 public class FormValidation {
     public static String validate(String origen, String destino, String fechaSalida){
-        // imput data controll
+        // Fecha is emptu
         if (fechaSalida.isEmpty()){
             return "FechaVacia";
         }
+        // same origen and destino
         if(origen.equals(destino)){
             return "Origen y destino iguales";
         }
@@ -18,13 +19,15 @@ public class FormValidation {
         return "";
     }
     public static String validate(String origen, String destino, String fechaSalida, int precio){
-        // imput data controll
+        // Fecha is empty
         if (fechaSalida.isEmpty()){
             return "FechaVacia";
         }
+        // same origen and destino
         if(origen.equals(destino)){
             return "Origen y destino iguales";
         }
+        // invalid precio
         if(precio <1){
             return "Precio < 1";
         }
