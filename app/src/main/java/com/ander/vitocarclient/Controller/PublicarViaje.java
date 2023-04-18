@@ -13,8 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
 import Model.ActiveUser;
@@ -57,7 +59,7 @@ public class PublicarViaje extends Fragment {
         // get the date and precio from the xml
         fecha = view.findViewById(R.id.etFechaSalidaPublicar);
         precio = view.findViewById(R.id.etPrecioPublicar);
-        // Create the contents of the spinners
+       // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
@@ -72,20 +74,8 @@ public class PublicarViaje extends Fragment {
                 String destino = sDestino.getSelectedItem().toString();
                 String fechaSalida = fecha.getText().toString();
                 int coste = Integer.parseInt(precio.getText().toString());
-                // imput data controll
-                if (fechaSalida.isEmpty()){
-                    Toast.makeText(getContext(), ToastControll.fechaVacia(), Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(origen.equals(destino)){
-                    Toast.makeText(getContext(),ToastControll.origenDestinoIguales(), Toast.LENGTH_LONG).show();
-                    return;
-                }
-                // send an error if the date is a date earlier than today
-                // Send error if there is no precio
-                if(coste < 1){
-                    Toast.makeText(getContext(),ToastControll.precioMenorUno(), Toast.LENGTH_LONG).show();
-                }
+                if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
+
                 publicarViaje(origen,destino,fechaSalida,coste);
             }
         });

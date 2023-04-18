@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
 import java.util.Map;
@@ -61,16 +62,8 @@ public class Buscar extends Fragment {
                 String origen = sOrigen.getSelectedItem().toString();
                 String destino = sDestino.getSelectedItem().toString();
                 String fechaSalida = fecha.getText().toString();
-                // imput data controll
-                if (fechaSalida.isEmpty()){
-                    Toast.makeText(getContext(), ToastControll.fechaVacia(), Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(origen.equals(destino)){
-                    Toast.makeText(getContext(),ToastControll.origenDestinoIguales(), Toast.LENGTH_LONG).show();
-                    return;
-                }
-                // send an error if the date is a date earlier than today
+
+                if(FormValidation.validate(getContext(),origen,destino,fechaSalida).equals(false)) return;
 
                 // store the query data
                 Bundle bundle = new Bundle();

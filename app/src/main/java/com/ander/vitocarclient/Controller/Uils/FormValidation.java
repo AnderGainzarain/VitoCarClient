@@ -1,39 +1,38 @@
 package com.ander.vitocarclient.Controller.Uils;
 
+import static java.security.AccessController.getContext;
+
+import android.content.Context;
 import android.widget.Toast;
 
 import Vista.ToastControll;
 
 public class FormValidation {
-    public static String validate(String origen, String destino, String fechaSalida){
-        // Fecha is emptu
+    public static Boolean validate(Context context,String origen, String destino, String fechaSalida){
+        // Check if there is fecha salida
         if (fechaSalida.isEmpty()){
-            return "FechaVacia";
+            Toast.makeText(context, ToastControll.fechaVacia(), Toast.LENGTH_LONG).show();
+            return false;
         }
-        // same origen and destino
+        // check if there is the same origen and destino
         if(origen.equals(destino)){
-            return "Origen y destino iguales";
+            Toast.makeText(context,ToastControll.origenDestinoIguales(), Toast.LENGTH_LONG).show();
+            return false;
         }
-        // send an error if the date is a date earlier than today
-        // return nothing if data is ok
-        return "";
+        // Check if the date has already passed
+        // todo: check if the date has passed
+        return true;
     }
-    public static String validate(String origen, String destino, String fechaSalida, int precio){
-        // Fecha is empty
-        if (fechaSalida.isEmpty()){
-            return "FechaVacia";
+    public static Boolean validate(Context context, String origen, String destino, String fechaSalida, int precio){
+        if (validate(context,origen,destino,fechaSalida).equals(false))
+            return false;
+        else{
+            if(precio < 1){
+                Toast.makeText(context,ToastControll.precioMenorUno(), Toast.LENGTH_LONG).show();
+                return false;
+            }
+            return true;
         }
-        // same origen and destino
-        if(origen.equals(destino)){
-            return "Origen y destino iguales";
-        }
-        // invalid precio
-        if(precio <1){
-            return "Precio < 1";
-        }
-        // send an error if the date is a date earlier than today
-        // return nothing if data is ok
-        return "";
     }
 
 }
