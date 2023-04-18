@@ -1,5 +1,7 @@
 package com.ander.vitocarclient.Controller;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
@@ -32,9 +37,11 @@ public class PublicarViaje extends Fragment {
     private final String[] ciudades = {"Vitoria", "Donostia", "Bilbo"};
     private EditText precio;
     private EditText fecha;
+    private EditText hora;
     private Button publicar;
     private ActiveUser au = ActiveUser.getActiveUser();
-
+    private ImageButton ibFechaSalida;
+    private ImageButton ibHoraSalida;
     public PublicarViaje() {
         // Required empty public constructor
     }
@@ -58,7 +65,11 @@ public class PublicarViaje extends Fragment {
         sDestino = view.findViewById(R.id.sDestinoPublicar);
         // get the date and precio from the xml
         fecha = view.findViewById(R.id.etFechaSalidaPublicar);
+        hora = view.findViewById(R.id.etHoraSalidaPublicar);
         precio = view.findViewById(R.id.etPrecioPublicar);
+        // Get the fecha and hora salida image buttons
+        ibFechaSalida=view.findViewById(R.id.ibCalendarPublicar);
+        ibHoraSalida=view.findViewById(R.id.ibTimePublicar);
        // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
@@ -85,9 +96,46 @@ public class PublicarViaje extends Fragment {
                 }
             }
         });
+        ibFechaSalida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrarFecha(view);
+            }
+        });
+        ibHoraSalida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mostrarHora(view);
+            }
+        });
     }
     public void publicarViaje(String origen, String destino, String fechaSalida, int coste) {
         Viaje viaje = new Viaje(coste, origen, destino, fechaSalida);
         ApiClient.getClient().create(ApiViaje.class).publicarViaje(au.getDNI(), viaje);
+    }
+
+
+    public void mostrarFecha (View v){
+
+        DatePickerDialog date = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                fecha.setText(dateFormat(dayOfMonth)+"/"+dateFormat(month+1)+"/"+year);
+            }
+        }, 2023, 01,28 );
+        date.show();
+    }
+    private String dateFormat(int n){
+        return (n<=9) ? ("0"+n) : String.valueOf(n);
+    }
+
+    public void mostrarHora (View v){
+        TimePickerDialog time = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                hora.setText(dateFormat(hourOfDay)+":"+dateFormat(minute) + ":00");
+            }
+        }, 10, 15, true);
+        time.show();
     }
 }
