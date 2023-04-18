@@ -73,10 +73,16 @@ public class PublicarViaje extends Fragment {
                 String origen = sOrigen.getSelectedItem().toString();
                 String destino = sDestino.getSelectedItem().toString();
                 String fechaSalida = fecha.getText().toString();
-                String coste = precio.getText().toString();
-                if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
+                // Check if the precio is introduced
+                if(precio.getText().toString().equals("")){
+                    Toast.makeText(getContext(),ToastControll.precioVacio(), Toast.LENGTH_LONG).show();
+                    return;
+                }else{
+                    String coste = precio.getText().toString();
+                    if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
 
-                publicarViaje(origen,destino,fechaSalida,Integer.parseInt(coste));
+                    publicarViaje(origen,destino,fechaSalida,Integer.parseInt(coste));
+                }
             }
         });
     }
