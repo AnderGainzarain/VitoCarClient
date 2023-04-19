@@ -33,10 +33,10 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String origen = "Origen: " + viajes.get(position).getOrigen();
-        String destino = "Destino: " + viajes.get(position).getDestino();
-        String fecha = "Fecha de salida: " + viajes.get(position).getFechaSalida();
-        String precio = "Precio: "+ viajes.get(position).getPrecioString()+ "€";
+        String origen =viajes.get(position).getOrigen();
+        String destino =viajes.get(position).getDestino();
+        String fecha =viajes.get(position).getFechaSalida();
+        String precio =viajes.get(position).getPrecioString()+ "€";
         holder.origen.setText(origen);
         holder.destino.setText(destino);
         holder.fecha.setText(fecha);
@@ -59,7 +59,7 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
             origen = itemView.findViewById(R.id.origen);
             destino = itemView.findViewById(R.id.destino);
             fecha = itemView.findViewById(R.id.fecha);
-            precio = itemView.findViewById(R.id.etPrecioPublicar);
+            precio = itemView.findViewById(R.id.precio);
 
         }
     }
