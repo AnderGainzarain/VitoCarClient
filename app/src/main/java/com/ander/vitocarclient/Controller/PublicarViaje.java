@@ -110,16 +110,20 @@ public class PublicarViaje extends Fragment {
             }
         });
     }
-    public void publicarViajes(String origen, String destino, String fechaSalida, String hora, int coste) {
-        Viaje viaje = new Viaje(coste, origen, destino, fechaSalida + " " + hora);
+    public void publicarViajes(String origen, String destino, String fechaSalida, String horaS, int coste) {
+        Viaje viaje = new Viaje(coste, origen, destino, fechaSalida + " " + horaS);
         Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).publicarViaje(1111, viaje);
         call.enqueue(new Callback<Viaje>() {
             @Override
             public void onResponse(Call<Viaje> call, Response<Viaje> response) {
                 if(response.isSuccessful()){
                     Viaje viaje = response.body();
-                    if (viaje!=null)
+                    if (viaje!=null){
+                        precio.setText("");
+                        fecha.setText("");
+                        hora.setText("");
                         Toast.makeText(getContext(),Vista.ToastControll.viajePublicado(), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
