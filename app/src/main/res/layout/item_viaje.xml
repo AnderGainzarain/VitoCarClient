@@ -15,29 +15,33 @@
         android:id="@+id/origen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15px"
-        android:text="origen" />
+        android:layout_marginLeft="25dp"
+        android:text="origen"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/destino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15px"
-        android:text="destino" />
+        android:layout_marginLeft="25dp"
+        android:text="destino"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15px"
-        android:text="fecha" />
+        android:layout_marginLeft="25dp"
+        android:text="fecha"
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/etPrecioPublicar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15px"
-        android:text="precio" />
+        android:layout_marginLeft="25dp"
+        android:text="precio"
+        android:textSize="24sp" />
 
     <View
         android:id="@+id/divider"
