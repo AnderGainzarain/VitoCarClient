@@ -1,7 +1,5 @@
 package com.ander.vitocarclient.Controller;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,19 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.ander.vitocarclient.Controller.Uils.DateManager;
+import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
-import java.time.LocalDateTime;
 
 import Model.ActiveUser;
 import Model.Viaje;
@@ -106,13 +100,13 @@ public class PublicarViaje extends Fragment {
         ibFechaSalida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mostrarFecha(view);
+                DateAndTimePickers.mostrarFecha(view,getContext(),fecha);
             }
         });
         ibHoraSalida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mostrarHora(view);
+                DateAndTimePickers.mostrarHora(view,getContext(),hora);
             }
         });
     }
@@ -137,28 +131,5 @@ public class PublicarViaje extends Fragment {
     }
 
 
-    public void mostrarFecha (View v){
 
-        DatePickerDialog date = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                fecha.setText(year+"-"+ dateFormat(month+1) +"-"+dateFormat(dayOfMonth));
-
-            }
-        }, 2023, 01,28 );
-        date.show();
-    }
-    private String dateFormat(int n){
-        return (n<=9) ? ("0"+n) : String.valueOf(n);
-    }
-
-    public void mostrarHora (View v){
-        TimePickerDialog time = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                hora.setText(dateFormat(hourOfDay)+":"+dateFormat(minute) + ":00");
-            }
-        }, 10, 15, true);
-        time.show();
-    }
 }
