@@ -6,13 +6,14 @@ public class DateManager {
    public static LocalDateTime parseDate(String date, String time) {
        return LocalDateTime.parse(date + "T" + time);
     }
-    public Boolean passedDate(String date){
+    public static Boolean passedDate(String date){
        // Get the current time
         LocalDateTime now = LocalDateTime.now();
         // Cast the fecha to a date type
-        LocalDateTime Fecha = LocalDateTime.parse(date);
+        LocalDateTime fecha = parseDate(date, "00:00:00");
+        System.out.println(fecha + "\n" + now);
         //Check if the fecha has passed
-        if (Fecha.isBefore(now)) {
+        if (fecha.isBefore(now)) {
             return false;
         }else
             return true;

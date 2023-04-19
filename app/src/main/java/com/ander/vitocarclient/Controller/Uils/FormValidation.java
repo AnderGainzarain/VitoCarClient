@@ -20,7 +20,11 @@ public class FormValidation {
             return false;
         }
         // Check if the date has already passed
-        // todo: check if the date has passed
+        if(!DateManager.passedDate(fechaSalida)){
+            Toast.makeText(context,ToastControll.fechaPasada(), Toast.LENGTH_LONG).show();
+
+            return false;
+        };
         return true;
     }
     public static Boolean validate(Context context, String origen, String destino, String fechaSalida, String precio){
