@@ -69,10 +69,10 @@ public class Perfil extends Fragment {
                 if(user == null){
                     Toast.makeText(getContext(),"No hay sesion iniciada", Toast.LENGTH_SHORT).show();
                 } else {
-                    String Nombre = "Nombre: " + user.getNombre();
-                    String Apellido = "Apellido: " + user.getApellido();
-                    String Mail = "Mail: " + user.getMail();
-                    String Telefono = "Telefono: " + String.valueOf(user.getTelefono());
+                    String Nombre = user.getNombre();
+                    String Apellido = user.getApellido();
+                    String Mail = user.getMail();
+                    String Telefono = String.valueOf(user.getTelefono());
                     nombre.setText(Nombre);
                     apellido.setText(Apellido);
                     mail.setText(Mail);
@@ -80,7 +80,7 @@ public class Perfil extends Fragment {
                     if(user.getCoche()==null){
                         Coche = "No hay coche registrado";
                     } else{
-                        Coche = "Coche: " + user.getCoche();
+                        Coche = user.getCoche();
                     }
                     coche.setText(Coche);
                 }
