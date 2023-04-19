@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
@@ -29,7 +31,7 @@ public class Buscar extends Fragment {
     private final String[] ciudades = {"Vitoria", "Donostia", "Bilbo"};
     private EditText fecha;
     private Button buscar;
-    private Map<String,String> queryData;
+    private ImageButton ibFechaSalida;
     public Buscar() {
         // Required empty public constructor
     }
@@ -49,6 +51,7 @@ public class Buscar extends Fragment {
         // get the date from the xml
         fecha = view.findViewById(R.id.etFechaBuscar);
         buscar = view.findViewById(R.id.btnBuscar);
+        ibFechaSalida = view.findViewById(R.id.ibFechaBuscar);
         // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
@@ -72,6 +75,12 @@ public class Buscar extends Fragment {
                 getParentFragmentManager().setFragmentResult("query", bundle);
                 // change the fragment
                 getParentFragmentManager().beginTransaction().replace(R.id.flMain, new ResultadosBusqueda()).commit();
+            }
+        });
+        ibFechaSalida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateAndTimePickers.mostrarFecha(view,getContext(),fecha);
             }
         });
 
