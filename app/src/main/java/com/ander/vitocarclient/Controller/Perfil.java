@@ -18,6 +18,8 @@ import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiUser;
+import com.ander.vitocarclient.Vista.ToastControll;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,7 +83,7 @@ public class Perfil extends Fragment {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(), Vista.ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }
         });
     }

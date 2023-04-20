@@ -22,6 +22,8 @@ import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
+import com.ander.vitocarclient.Vista.ToastControll;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,7 +62,7 @@ public class VerReservas extends Fragment {
                 if(response.isSuccessful()){
                         viajes=response.body();
                         if(viajes.isEmpty()){
-                            Toast.makeText(getContext(),Vista.ToastControll.noViajesReservados(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), ToastControll.noViajesReservados(), Toast.LENGTH_LONG).show();
                         }else{
                             adapter = new ViajeAdapter(viajes,getContext());
                             rv.setAdapter(adapter);
@@ -71,7 +73,7 @@ public class VerReservas extends Fragment {
             @Override
             public void onFailure(Call<List<Viaje>> call, Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(), Vista.ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.R;
+import com.ander.vitocarclient.Vista.ToastControll;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -107,7 +108,7 @@ public class MisViajes extends Fragment {
             @Override
             public void onFailure(Call<List<Viaje>> call, Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(), Vista.ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }
         });
     }

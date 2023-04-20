@@ -25,7 +25,7 @@ import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
-import Vista.ToastControll;
+import com.ander.vitocarclient.Vista.ToastControll;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -122,14 +122,14 @@ public class PublicarViaje extends Fragment {
                         precio.setText("");
                         fecha.setText("");
                         hora.setText("");
-                        Toast.makeText(getContext(),Vista.ToastControll.viajePublicado(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), ToastControll.viajePublicado(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Viaje> call, Throwable t) {
-                Toast.makeText(getContext(),Vista.ToastControll.errorPublicar() + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.errorPublicar() + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
