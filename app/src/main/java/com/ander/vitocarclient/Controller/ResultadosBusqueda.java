@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Adapter.ViajeAdapter;
+import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import Model.Viaje;
 import Network.ApiClient;
 import Network.ApiViaje;

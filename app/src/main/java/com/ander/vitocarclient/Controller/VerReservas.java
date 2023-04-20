@@ -11,18 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.R;
 
 import java.util.List;
 
-import Adapter.ViajeAdapter;
+import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import Model.ActiveUser;
 import Model.Viaje;
 import Network.ApiClient;
-import Network.ApiUser;
 import Network.ApiViaje;
 import retrofit2.Call;
 import retrofit2.Callback;

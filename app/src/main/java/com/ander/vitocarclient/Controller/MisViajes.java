@@ -17,11 +17,10 @@ import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.R;
 import com.google.android.material.tabs.TabLayout;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import Adapter.ViajeAdapter;
+import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import Model.ActiveUser;
 import Model.Viaje;
 import Network.ApiClient;
