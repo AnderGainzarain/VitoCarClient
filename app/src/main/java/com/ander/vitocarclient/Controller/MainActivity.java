@@ -13,8 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.User;
-import Network.ApiClient;
-import Network.ApiUser;
+import com.ander.vitocarclient.Network.ApiClient;
+import com.ander.vitocarclient.Network.ApiUser;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -23,8 +23,8 @@ import com.ander.vitocarclient.R;
 
 import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.Viaje;
-import Network.ApiClient;
-import Network.ApiViaje;
+import com.ander.vitocarclient.Network.ApiClient;
+import com.ander.vitocarclient.Network.ApiViaje;
 import Vista.ToastControll;
 import retrofit2.Call;
 import retrofit2.Callback;

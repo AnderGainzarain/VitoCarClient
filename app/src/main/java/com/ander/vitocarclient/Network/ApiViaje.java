@@ -1,4 +1,4 @@
-package Network;
+package com.ander.vitocarclient.Network;
 
 import java.time.LocalDateTime;
 import java.util.List;

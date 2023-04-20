@@ -1,4 +1,4 @@
-package Network;
+package com.ander.vitocarclient.Network;
 
 import java.util.List;
 
