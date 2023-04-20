@@ -1,6 +1,4 @@
-package Model;
-
-import java.time.LocalDateTime;
+package com.ander.vitocarclient.Model;
 
 public class Viaje {
     // Atributes

@@ -21,8 +21,8 @@ import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
 
-import Model.ActiveUser;
-import Model.Viaje;
+import com.ander.vitocarclient.Model.ActiveUser;
+import com.ander.vitocarclient.Model.Viaje;
 import Network.ApiClient;
 import Network.ApiViaje;
 import Vista.ToastControll;

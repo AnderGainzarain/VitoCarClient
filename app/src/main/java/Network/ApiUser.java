@@ -2,8 +2,8 @@ package Network;
 
 import java.util.List;
 
-import Model.User;
-import Model.Viaje;
+import com.ander.vitocarclient.Model.User;
+import com.ander.vitocarclient.Model.Viaje;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
-import Model.Viaje;
+import com.ander.vitocarclient.Model.Viaje;
 import Network.ApiClient;
 import Network.ApiViaje;
 import retrofit2.Call;

@@ -1,4 +1,4 @@
-package Model;
+package com.ander.vitocarclient.Model;
 
 public class ActiveUser {
     // Atributes

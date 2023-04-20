@@ -3,7 +3,7 @@ package Network;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import Model.Viaje;
+import com.ander.vitocarclient.Model.Viaje;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;

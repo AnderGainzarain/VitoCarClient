@@ -18,8 +18,8 @@ import com.ander.vitocarclient.R;
 import java.util.List;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
-import Model.ActiveUser;
-import Model.Viaje;
+import com.ander.vitocarclient.Model.ActiveUser;
+import com.ander.vitocarclient.Model.Viaje;
 import Network.ApiClient;
 import Network.ApiViaje;
 import retrofit2.Call;

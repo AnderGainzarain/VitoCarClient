@@ -11,10 +11,8 @@ import android.widget.Toast;
 import com.ander.vitocarclient.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Map;
-
-import Model.ActiveUser;
-import Model.User;
+import com.ander.vitocarclient.Model.ActiveUser;
+import com.ander.vitocarclient.Model.User;
 import Network.ApiClient;
 import Network.ApiUser;
 import retrofit2.Call;

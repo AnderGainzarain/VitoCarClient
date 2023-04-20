@@ -13,7 +13,7 @@ import com.ander.vitocarclient.R;
 
 import java.util.List;
 
-import Model.Viaje;
+import com.ander.vitocarclient.Model.Viaje;
 
 public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
     private List<Viaje> viajes;
