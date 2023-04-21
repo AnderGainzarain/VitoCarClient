@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.R;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import com.ander.vitocarclient.Model.ActiveUser;
@@ -23,6 +25,7 @@ import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.Vista.ToastControll;
+import com.google.android.material.tabs.TabLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +37,7 @@ public class VerReservas extends Fragment {
     private RecyclerView rv;
     private ViajeAdapter adapter;
     private ActiveUser au = ActiveUser.getActiveUser();
+    private TabLayout tabLayout;
 
     public VerReservas() {
         // Required empty public constructor
@@ -51,9 +55,26 @@ public class VerReservas extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rv = view.findViewById(R.id.rvVerReservas);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        showReservas(3333);
+        tabLayout=view.findViewById(R.id.tabReservas);
+        tabLayout.selectTab(tabLayout.getTabAt(1));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                showReservas(3333,false);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                showReservas(3333,true);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                showReservas(3333,false);
+            }
+        });
     }
-    public void showReservas(int dni){
+    public void showReservas(int dni, boolean pasado){
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(dni);
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
@@ -61,11 +82,18 @@ public class VerReservas extends Fragment {
                 // Show the viajes in the recycler view
                 if(response.isSuccessful()){
                         viajes=response.body();
-                        if(viajes.isEmpty()){
+                        if(viajes==null||viajes.isEmpty()){
                             Toast.makeText(getContext(), ToastControll.noViajesReservados(), Toast.LENGTH_LONG).show();
                         }else{
-                            adapter = new ViajeAdapter(viajes,getContext());
-                            rv.setAdapter(adapter);
+                            if (pasado){
+                                List<Viaje> mostrar = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10))).collect(Collectors.toList());
+                                adapter = new ViajeAdapter(mostrar,getContext());
+                                rv.setAdapter(adapter);
+                            }else{
+                                List<Viaje> mostrar = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0,10))).collect(Collectors.toList());
+                                adapter = new ViajeAdapter(mostrar,getContext());
+                                rv.setAdapter(adapter);
+                            }
                         }
                 }
             }
