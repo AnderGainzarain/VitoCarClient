@@ -33,13 +33,10 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String origen =viajes.get(position).getOrigen();
-        String destino =viajes.get(position).getDestino();
-        String fecha =viajes.get(position).getFechaSalida();
         String precio =viajes.get(position).getPrecioString()+ "€";
-        holder.origen.setText(origen);
-        holder.destino.setText(destino);
-        holder.fecha.setText(fecha);
+        holder.origen.setText(viajes.get(position).getOrigen());
+        holder.destino.setText(viajes.get(position).getDestino());
+        holder.fecha.setText(viajes.get(position).getFechaSalida());
         holder.precio.setText(precio);
     }
 
