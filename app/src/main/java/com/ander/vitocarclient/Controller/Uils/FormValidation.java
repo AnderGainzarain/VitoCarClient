@@ -1,11 +1,9 @@
 package com.ander.vitocarclient.Controller.Uils;
 
-import static java.security.AccessController.getContext;
-
 import android.content.Context;
 import android.widget.Toast;
 
-import Vista.ToastControll;
+import com.ander.vitocarclient.Vista.ToastControll;
 
 public class FormValidation {
     public static Boolean validate(Context context,String origen, String destino, String fechaSalida){

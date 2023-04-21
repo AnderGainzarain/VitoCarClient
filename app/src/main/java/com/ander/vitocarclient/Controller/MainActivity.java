@@ -9,14 +9,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.R;
+import com.ander.vitocarclient.Vista.ToastControll;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.Map;
-
-import Model.ActiveUser;
-import Model.User;
-import Network.ApiClient;
-import Network.ApiUser;
+import com.ander.vitocarclient.Model.ActiveUser;
+import com.ander.vitocarclient.Model.User;
+import com.ander.vitocarclient.Network.ApiClient;
+import com.ander.vitocarclient.Network.ApiUser;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -85,7 +84,7 @@ public class MainActivity<Busacar> extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getApplicationContext(), Vista.ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -14,15 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
-
-import java.util.Map;
-
-import Vista.ToastControll;
 
 public class Buscar extends Fragment {
 

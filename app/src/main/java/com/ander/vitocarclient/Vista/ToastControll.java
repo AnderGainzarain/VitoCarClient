@@ -1,4 +1,4 @@
-package Vista;
+package com.ander.vitocarclient.Vista;
 
 public class ToastControll {
     // Conection error

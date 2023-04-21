@@ -15,17 +15,17 @@ import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.R;
+import com.ander.vitocarclient.Vista.ToastControll;
 import com.google.android.material.tabs.TabLayout;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import Adapter.ViajeAdapter;
-import Model.ActiveUser;
-import Model.Viaje;
-import Network.ApiClient;
-import Network.ApiUser;
+import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
+import com.ander.vitocarclient.Model.ActiveUser;
+import com.ander.vitocarclient.Model.Viaje;
+import com.ander.vitocarclient.Network.ApiClient;
+import com.ander.vitocarclient.Network.ApiUser;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -108,7 +108,7 @@ public class MisViajes extends Fragment {
             @Override
             public void onFailure(Call<List<Viaje>> call, Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(), Vista.ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }
         });
     }
