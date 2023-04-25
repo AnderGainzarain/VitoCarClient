@@ -76,7 +76,13 @@ public class ActiveUser {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 User user = response.body();
-                activeUser = new ActiveUser(user.getDni(),user.getTelefono(),user.getMail(),user.getNombre(),user.getApellido(),user.getFoto(),user.getCoche());
+                String c;
+                if(user.getCoche().equals("")){
+                    c = "No hay coche registrado";
+                }else{
+                    c = user.getCoche();
+                }
+                activeUser = new ActiveUser(user.getDni(),user.getTelefono(),user.getMail(),user.getNombre(),user.getApellido(),user.getFoto(),c);
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
