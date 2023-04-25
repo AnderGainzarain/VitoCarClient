@@ -63,20 +63,33 @@ public class MisViajes extends Fragment {
         tabLayout = view.findViewById(R.id.tabMisviajes);
         // Set the default tab
         tabLayout.selectTab(tabLayout.getTabAt(1));
+        getMisViajes(1111,true);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                getMisViajes(1111,false);
+                if(tab==tabLayout.getTabAt(0)){
+                    getMisViajes(1111,false);
+                }else{
+                    getMisViajes(1111,true);
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                getMisViajes(1111,true);
+                if(tab==tabLayout.getTabAt(0)){
+                    getMisViajes(1111,false);
+                }else{
+                    getMisViajes(1111,true);
+                }
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                getMisViajes(1111,false);
+                if(tab==tabLayout.getTabAt(0)){
+                    getMisViajes(1111,false);
+                }else{
+                    getMisViajes(1111,true);
+                }
             }
         });
     }
@@ -96,7 +109,7 @@ public class MisViajes extends Fragment {
                     }else{
                         if(pasado){
                             show = viajes.stream()
-                                    .filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10)))
+                                    .filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0,10)))
                                     .collect(Collectors.toList());
                         }else{
                             show = viajes.stream()
