@@ -76,7 +76,6 @@ public class MainActivity<Busacar> extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                System.out.println(response.raw());
                 User usr = response.body();
                 assert usr != null;
                 ActiveUser.initialize(usr);
