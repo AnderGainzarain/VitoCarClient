@@ -25,12 +25,11 @@ public class MainActivity<Busacar> extends AppCompatActivity {
     private BottomNavigationView bnv;
 
     private ActiveUser au = ActiveUser.getActiveUser();
-    private int dni = 1111;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // initialize the active user for testing
-       // startUser();
+       startUser();
         // Create the fragment so it can listen to the result of the search query
         Buscar buscar = new Buscar();
         setContentView(R.layout.activity_main);
@@ -73,13 +72,18 @@ public class MainActivity<Busacar> extends AppCompatActivity {
         });
     }
     public void startUser(){
-        Call<User> call = ApiClient.getClient().create(ApiUser.class).getUser(dni);
+        Call<User> call = ApiClient.getClient().create(ApiUser.class).getUser(1111);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                User user = response.body();
-                assert user != null;
-                ActiveUser.initialize(user);
+                System.out.println(response.raw());
+                User usr = response.body();
+                assert usr != null;
+                System.out.println("DNI: " + response.body().getDni());
+                System.out.println(usr.getMail());
+                System.out.println(usr.getTelefono());
+               // user.setDNI(dni);
+                ActiveUser.initialize(usr);
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {

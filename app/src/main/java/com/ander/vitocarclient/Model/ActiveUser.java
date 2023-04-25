@@ -15,7 +15,7 @@ public class ActiveUser {
     private ActiveUser(){
     }
     public static void initialize(User user){
-            DNI = user.getDNI();
+            DNI = user.getDni();
             telefono = user.getTelefono();
             mail = user.getMail();
             nombre = user.getNombre();

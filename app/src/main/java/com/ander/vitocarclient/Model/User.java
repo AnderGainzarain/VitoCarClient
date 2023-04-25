@@ -4,24 +4,24 @@ import java.util.List;
 
 public class User {
     // Atributes
-    private Integer DNI;
+    private Integer dni;
     private int telefono;
-    private String Contraseña;
+    private String contraseña;
     private String mail;
     private String nombre;
     private String apellido;
     private String foto;
-    private String Coche;
+    private String coche;
     private List<Viaje> viajes;
     private List<Viaje> viajes2;
 
     // Getters and setters
-    public Integer getDNI() {
-        return DNI;
+    public Integer getDni() {
+        return dni;
     }
 
-    public void setDNI(Integer DNI) {
-        this.DNI = DNI;
+    public void setDni(Integer dni) {
+        this.dni = dni;
     }
 
     public int getTelefono() {
@@ -33,11 +33,11 @@ public class User {
     }
 
     public String getContraseña() {
-        return Contraseña;
+        return contraseña;
     }
 
     public void setContraseña(String contraseña) {
-        Contraseña = contraseña;
+        this.contraseña = contraseña;
     }
 
     public String getMail() {
@@ -73,11 +73,11 @@ public class User {
     }
 
     public String getCoche() {
-        return Coche;
+        return coche;
     }
 
     public void setCoche(String coche) {
-        Coche = coche;
+        this.coche = coche;
     }
 
     public List<Viaje> getViajes() {
