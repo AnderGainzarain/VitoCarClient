@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.Vista.ToastControll;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,6 +36,7 @@ public class Perfil extends Fragment {
     private TextView mail;
     private TextView telefono;
     private TextView coche;
+    private ImageView foto;
     public Perfil() {
         // Required empty public constructor
     }
@@ -51,6 +54,7 @@ public class Perfil extends Fragment {
         mail = view.findViewById(R.id.mail);
         telefono = view.findViewById(R.id.telefono);
         coche = view.findViewById(R.id.coche);
+        foto = view.findViewById(R.id.profilePicture);
         showUser(2222);
     }
     public void showUser(int dni){
@@ -64,14 +68,11 @@ public class Perfil extends Fragment {
                 if(user == null){
                     Toast.makeText(getContext(),"No hay sesion iniciada", Toast.LENGTH_SHORT).show();
                 } else {
-                    String Nombre = user.getNombre();
-                    String Apellido = user.getApellido();
-                    String Mail = user.getMail();
-                    String Telefono = String.valueOf(user.getTelefono());
-                    nombre.setText(Nombre);
-                    apellido.setText(Apellido);
-                    mail.setText(Mail);
-                    telefono.setText(Telefono);
+                    Picasso.get().load(user.getFoto()).into(foto);
+                    nombre.setText(user.getNombre());
+                    apellido.setText(user.getApellido());
+                    mail.setText(user.getMail());
+                    telefono.setText(String.valueOf(user.getTelefono()));
                     if(user.getCoche()==null){
                         Coche = "No hay coche registrado";
                     } else{

@@ -11,7 +11,7 @@ public class DateManager {
         LocalDateTime now = LocalDateTime.now();
         // Cast the fecha to a date type
         LocalDateTime fecha = parseDate(date.replace("/","-"), "00:00:00");
-        //Check if the fecha has passed
+        //Return true if the fecha has passed
         return !fecha.isBefore(now);
     }
 

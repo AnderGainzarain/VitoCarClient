@@ -18,6 +18,7 @@ import com.ander.vitocarclient.R;
 import com.ander.vitocarclient.Vista.ToastControll;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,8 +39,6 @@ public class MisViajes extends Fragment {
     private ViajeAdapter adapter;
     private ActiveUser au = ActiveUser.getActiveUser();
     private TabLayout tabLayout;
-    private List<Viaje> pasados;
-    private List<Viaje> pendeintes;
 
     public MisViajes() {
         // Required empty public constructor
@@ -53,55 +52,60 @@ public class MisViajes extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        // Get the viajes
-        getMisViajes(1111);
+
         // Bind the recycler view
         rv = view.findViewById(R.id.rvMisViajes);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        // Initialize the rv adapter with an empty list
+        adapter = new ViajeAdapter(new ArrayList<>(),getContext());
+        rv.setAdapter(adapter);
         // Bind the tab layout
         tabLayout = view.findViewById(R.id.tabMisviajes);
         // Set the default tab
-        tabLayout.selectTab(tabLayout.getTabAt(0));
+        tabLayout.selectTab(tabLayout.getTabAt(1));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                showViajes(pendeintes);
+                getMisViajes(1111,false);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                showViajes(pasados);
+                getMisViajes(1111,true);
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                showViajes(pendeintes);
+                getMisViajes(1111,false);
             }
         });
     }
 
-    public void showViajes(List<Viaje> p){
-        adapter = new ViajeAdapter(p,getContext());
-        rv.setAdapter(adapter);
-    }
 
-    public void getMisViajes(int dni){
+    public void getMisViajes(int dni, Boolean pasado){
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(dni);
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
             public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
                 // Show the viajes in the recycler view
-
+                List<Viaje> show;
                 if(response.isSuccessful()){
                     viajes=response.body();
-                    pendeintes = viajes.stream()
-                            .filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10)))
-                            .collect(Collectors.toList());
-
-                    pasados = viajes.stream()
-                            .filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10)))
-                            .collect(Collectors.toList());
-
+                    if (viajes ==null || viajes.isEmpty()){
+                        Toast.makeText(getContext(), ToastControll.noViajesReservados(), Toast.LENGTH_LONG).show();
+                    }else{
+                        if(pasado){
+                            show = viajes.stream()
+                                    .filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10)))
+                                    .collect(Collectors.toList());
+                        }else{
+                            show = viajes.stream()
+                                    .filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10)))
+                                    .collect(Collectors.toList());
+                        }
+                        adapter = new ViajeAdapter(show, getContext());
+                        rv.setAdapter(adapter);
+                    }
                 }
             }
 

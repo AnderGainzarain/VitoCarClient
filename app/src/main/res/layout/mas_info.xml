@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvOrigenM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Origen: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDestinoM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destino: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFechaSalidaM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de salida: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPrecioM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvConductorM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Conductor: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvContactoM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contacto: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/origenM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="origen"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/destinoM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="destino"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/fechaSalidaM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de salida"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/precioM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/conductorM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="conductor"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/contactoM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="contacto"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnreservarM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginRight="150dp"
+        android:text="Reservar" />
+
+</LinearLayout>
