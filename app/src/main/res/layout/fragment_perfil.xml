@@ -33,15 +33,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvTelefono"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="Telefono:"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
                     android:id="@+id/tvNombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,6 +49,15 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="0"
                     android:text="Apellido:"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTelefono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="Telefono:"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -89,13 +89,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/telefono"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Telefono"
-                    android:textSize="24sp" />
-
-                <TextView
                     android:id="@+id/nombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,6 +102,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="Apellido"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/telefono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Telefono"
                     android:textSize="24sp" />
 
                 <TextView
