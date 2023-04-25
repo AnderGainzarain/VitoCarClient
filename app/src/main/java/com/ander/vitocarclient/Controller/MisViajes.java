@@ -95,7 +95,7 @@ public class MisViajes extends Fragment {
     }
 
 
-    public void getMisViajes(Boolean pasado){
+    private void getMisViajes(Boolean pasado){
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(au.getDNI());
         call.enqueue(new Callback<List<Viaje>>() {
             @Override

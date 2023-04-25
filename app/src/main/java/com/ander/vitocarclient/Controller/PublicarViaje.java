@@ -110,7 +110,7 @@ public class PublicarViaje extends Fragment {
             }
         });
     }
-    public void publicarViajes(String origen, String destino, String fechaSalida, String horaS, int coste) {
+    private void publicarViajes(String origen, String destino, String fechaSalida, String horaS, int coste) {
         Viaje viaje = new Viaje(coste, origen, destino, fechaSalida + " " + horaS);
         Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).publicarViaje(1111, viaje);
         call.enqueue(new Callback<Viaje>() {

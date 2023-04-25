@@ -15,11 +15,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
+import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.R;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import com.ander.vitocarclient.Model.Viaje;
@@ -36,6 +38,7 @@ public class ResultadosBusqueda extends Fragment {
     private List<Viaje> viajes;
     private ViajeAdapter adapter;
     private RecyclerView rv;
+    private ActiveUser au = ActiveUser.getActiveUser();
     private Map<String,String> queryData = new HashMap<>();
     public ResultadosBusqueda() {
         // Required empty public constructor
@@ -65,7 +68,7 @@ public class ResultadosBusqueda extends Fragment {
         rv = view.findViewById(R.id.rvResultadosBusqueda);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
-    public void busqueda(){
+    private void busqueda(){
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), DateManager.parseDate(queryData.get("fechaSalida"),"00:00:00"));
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
@@ -76,6 +79,9 @@ public class ResultadosBusqueda extends Fragment {
                     if(viajes.isEmpty()){
                         Toast.makeText(getContext(), ToastControll.noHayBusqueda(), Toast.LENGTH_LONG).show();
                     }else{
+                        if(au!=null){
+                            viajes = viajes.stream().filter(v->v.getConductor().getDni()!=au.getDNI()).collect(Collectors.toList());
+                        }
                         adapter = new ViajeAdapter(viajes,getContext());
                         rv.setAdapter(adapter);
                     }

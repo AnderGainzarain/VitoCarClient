@@ -70,7 +70,7 @@ public class ActiveUser {
         return activeUser;
     }
 
-    public static void startUser(){
+    private static void startUser(){
         Call<User> call = ApiClient.getClient().create(ApiUser.class).getUser(1111);
         call.enqueue(new Callback<User>() {
             @Override

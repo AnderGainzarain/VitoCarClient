@@ -87,7 +87,7 @@ public class VerReservas extends Fragment {
             }
         });
     }
-    public void showReservas(boolean pasado){
+    private void showReservas(boolean pasado){
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(3333);
         call.enqueue(new Callback<List<Viaje>>() {
             @Override

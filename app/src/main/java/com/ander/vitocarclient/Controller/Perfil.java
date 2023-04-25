@@ -55,37 +55,12 @@ public class Perfil extends Fragment {
         telefono = view.findViewById(R.id.telefono);
         coche = view.findViewById(R.id.coche);
         foto = view.findViewById(R.id.profilePicture);
-        showUser(2222);
-    }
-    public void showUser(int dni){
-        Call<User> call = ApiClient.getClient().create(ApiUser.class).getUser(dni);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                user = response.body();
-                // Show the viajes in the text views
-                String Coche;
-                if(user == null){
-                    Toast.makeText(getContext(),"No hay sesion iniciada", Toast.LENGTH_SHORT).show();
-                } else {
-                    Picasso.get().load(user.getFoto()).into(foto);
-                    nombre.setText(user.getNombre());
-                    apellido.setText(user.getApellido());
-                    mail.setText(user.getMail());
-                    telefono.setText(String.valueOf(user.getTelefono()));
-                    if(user.getCoche()==null){
-                        Coche = "No hay coche registrado";
-                    } else{
-                        Coche = user.getCoche();
-                    }
-                    coche.setText(Coche);
-                }
-            }
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                // return an error message if there is an error
-                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
-            }
-        });
+        Picasso.get().load(au.getFoto()).into(foto);
+        nombre.setText(au.getNombre());
+        apellido.setText(au.getApellido());
+        mail.setText(au.getMail());
+        telefono.setText(au.getTelefono());
+        coche.setText(au.getCoche());
+
     }
 }
