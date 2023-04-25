@@ -79,10 +79,6 @@ public class MainActivity<Busacar> extends AppCompatActivity {
                 System.out.println(response.raw());
                 User usr = response.body();
                 assert usr != null;
-                System.out.println("DNI: " + response.body().getDni());
-                System.out.println(usr.getMail());
-                System.out.println(usr.getTelefono());
-               // user.setDNI(dni);
                 ActiveUser.initialize(usr);
             }
             @Override
