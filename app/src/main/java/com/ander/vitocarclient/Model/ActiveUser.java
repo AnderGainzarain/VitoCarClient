@@ -1,30 +1,41 @@
 package com.ander.vitocarclient.Model;
 
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.ander.vitocarclient.Network.ApiClient;
+import com.ander.vitocarclient.Network.ApiUser;
+import com.ander.vitocarclient.Vista.ToastControll;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class ActiveUser {
     // Atributes
-    private static Integer DNI;
+    private static Integer dni;
     private static int telefono;
     private static String mail;
     private static String nombre;
     private static String apellido;
     private static String foto;
-    private static String Coche;
+    private static String coche;
     private static ActiveUser activeUser;
 
     //Constructor
-    private ActiveUser(){
+    private ActiveUser(Integer DNI, int telefono, String mail, String nombre, String apellido, String foto, String coche){
+        dni = DNI;
+        ActiveUser.telefono = telefono;
+        ActiveUser.mail = mail;
+        ActiveUser.nombre = nombre;
+        ActiveUser.apellido = apellido;
+        ActiveUser.foto = foto;
+        ActiveUser.coche = coche;
     }
-    public static void initialize(User user){
-            DNI = user.getDni();
-            telefono = user.getTelefono();
-            mail = user.getMail();
-            nombre = user.getNombre();
-            apellido = user.getApellido();
-            foto = user.getFoto();
-            Coche = user.getCoche();
-    }
+
     public Integer getDNI() {
-        return DNI;
+        return dni;
     }
 
     public int getTelefono() {
@@ -48,10 +59,28 @@ public class ActiveUser {
     }
 
     public String getCoche() {
-        return Coche;
+        return coche;
     }
 
     public static ActiveUser getActiveUser() {
+        if(activeUser==null){
+            startUser();
+        }
+
         return activeUser;
+    }
+
+    public static void startUser(){
+        Call<User> call = ApiClient.getClient().create(ApiUser.class).getUser(1111);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                User user = response.body();
+                activeUser = new ActiveUser(user.getDni(),user.getTelefono(),user.getMail(),user.getNombre(),user.getApellido(),user.getFoto(),user.getCoche());
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+            }
+        });
     }
 }
