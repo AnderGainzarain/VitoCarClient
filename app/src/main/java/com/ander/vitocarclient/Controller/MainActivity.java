@@ -28,8 +28,6 @@ public class MainActivity<Busacar> extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // initialize the active user for testing
-       startUser();
         // Create the fragment so it can listen to the result of the search query
         Buscar buscar = new Buscar();
         setContentView(R.layout.activity_main);
@@ -71,20 +69,5 @@ public class MainActivity<Busacar> extends AppCompatActivity {
             }
         });
     }
-    public void startUser(){
-        Call<User> call = ApiClient.getClient().create(ApiUser.class).getUser(1111);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                User usr = response.body();
-                assert usr != null;
-                ActiveUser.initialize(usr);
-            }
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                // return an error message if there is an error
-                Toast.makeText(getApplicationContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+
 }
