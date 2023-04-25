@@ -63,40 +63,40 @@ public class MisViajes extends Fragment {
         tabLayout = view.findViewById(R.id.tabMisviajes);
         // Set the default tab
         tabLayout.selectTab(tabLayout.getTabAt(1));
-        getMisViajes(1111,true);
+        getMisViajes(true);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if(tab==tabLayout.getTabAt(0)){
-                    getMisViajes(1111,false);
+                    getMisViajes(false);
                 }else{
-                    getMisViajes(1111,true);
+                    getMisViajes(true);
                 }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 if(tab==tabLayout.getTabAt(0)){
-                    getMisViajes(1111,false);
+                    getMisViajes(false);
                 }else{
-                    getMisViajes(1111,true);
+                    getMisViajes(true);
                 }
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 if(tab==tabLayout.getTabAt(0)){
-                    getMisViajes(1111,false);
+                    getMisViajes(false);
                 }else{
-                    getMisViajes(1111,true);
+                    getMisViajes(true);
                 }
             }
         });
     }
 
 
-    public void getMisViajes(int dni, Boolean pasado){
-        Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(dni);
+    public void getMisViajes(Boolean pasado){
+        Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(au.getDNI());
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
             public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {

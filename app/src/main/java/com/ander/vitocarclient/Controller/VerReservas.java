@@ -36,7 +36,7 @@ public class VerReservas extends Fragment {
     private List<Viaje> viajes;
     private RecyclerView rv;
     private ViajeAdapter adapter;
-    private ActiveUser au = ActiveUser.getActiveUser();
+    private final ActiveUser au = ActiveUser.getActiveUser();
     private TabLayout tabLayout;
 
     public VerReservas() {
@@ -57,25 +57,38 @@ public class VerReservas extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         tabLayout=view.findViewById(R.id.tabReservas);
         tabLayout.selectTab(tabLayout.getTabAt(1));
+        showReservas(true);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                showReservas(3333,false);
+                if(tab==tabLayout.getTabAt(0)){
+                    showReservas(false);
+                }else{
+                    showReservas(true);
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                showReservas(3333,true);
+                if(tab==tabLayout.getTabAt(0)){
+                    showReservas(false);
+                }else{
+                    showReservas(true);
+                }
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                showReservas(3333,false);
+                if(tab==tabLayout.getTabAt(0)){
+                    showReservas(false);
+                }else{
+                    showReservas(true);
+                }
             }
         });
     }
-    public void showReservas(int dni, boolean pasado){
-        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(dni);
+    public void showReservas(boolean pasado){
+        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(3333);
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
             public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
@@ -86,11 +99,11 @@ public class VerReservas extends Fragment {
                             Toast.makeText(getContext(), ToastControll.noViajesReservados(), Toast.LENGTH_LONG).show();
                         }else{
                             if (pasado){
-                                List<Viaje> mostrar = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10))).collect(Collectors.toList());
+                                List<Viaje> mostrar = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0,10))).collect(Collectors.toList());
                                 adapter = new ViajeAdapter(mostrar,getContext());
                                 rv.setAdapter(adapter);
                             }else{
-                                List<Viaje> mostrar = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0,10))).collect(Collectors.toList());
+                                List<Viaje> mostrar = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10))).collect(Collectors.toList());
                                 adapter = new ViajeAdapter(mostrar,getContext());
                                 rv.setAdapter(adapter);
                             }
