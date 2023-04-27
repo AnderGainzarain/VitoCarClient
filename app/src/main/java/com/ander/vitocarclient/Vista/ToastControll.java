@@ -25,4 +25,10 @@ public class ToastControll {
     public static String mailIncorrecto() {return "El mail es incorrecto";}
 
     public static String pwdIncorrecto() {return "La contraseña es incorrecta";}
+
+    public static String publicarNoLogueado() { return "Es necesario iniciar sesion para publicar un viaje";}
+
+    public static String reservasNoLogueado() {return "Es necesario iniciar sesion para ver tus reservas";}
+    public static String viajesNoLogueado() {return "Es necesario iniciar sesion para ver tus viajes publicados";}
+
 }
