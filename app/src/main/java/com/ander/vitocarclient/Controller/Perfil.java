@@ -20,6 +20,7 @@ import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.Vista.ToastControll;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
@@ -30,13 +31,14 @@ import retrofit2.Response;
 public class Perfil extends Fragment {
 
     private User user;
-    private ActiveUser au = ActiveUser.getActiveUser();
+    private final ActiveUser au = ActiveUser.getActiveUser();
     private TextView nombre;
     private TextView apellido;
     private TextView mail;
     private TextView telefono;
     private TextView coche;
     private ImageView foto;
+    private FloatingActionButton logOut;
     public Perfil() {
         // Required empty public constructor
     }
@@ -55,12 +57,19 @@ public class Perfil extends Fragment {
         telefono = view.findViewById(R.id.telefono);
         coche = view.findViewById(R.id.coche);
         foto = view.findViewById(R.id.profilePicture);
+        logOut = view.findViewById(R.id.btnLogOut);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActiveUser.logOut();
+                getParentFragmentManager().beginTransaction().replace(R.id.flMain, new LogIn()).commit();
+            }
+        });
         Picasso.get().load(au.getFoto()).into(foto);
         nombre.setText(au.getNombre());
         apellido.setText(au.getApellido());
         mail.setText(au.getMail());
         telefono.setText(au.getTelefono());
         coche.setText(au.getCoche());
-
     }
 }
