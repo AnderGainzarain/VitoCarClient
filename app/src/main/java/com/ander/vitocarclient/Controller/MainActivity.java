@@ -1,5 +1,7 @@
 package com.ander.vitocarclient.Controller;
 
+import static java.security.AccessController.getContext;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,11 +25,13 @@ import retrofit2.Response;
 public class MainActivity<Busacar> extends AppCompatActivity {
     private Toolbar tb;
     private BottomNavigationView bnv;
-
+    private Boolean logedIn;
     private ActiveUser au = ActiveUser.getActiveUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Check if the user is loged in
+        logedIn= au != null;
         // Create the fragment so it can listen to the result of the search query
         Buscar buscar = new Buscar();
         setContentView(R.layout.activity_main);
@@ -49,25 +53,58 @@ public class MainActivity<Busacar> extends AppCompatActivity {
                          tb.setTitle("Buscar Viaje");
                          return true;
                      case R.id.bnvPerfil:
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new Perfil()).commit();
-                         tb.setTitle("Perfil");
+                         if(logedIn){
+                             getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new Perfil()).commit();
+                             tb.setTitle("Perfil");
+                         }else{
+                             getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
+                             tb.setTitle("Log In");
+                         }
                          return true;
                      case R.id.bnvPublicarViaje:
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new PublicarViaje()).commit();
-                         tb.setTitle("Publicar Viaje");
+                         if (logedIn) {
+                             getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new PublicarViaje()).commit();
+                             tb.setTitle("Publicar Viaje");
+                         }else{
+                             getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
+                             tb.setTitle("Log In");
+                             showPublicarNoLogueado();
+                         }
                          return true;
                      case R.id.bnvReservas:
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new VerReservas()).commit();
-                         tb.setTitle("Viajes Reservados");
+                         if(logedIn){
+                             getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new VerReservas()).commit();
+                             tb.setTitle("Viajes Reservados");
+                         }else{
+                             getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
+                             tb.setTitle("Log In");
+                             showReservasNoLogueado();
+                         }
+
                          return true;
                      case R.id.bnvViajesPublicados:
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new MisViajes()).commit();
-                         tb.setTitle("Viajes Publicados");
+                         if(logedIn){
+                             getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new MisViajes()).commit();
+                             tb.setTitle("Viajes Publicados");
+                         }else{
+                             getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
+                             tb.setTitle("Log In");
+                             showViajesNoLogueado();
+                         }
+
                          return true;
                  }
                 return false;
             }
         });
     }
-
+    private void showPublicarNoLogueado(){
+        Toast.makeText(this, ToastControll.publicarNoLogueado(), Toast.LENGTH_LONG).show();
+    }
+    private void showReservasNoLogueado(){
+        Toast.makeText(this, ToastControll.reservasNoLogueado(), Toast.LENGTH_LONG).show();
+    }
+    private void showViajesNoLogueado(){
+        Toast.makeText(this, ToastControll.reservasNoLogueado(), Toast.LENGTH_LONG).show();
+    }
 }
