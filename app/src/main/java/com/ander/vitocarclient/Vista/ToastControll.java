@@ -21,4 +21,8 @@ public class ToastControll {
 
     public static String viajePublicado() { return "Viaje publciado con exito";}
     public static String errorPublicar() {return "Error al publicar";}
+
+    public static String mailIncorrecto() {return "El mail es incorrecto";}
+
+    public static String pwdIncorrecto() {return "La contraseña es incorrecta";}
 }
