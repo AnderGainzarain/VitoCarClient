@@ -37,6 +37,9 @@ public class ActiveUser {
     public static void initialize(User user) {
         activeUser = new ActiveUser(user.getDni(),user.getTelefono(),user.getMail(),user.getNombre(),user.getApellido(),user.getFoto(),user.getCoche());
     }
+    public static void logOut(){
+        activeUser = null;
+    }
 
     public Integer getDNI() {
         return dni;
