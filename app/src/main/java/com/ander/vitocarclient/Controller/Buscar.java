@@ -19,6 +19,8 @@ import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
+import java.time.LocalDateTime;
+
 public class Buscar extends Fragment {
 
     private Spinner sOrigen;
@@ -47,6 +49,8 @@ public class Buscar extends Fragment {
         fecha = view.findViewById(R.id.etFechaBuscar);
         buscar = view.findViewById(R.id.btnBuscar);
         ibFechaSalida = view.findViewById(R.id.ibFechaBuscar);
+        // set the current date and time as the default
+        fecha.setText(LocalDateTime.now().toString().substring(0,10));
         // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
