@@ -30,5 +30,7 @@ public class ToastControll {
 
     public static String reservasNoLogueado() {return "Es necesario iniciar sesion para ver tus reservas";}
     public static String viajesNoLogueado() {return "Es necesario iniciar sesion para ver tus viajes publicados";}
+    public static String viajeYaPublicado() { return "Ya has publicado un viaje con ese origen y destino para la misma hora";}
+
 
 }

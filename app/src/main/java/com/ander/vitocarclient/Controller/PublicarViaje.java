@@ -140,6 +140,8 @@ public class PublicarViaje extends Fragment {
                             /*au.getDNI()*/
                             if(viajes.stream().noneMatch(v -> Objects.equals(v.getConductor().getDni(), 2222/*au.getDNI()*/))){
                                 publicarViajes(origen,destino,fecha,horaS,coste);
+                            }else{
+                                Toast.makeText(getContext(),ToastControll.viajeYaPublicado(), Toast.LENGTH_LONG).show();
                             }
                         }
                     }
