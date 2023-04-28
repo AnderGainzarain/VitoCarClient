@@ -10,9 +10,16 @@ public class DateManager {
        // Get the current time
         LocalDateTime now = LocalDateTime.now();
         // Cast the fecha to a date type
-        LocalDateTime fecha = parseDate(date.replace("/","-"), "00:00:00");
+        LocalDateTime fecha = parseDate(date.replace("/","-"), getMinutes());
         //Return true if the fecha has passed
-        return !fecha.isBefore(now);
+        if(fecha.equals(now)){
+            return true;
+        }else{
+            return fecha.isAfter(now);
+        }
     }
-
+    public static String getMinutes(){
+        LocalDateTime now = LocalDateTime.now();
+        return now.getHour() +":"+ (now.getMinute()+1) +":"+ now.getSecond();
+    }
 }
