@@ -21,6 +21,7 @@ import com.ander.vitocarclient.R;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
@@ -69,7 +70,7 @@ public class ResultadosBusqueda extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
     private void busqueda(){
-        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), DateManager.parseDate(queryData.get("fechaSalida"),"00:00:00"));
+        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), DateManager.parseDate(queryData.get("fechaSalida"),DateManager.getMinutes()));
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
             public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
@@ -80,7 +81,7 @@ public class ResultadosBusqueda extends Fragment {
                         Toast.makeText(getContext(), ToastControll.noHayBusqueda(), Toast.LENGTH_LONG).show();
                     }else{
                         if(au!=null){
-                            viajes = viajes.stream().filter(v->v.getConductor().getDni()!=au.getDNI()).collect(Collectors.toList());
+                            viajes = viajes.stream().filter(v-> !Objects.equals(v.getConductor().getDni(), au.getDNI())).collect(Collectors.toList());
                         }
                         adapter = new ViajeAdapter(viajes,getContext());
                         rv.setAdapter(adapter);
