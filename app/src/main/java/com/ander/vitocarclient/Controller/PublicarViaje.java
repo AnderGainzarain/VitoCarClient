@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
+import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
@@ -26,6 +27,10 @@ import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.Vista.ToastControll;
+
+import java.util.List;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,38 +82,24 @@ public class PublicarViaje extends Fragment {
         sDestino.setAdapter(adaptador);
         // Set the event listener to publicar
         publicar = view.findViewById(R.id.btnPublicar);
-        publicar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // do something when the button is clicked
-                String origen = sOrigen.getSelectedItem().toString();
-                String destino = sDestino.getSelectedItem().toString();
-                String fechaSalida = fecha.getText().toString();
-                String horaSalida = hora.getText().toString();
-                // Check if the precio is introduced
-                if(precio.getText().toString().equals("")){
-                    Toast.makeText(getContext(),ToastControll.precioVacio(), Toast.LENGTH_LONG).show();
-                    return;
-                }else{
-                    String coste = precio.getText().toString();
-                    if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
+        publicar.setOnClickListener(view1 -> {
+            // do something when the button is clicked
+            String origen = sOrigen.getSelectedItem().toString();
+            String destino = sDestino.getSelectedItem().toString();
+            String fechaSalida = fecha.getText().toString();
+            String horaSalida = hora.getText().toString();
+            // Check if the precio is introduced
+            if(precio.getText().toString().equals("")){
+                Toast.makeText(getContext(),ToastControll.precioVacio(), Toast.LENGTH_LONG).show();
+            }else{
+                String coste = precio.getText().toString();
+                if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
 
-                    publicarViajes(origen,destino,fechaSalida,horaSalida,Integer.parseInt(coste));
-                }
+                esViajeValido(origen,destino,fechaSalida,horaSalida,Integer.parseInt(coste));
             }
         });
-        ibFechaSalida.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DateAndTimePickers.mostrarFecha(view,getContext(),fecha);
-            }
-        });
-        ibHoraSalida.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DateAndTimePickers.mostrarHora(view,getContext(),hora);
-            }
-        });
+        ibFechaSalida.setOnClickListener(view2 -> DateAndTimePickers.mostrarFecha(view2,getContext(),fecha));
+        ibHoraSalida.setOnClickListener(view3 -> DateAndTimePickers.mostrarHora(view3,getContext(),hora));
     }
     private void publicarViajes(String origen, String destino, String fechaSalida, String horaS, int coste) {
         Viaje viaje = new Viaje(coste, origen, destino, fechaSalida + " " + horaS);
@@ -133,7 +124,32 @@ public class PublicarViaje extends Fragment {
             }
         });
     }
+    private void esViajeValido(String origen, String destino, String fecha, String horaS,int coste){
+        if(au.getCoche()==null){
+            return;
+        }else{
+            Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(origen,destino, DateManager.parseDate(fecha,horaS));
+            call.enqueue(new Callback<List<Viaje>>() {
+                @Override
+                public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
+                    if(response.isSuccessful()){
+                        List<Viaje>viajes=response.body();
+                        if(viajes==null||viajes.isEmpty()){
+                            publicarViajes(origen,destino,fecha,horaS,coste);
+                        }else {
+                            /*au.getDNI()*/
+                            if(viajes.stream().noneMatch(v -> Objects.equals(v.getConductor().getDni(), 2222/*au.getDNI()*/))){
+                                publicarViajes(origen,destino,fecha,horaS,coste);
+                            }
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<List<Viaje>> call, Throwable t) {
 
+                }
+            });
+        }
 
-
+    }
 }
