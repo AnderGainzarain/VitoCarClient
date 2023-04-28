@@ -37,7 +37,7 @@ public class MisViajes extends Fragment {
     private List<Viaje> viajes;
     private RecyclerView rv;
     private ViajeAdapter adapter;
-    private ActiveUser au = ActiveUser.getActiveUser();
+    private final ActiveUser au = ActiveUser.getActiveUser();
     private TabLayout tabLayout;
 
     public MisViajes() {
@@ -67,29 +67,17 @@ public class MisViajes extends Fragment {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab==tabLayout.getTabAt(0)){
-                    getMisViajes(false);
-                }else{
-                    getMisViajes(true);
-                }
+                getMisViajes(tab != tabLayout.getTabAt(0));
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                if(tab==tabLayout.getTabAt(0)){
-                    getMisViajes(false);
-                }else{
-                    getMisViajes(true);
-                }
+                getMisViajes(tab != tabLayout.getTabAt(0));
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                if(tab==tabLayout.getTabAt(0)){
-                    getMisViajes(false);
-                }else{
-                    getMisViajes(true);
-                }
+                getMisViajes(tab != tabLayout.getTabAt(0));
             }
         });
     }
@@ -99,7 +87,7 @@ public class MisViajes extends Fragment {
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(au.getDNI());
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
-            public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
+            public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
                 // Show the viajes in the recycler view
                 List<Viaje> show;
                 if(response.isSuccessful()){
@@ -123,7 +111,7 @@ public class MisViajes extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Viaje>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
                 // return an error message if there is an error
                 Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }

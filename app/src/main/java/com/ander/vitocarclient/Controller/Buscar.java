@@ -27,8 +27,7 @@ public class Buscar extends Fragment {
     private Spinner sDestino;
     private final String[] ciudades = {"Vitoria", "Donostia", "Bilbo"};
     private EditText fecha;
-    private Button buscar;
-    private ImageButton ibFechaSalida;
+
     public Buscar() {
         // Required empty public constructor
     }
@@ -47,8 +46,8 @@ public class Buscar extends Fragment {
         sDestino = view.findViewById(R.id.sDestinoBuscar);
         // get the date from the xml
         fecha = view.findViewById(R.id.etFechaBuscar);
-        buscar = view.findViewById(R.id.btnBuscar);
-        ibFechaSalida = view.findViewById(R.id.ibFechaBuscar);
+        Button buscar = view.findViewById(R.id.btnBuscar);
+        ImageButton ibFechaSalida = view.findViewById(R.id.ibFechaBuscar);
         // set the current date and time as the default
         fecha.setText(LocalDateTime.now().toString().substring(0,10));
         // Create the contents of the spinners
@@ -57,31 +56,23 @@ public class Buscar extends Fragment {
         sOrigen.setAdapter(adaptador);
         sDestino.setAdapter(adaptador);
         // Set the event listener to buscar
-        buscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // do something when the button is clicked
-                String origen = sOrigen.getSelectedItem().toString();
-                String destino = sDestino.getSelectedItem().toString();
-                String fechaSalida = fecha.getText().toString().replace("/","-");
-                if(FormValidation.validate(getContext(),origen,destino,fechaSalida).equals(false)) return;
+        buscar.setOnClickListener(view1 -> {
+            // do something when the button is clicked
+            String origen = sOrigen.getSelectedItem().toString();
+            String destino = sDestino.getSelectedItem().toString();
+            String fechaSalida = fecha.getText().toString().replace("/","-");
+            if(FormValidation.validate(getContext(),origen,destino,fechaSalida).equals(false)) return;
 
-                // store the query data
-                Bundle bundle = new Bundle();
-                bundle.putString("origen", origen);
-                bundle.putString("destino", destino);
-                bundle.putString("fechaSalida", fechaSalida);
-                getParentFragmentManager().setFragmentResult("query", bundle);
-                // change the fragment
-                getParentFragmentManager().beginTransaction().replace(R.id.flMain, new ResultadosBusqueda()).commit();
-            }
+            // store the query data
+            Bundle bundle = new Bundle();
+            bundle.putString("origen", origen);
+            bundle.putString("destino", destino);
+            bundle.putString("fechaSalida", fechaSalida);
+            getParentFragmentManager().setFragmentResult("query", bundle);
+            // change the fragment
+            getParentFragmentManager().beginTransaction().replace(R.id.flMain, new ResultadosBusqueda()).commit();
         });
-        ibFechaSalida.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DateAndTimePickers.mostrarFecha(view,getContext(),fecha);
-            }
-        });
+        ibFechaSalida.setOnClickListener(view2 -> DateAndTimePickers.mostrarFecha(view2,getContext(),fecha));
 
     }
 }

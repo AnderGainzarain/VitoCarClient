@@ -43,10 +43,8 @@ public class PublicarViaje extends Fragment {
     private EditText precio;
     private EditText fecha;
     private EditText hora;
-    private Button publicar;
-    private ActiveUser au = ActiveUser.getActiveUser();
-    private ImageButton ibFechaSalida;
-    private ImageButton ibHoraSalida;
+    private final ActiveUser au = ActiveUser.getActiveUser();
+
     public PublicarViaje() {
         // Required empty public constructor
     }
@@ -73,15 +71,15 @@ public class PublicarViaje extends Fragment {
         hora = view.findViewById(R.id.etHoraSalidaPublicar);
         precio = view.findViewById(R.id.etPrecioPublicar);
         // Get the fecha and hora salida image buttons
-        ibFechaSalida=view.findViewById(R.id.ibCalendarPublicar);
-        ibHoraSalida=view.findViewById(R.id.ibTimePublicar);
+        ImageButton ibFechaSalida = view.findViewById(R.id.ibCalendarPublicar);
+        ImageButton ibHoraSalida = view.findViewById(R.id.ibTimePublicar);
        // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
         sDestino.setAdapter(adaptador);
         // Set the event listener to publicar
-        publicar = view.findViewById(R.id.btnPublicar);
+        Button publicar = view.findViewById(R.id.btnPublicar);
         publicar.setOnClickListener(view1 -> {
             // do something when the button is clicked
             String origen = sOrigen.getSelectedItem().toString();
@@ -106,7 +104,7 @@ public class PublicarViaje extends Fragment {
         Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).publicarViaje(1111, viaje);
         call.enqueue(new Callback<Viaje>() {
             @Override
-            public void onResponse(Call<Viaje> call, Response<Viaje> response) {
+            public void onResponse(@NonNull Call<Viaje> call, @NonNull Response<Viaje> response) {
                 if(response.isSuccessful()){
                     Viaje viaje = response.body();
                     if (viaje!=null){
@@ -119,19 +117,17 @@ public class PublicarViaje extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Viaje> call, Throwable t) {
+            public void onFailure(@NonNull Call<Viaje> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), ToastControll.errorPublicar() + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
     private void esViajeValido(String origen, String destino, String fecha, String horaS,int coste){
-        if(au.getCoche()==null){
-            return;
-        }else{
+        if(au.getCoche()!=null){
             Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(origen,destino, DateManager.parseDate(fecha,horaS));
             call.enqueue(new Callback<List<Viaje>>() {
                 @Override
-                public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
+                public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
                     if(response.isSuccessful()){
                         List<Viaje>viajes=response.body();
                         if(viajes==null||viajes.isEmpty()){
@@ -147,7 +143,7 @@ public class PublicarViaje extends Fragment {
                     }
                 }
                 @Override
-                public void onFailure(Call<List<Viaje>> call, Throwable t) {
+                public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
 
                 }
             });

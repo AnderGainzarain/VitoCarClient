@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,8 +38,8 @@ public class ResultadosBusqueda extends Fragment {
     private List<Viaje> viajes;
     private ViajeAdapter adapter;
     private RecyclerView rv;
-    private ActiveUser au = ActiveUser.getActiveUser();
-    private Map<String,String> queryData = new HashMap<>();
+    private final ActiveUser au = ActiveUser.getActiveUser();
+    private final Map<String,String> queryData = new HashMap<>();
     public ResultadosBusqueda() {
         // Required empty public constructor
     }
@@ -48,14 +47,11 @@ public class ResultadosBusqueda extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getParentFragmentManager().setFragmentResultListener("query", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                queryData.put("origen",result.getString("origen"));
-                queryData.put("destino", result.getString("destino"));
-                queryData.put("fechaSalida",result.getString("fechaSalida"));
-                busqueda();
-            }
+        getParentFragmentManager().setFragmentResultListener("query", this, (requestKey, result) -> {
+            queryData.put("origen",result.getString("origen"));
+            queryData.put("destino", result.getString("destino"));
+            queryData.put("fechaSalida",result.getString("fechaSalida"));
+            busqueda();
         });
     }
     @Override
@@ -73,11 +69,11 @@ public class ResultadosBusqueda extends Fragment {
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), DateManager.parseDate(queryData.get("fechaSalida"),DateManager.getMinutes()));
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
-            public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
+            public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
                 // Show the viajes in the recycler view
                if(response.isSuccessful()){
                     viajes=response.body();
-                    if(viajes.isEmpty()){
+                    if(viajes == null || viajes.isEmpty()){
                         Toast.makeText(getContext(), ToastControll.noHayBusqueda(), Toast.LENGTH_LONG).show();
                     }else{
                         if(au!=null){
@@ -90,7 +86,7 @@ public class ResultadosBusqueda extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Viaje>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
                 // return an error message if there is an error
                 Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }

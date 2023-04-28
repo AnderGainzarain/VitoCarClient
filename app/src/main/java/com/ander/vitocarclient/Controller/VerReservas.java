@@ -61,58 +61,45 @@ public class VerReservas extends Fragment {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tab==tabLayout.getTabAt(0)){
-                    showReservas(false);
-                }else{
-                    showReservas(true);
-                }
+                showReservas(tab != tabLayout.getTabAt(0));
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                if(tab==tabLayout.getTabAt(0)){
-                    showReservas(false);
-                }else{
-                    showReservas(true);
-                }
+                showReservas(tab != tabLayout.getTabAt(0));
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                if(tab==tabLayout.getTabAt(0)){
-                    showReservas(false);
-                }else{
-                    showReservas(true);
-                }
+                showReservas(tab != tabLayout.getTabAt(0));
             }
         });
     }
     private void showReservas(boolean pasado){
-        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(3333);
+        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(au.getDNI());
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
-            public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
+            public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
                 // Show the viajes in the recycler view
                 if(response.isSuccessful()){
                         viajes=response.body();
                         if(viajes==null||viajes.isEmpty()){
                             Toast.makeText(getContext(), ToastControll.noViajesReservados(), Toast.LENGTH_LONG).show();
                         }else{
+                            List<Viaje> mostrar;
                             if (pasado){
-                                List<Viaje> mostrar = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0,10))).collect(Collectors.toList());
-                                adapter = new ViajeAdapter(mostrar,getContext());
-                                rv.setAdapter(adapter);
+                                mostrar = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
                             }else{
-                                List<Viaje> mostrar = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10))).collect(Collectors.toList());
-                                adapter = new ViajeAdapter(mostrar,getContext());
-                                rv.setAdapter(adapter);
+                                mostrar = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
                             }
+                            adapter = new ViajeAdapter(mostrar,getContext());
+                            rv.setAdapter(adapter);
                         }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Viaje>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
                 // return an error message if there is an error
                 Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
             }

@@ -1,7 +1,6 @@
 package com.ander.vitocarclient.Controller.Uils;
 
 import android.app.DatePickerDialog;
-import android.app.LocaleConfig;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.view.View;
@@ -23,7 +22,7 @@ public class DateAndTimePickers{
             }, now.getYear(), now.getMonthValue()-1,now.getDayOfMonth());
             date.show();
         }
-        private static String dateFormat(int n){
+        static String dateFormat(int n){
             return (n<=9) ? ("0"+n) : String.valueOf(n);
         }
 

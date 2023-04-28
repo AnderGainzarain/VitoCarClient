@@ -1,26 +1,15 @@
 package com.ander.vitocarclient.Model;
 
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.ander.vitocarclient.Network.ApiClient;
-import com.ander.vitocarclient.Network.ApiUser;
-import com.ander.vitocarclient.Vista.ToastControll;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ActiveUser {
     // Atributes
-    private Integer dni;
-    private int telefono;
-    private String mail;
-    private String nombre;
-    private String apellido;
-    private String foto;
-    private String coche;
+    private final Integer dni;
+    private final int telefono;
+    private final String mail;
+    private final String nombre;
+    private final String apellido;
+    private final String foto;
+    private final String coche;
     private static ActiveUser activeUser;
 
     //Constructor
@@ -70,6 +59,10 @@ public class ActiveUser {
     }
 
     public static ActiveUser getActiveUser() {
+        if(activeUser==null){
+            activeUser = new ActiveUser(1111,1,"a@a","a","apellido1","https://www.w3schools.com/howto/img_avatar2.png","coche1");
+
+        }
         return activeUser;
     }
 }

@@ -11,34 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ander.vitocarclient.R;
 
 import com.ander.vitocarclient.Model.ActiveUser;
-import com.ander.vitocarclient.Model.User;
-import com.ander.vitocarclient.Network.ApiClient;
-import com.ander.vitocarclient.Network.ApiUser;
-import com.ander.vitocarclient.Vista.ToastControll;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class Perfil extends Fragment {
 
-    private User user;
     private final ActiveUser au = ActiveUser.getActiveUser();
-    private TextView nombre;
-    private TextView apellido;
-    private TextView mail;
-    private TextView telefono;
-    private TextView coche;
-    private ImageView foto;
-    private FloatingActionButton logOut;
+
     public Perfil() {
         // Required empty public constructor
     }
@@ -51,13 +35,13 @@ public class Perfil extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        nombre = view.findViewById(R.id.nombre);
-        apellido = view.findViewById(R.id.apellido);
-        mail = view.findViewById(R.id.mail);
-        telefono = view.findViewById(R.id.telefono);
-        coche = view.findViewById(R.id.coche);
-        foto = view.findViewById(R.id.profilePicture);
-        logOut = view.findViewById(R.id.btnLogOut);
+        TextView nombre = view.findViewById(R.id.nombre);
+        TextView apellido = view.findViewById(R.id.apellido);
+        TextView mail = view.findViewById(R.id.mail);
+        TextView telefono = view.findViewById(R.id.telefono);
+        TextView coche = view.findViewById(R.id.coche);
+        ImageView foto = view.findViewById(R.id.profilePicture);
+        FloatingActionButton logOut = view.findViewById(R.id.btnLogOut);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +53,7 @@ public class Perfil extends Fragment {
         nombre.setText(au.getNombre());
         apellido.setText(au.getApellido());
         mail.setText(au.getMail());
-        telefono.setText(au.getTelefono());
+        telefono.setText(String.valueOf(au.getTelefono()));
         coche.setText(au.getCoche());
     }
 }

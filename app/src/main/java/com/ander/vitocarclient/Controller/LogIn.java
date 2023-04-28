@@ -31,7 +31,7 @@ public class LogIn extends Fragment {
 
     private EditText mail;
     private EditText password;
-    private Button logIn;
+
     public LogIn() {
         // Required empty public constructor
     }
@@ -47,13 +47,8 @@ public class LogIn extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mail = view.findViewById(R.id.etMailLogIn);
         password = view.findViewById(R.id.etPasswordLogIn);
-        logIn = view.findViewById(R.id.btnLogIn);
-        logIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logIn(mail.getText().toString(), password.getText().toString());
-            }
-        });
+        Button logIn = view.findViewById(R.id.btnLogIn);
+        logIn.setOnClickListener(view1 -> logIn(mail.getText().toString(), password.getText().toString()));
     }
     private class LogInTask extends AsyncTask<String, Void, Boolean> {
 
