@@ -20,4 +20,6 @@ public interface ApiViaje {
                                        @Query("fecha") LocalDateTime fechaSalida);
     @POST("api/viajes/publicar/{dni}")
     Call<Viaje> publicarViaje(@Path("dni") int dni, @Body Viaje viaje);
+    @POST("api/viajes/reservar/{dni}/{idViaje}")
+    Call<Viaje> reservar(@Path("dni") int dni, @Path("idViaje") int idViaje);
 }
