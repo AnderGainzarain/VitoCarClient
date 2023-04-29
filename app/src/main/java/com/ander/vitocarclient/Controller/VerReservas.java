@@ -110,7 +110,22 @@ public class VerReservas extends Fragment implements RvInterface {
             }
         });
     }
+    private void anularReserva(int idViaje){
+        Call<Void> call = ApiClient.getClient().create(ApiViaje.class).anularReserva(au.getDNI(),idViaje);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), TextControll.reservaAnulada(),Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     @Override
     public void onItemClick(int position) {
         PopupWindow popupWindow = new PopupWindow(getContext());
@@ -124,13 +139,7 @@ public class VerReservas extends Fragment implements RvInterface {
         Button submit = popupView.findViewById(R.id.btnreservarM);
         submit.setText(TextControll.btnAnular());
         popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-
+        closeButton.setOnClickListener(v -> popupWindow.dismiss());
+        submit.setOnClickListener(view -> anularReserva(viajes.get(position).getIdViaje()));
     }
 }
