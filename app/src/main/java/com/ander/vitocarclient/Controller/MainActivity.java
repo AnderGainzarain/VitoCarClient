@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void showPublicarNoLogueado(){
-        Toast.makeText(this, ToastControll.publicarNoLogueado(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, ToastControll.publicarNoLogueado(), Toast.LENGTH_SHORT).show();
     }
     private void showReservasNoLogueado(){
-        Toast.makeText(this, ToastControll.reservasNoLogueado(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, ToastControll.reservasNoLogueado(), Toast.LENGTH_SHORT).show();
     }
     private void showViajesNoLogueado(){
-        Toast.makeText(this, ToastControll.reservasNoLogueado(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, ToastControll.reservasNoLogueado(), Toast.LENGTH_SHORT).show();
     }
 }

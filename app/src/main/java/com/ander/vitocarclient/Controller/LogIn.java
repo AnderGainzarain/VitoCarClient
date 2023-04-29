@@ -107,13 +107,13 @@ public class LogIn extends Fragment {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 User user = response.body();
                 if(user==null){
-                    Toast.makeText(getContext(), ToastControll.mailIncorrecto(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ToastControll.mailIncorrecto(), Toast.LENGTH_SHORT).show();
                     mail.setText("");
                     password.setText("");
                     return;
                 }
                 if(!user.getContraseña().equals(pwd)){
-                    Toast.makeText(getContext(), ToastControll.pwdIncorrecto(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ToastControll.pwdIncorrecto(), Toast.LENGTH_SHORT).show();
                     mail.setText("");
                     password.setText("");
                     return;
@@ -122,7 +122,7 @@ public class LogIn extends Fragment {
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

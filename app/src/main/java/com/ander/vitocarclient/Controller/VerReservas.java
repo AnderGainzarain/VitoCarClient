@@ -84,7 +84,7 @@ public class VerReservas extends Fragment implements RvInterface {
                 if(response.isSuccessful()){
                         viajes=response.body();
                         if(viajes==null||viajes.isEmpty()){
-                            Toast.makeText(getContext(), ToastControll.noViajesReservados(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), ToastControll.noViajesReservados(), Toast.LENGTH_SHORT).show();
                         }else{
                             List<Viaje> mostrar;
                             if (pasado){
@@ -101,7 +101,7 @@ public class VerReservas extends Fragment implements RvInterface {
             @Override
             public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

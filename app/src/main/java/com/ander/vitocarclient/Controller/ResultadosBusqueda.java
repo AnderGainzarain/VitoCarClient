@@ -74,7 +74,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                if(response.isSuccessful()){
                     viajes=response.body();
                     if(viajes == null || viajes.isEmpty()){
-                        Toast.makeText(getContext(), ToastControll.noHayBusqueda(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), ToastControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
                     }else{
                         if(au!=null){
                             viajes = viajes.stream().filter(v-> !Objects.equals(v.getConductor().getDni(), au.getDNI())).collect(Collectors.toList());
@@ -88,7 +88,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             @Override
             public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -88,7 +88,7 @@ public class PublicarViaje extends Fragment {
             String horaSalida = hora.getText().toString();
             // Check if the precio is introduced
             if(precio.getText().toString().equals("")){
-                Toast.makeText(getContext(),ToastControll.precioVacio(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),ToastControll.precioVacio(), Toast.LENGTH_SHORT).show();
             }else{
                 String coste = precio.getText().toString();
                 if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
@@ -101,7 +101,7 @@ public class PublicarViaje extends Fragment {
     }
     private void publicarViajes(String origen, String destino, String fechaSalida, String horaS, int coste) {
         Viaje viaje = new Viaje(coste, origen, destino, fechaSalida + " " + horaS);
-        Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).publicarViaje(1111, viaje);
+        Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).publicarViaje(au.getDNI(), viaje);
         call.enqueue(new Callback<Viaje>() {
             @Override
             public void onResponse(@NonNull Call<Viaje> call, @NonNull Response<Viaje> response) {
@@ -111,14 +111,14 @@ public class PublicarViaje extends Fragment {
                         precio.setText("");
                         fecha.setText("");
                         hora.setText("");
-                        Toast.makeText(getContext(), ToastControll.viajePublicado(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), ToastControll.viajePublicado(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Viaje> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), ToastControll.errorPublicar() + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), ToastControll.errorPublicar() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -133,18 +133,17 @@ public class PublicarViaje extends Fragment {
                         if(viajes==null||viajes.isEmpty()){
                             publicarViajes(origen,destino,fecha,horaS,coste);
                         }else {
-                            /*au.getDNI()*/
-                            if(viajes.stream().noneMatch(v -> Objects.equals(v.getConductor().getDni(), 2222/*au.getDNI()*/))){
+                            if(viajes.stream().noneMatch(v -> Objects.equals(v.getConductor().getDni(), au.getDNI()))){
                                 publicarViajes(origen,destino,fecha,horaS,coste);
                             }else{
-                                Toast.makeText(getContext(),ToastControll.viajeYaPublicado(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(),ToastControll.viajeYaPublicado(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
                 }
                 @Override
                 public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
-                    Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -9,17 +9,17 @@ public class FormValidation {
     public static Boolean validate(Context context,String origen, String destino, String fechaSalida){
         // Check if there is fecha salida
         if (fechaSalida.isEmpty()){
-            Toast.makeText(context, ToastControll.fechaVacia(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, ToastControll.fechaVacia(), Toast.LENGTH_SHORT).show();
             return false;
         }
         // check if there is the same origen and destino
         if(origen.equals(destino)){
-            Toast.makeText(context,ToastControll.origenDestinoIguales(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context,ToastControll.origenDestinoIguales(), Toast.LENGTH_SHORT).show();
             return false;
         }
         // Check if the date has already passed
         if(!DateManager.passedDate(fechaSalida)){
-            Toast.makeText(context,ToastControll.fechaPasada(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context,ToastControll.fechaPasada(), Toast.LENGTH_SHORT).show();
 
             return false;
         };
@@ -31,7 +31,7 @@ public class FormValidation {
         else{
             // check if the precio is valid
             if(Integer.parseInt(precio) < 1){
-                Toast.makeText(context,ToastControll.precioMenorUno(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context,ToastControll.precioMenorUno(), Toast.LENGTH_SHORT).show();
                 return false;
             }
             return true;
