@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
@@ -31,6 +32,8 @@ import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.Vista.TextControll;
+
+import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,7 +98,23 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             }
         });
     }
+    private void reservar(int idViaje){
+        Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).reservar(au.getDNI(),idViaje);
+        call.enqueue(new Callback<Viaje>() {
+            @Override
+            public void onResponse(Call<Viaje> call, Response<Viaje> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), TextControll.reservaRealizada(),Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Viaje> call, Throwable t) {
+                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
     @Override
     public void onItemClick(int position) {
         //TODO: create the popup
@@ -108,12 +127,8 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
         Button closeButton = popupView.findViewById(R.id.close_button);
         popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
+        closeButton.setOnClickListener(v -> popupWindow.dismiss());
+        Button reserva = popupView.findViewById(R.id.btnreservarM);
+        reserva.setOnClickListener(view -> reservar(viajes.get(position).getIdViaje()));
     }
 }
