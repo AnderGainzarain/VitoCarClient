@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
+import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
@@ -60,7 +61,7 @@ public class Buscar extends Fragment {
             // do something when the button is clicked
             String origen = sOrigen.getSelectedItem().toString();
             String destino = sDestino.getSelectedItem().toString();
-            String fechaSalida = fecha.getText().toString().replace("/","-");
+            String fechaSalida = fecha.getText().toString().replace("/","-").substring(0,10) + "T" + DateManager.getMinutes();
             if(FormValidation.validate(getContext(),origen,destino,fechaSalida).equals(false)) return;
 
             // store the query data
