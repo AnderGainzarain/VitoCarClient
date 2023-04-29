@@ -33,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ResultadosBusqueda extends Fragment {
+public class ResultadosBusqueda extends Fragment implements RvInterface {
 
     private List<Viaje> viajes;
     private ViajeAdapter adapter;
@@ -79,7 +79,7 @@ public class ResultadosBusqueda extends Fragment {
                         if(au!=null){
                             viajes = viajes.stream().filter(v-> !Objects.equals(v.getConductor().getDni(), au.getDNI())).collect(Collectors.toList());
                         }
-                        adapter = new ViajeAdapter(viajes,getContext());
+                        adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }
                 }
@@ -91,5 +91,11 @@ public class ResultadosBusqueda extends Fragment {
                 Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        //TODO: create the popup
+
     }
 }

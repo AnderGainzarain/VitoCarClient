@@ -32,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MisViajes extends Fragment {
+public class MisViajes extends Fragment implements RvInterface {
 
     private List<Viaje> viajes;
     private RecyclerView rv;
@@ -57,7 +57,7 @@ public class MisViajes extends Fragment {
         rv = view.findViewById(R.id.rvMisViajes);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         // Initialize the rv adapter with an empty list
-        adapter = new ViajeAdapter(new ArrayList<>(),getContext());
+        adapter = new ViajeAdapter(new ArrayList<>(),getContext(),this);
         rv.setAdapter(adapter);
         // Bind the tab layout
         tabLayout = view.findViewById(R.id.tabMisviajes);
@@ -104,7 +104,7 @@ public class MisViajes extends Fragment {
                                     .filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10)))
                                     .collect(Collectors.toList());
                         }
-                        adapter = new ViajeAdapter(show, getContext());
+                        adapter = new ViajeAdapter(show, getContext(),MisViajes.this);
                         rv.setAdapter(adapter);
                     }
                 }
@@ -116,5 +116,11 @@ public class MisViajes extends Fragment {
                 Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        // TODO: implement the popup
+
     }
 }

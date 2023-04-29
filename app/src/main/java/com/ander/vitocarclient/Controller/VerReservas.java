@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VerReservas extends Fragment {
+public class VerReservas extends Fragment implements RvInterface {
 
     private List<Viaje> viajes;
     private RecyclerView rv;
@@ -92,7 +92,7 @@ public class VerReservas extends Fragment {
                             }else{
                                 mostrar = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
                             }
-                            adapter = new ViajeAdapter(mostrar,getContext());
+                            adapter = new ViajeAdapter(mostrar,getContext(),VerReservas.this);
                             rv.setAdapter(adapter);
                         }
                 }
@@ -104,5 +104,11 @@ public class VerReservas extends Fragment {
                 Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        // TODO: implement the popup
+
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ander.vitocarclient.Controller.RvInterface;
 import com.ander.vitocarclient.R;
 
 import java.util.List;
@@ -16,12 +17,14 @@ import java.util.List;
 import com.ander.vitocarclient.Model.Viaje;
 
 public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
+    private final RvInterface rvInterface;
     private List<Viaje> viajes;
     private Context context;
 
-    public ViajeAdapter(List<Viaje> viajes, Context context) {
+    public ViajeAdapter(List<Viaje> viajes, Context context, RvInterface rvInterface) {
         this.viajes = viajes;
         this.context = context;
+        this.rvInterface = rvInterface;
     }
 
     @NonNull
@@ -58,6 +61,17 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
             fecha = itemView.findViewById(R.id.fecha);
             precio = itemView.findViewById(R.id.precio);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(rvInterface != null){
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION){
+                            rvInterface.onItemClick(pos);
+                        }
+                    }
+                }
+            });
         }
     }
 }
