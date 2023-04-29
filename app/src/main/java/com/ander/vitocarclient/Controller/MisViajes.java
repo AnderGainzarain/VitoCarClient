@@ -19,6 +19,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
+import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.R;
 import com.ander.vitocarclient.Vista.TextControll;
 import com.google.android.material.tabs.TabLayout;
@@ -122,6 +123,23 @@ public class MisViajes extends Fragment implements RvInterface {
             }
         });
     }
+    public void anularViaje(int idViaje){
+        Call<Void> call = ApiClient.getClient().create(ApiViaje.class).anularViaje(idViaje);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    Toast.makeText(getContext(), TextControll.reservaRealizada(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     @Override
     public void onItemClick(int position) {
@@ -136,13 +154,7 @@ public class MisViajes extends Fragment implements RvInterface {
         Button submit = popupView.findViewById(R.id.btnreservarM);
         submit.setText(TextControll.btnAnular());
         popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-
+        closeButton.setOnClickListener(v -> popupWindow.dismiss());
+        submit.setOnClickListener(view -> anularViaje(viajes.get(position).getIdViaje()));
     }
 }
