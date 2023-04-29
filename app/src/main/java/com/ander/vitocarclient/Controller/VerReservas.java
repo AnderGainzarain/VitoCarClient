@@ -1,5 +1,7 @@
 package com.ander.vitocarclient.Controller;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,9 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
@@ -24,7 +29,7 @@ import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
-import com.ander.vitocarclient.Vista.ToastControll;
+import com.ander.vitocarclient.Vista.TextControll;
 import com.google.android.material.tabs.TabLayout;
 
 import retrofit2.Call;
@@ -84,7 +89,7 @@ public class VerReservas extends Fragment implements RvInterface {
                 if(response.isSuccessful()){
                         viajes=response.body();
                         if(viajes==null||viajes.isEmpty()){
-                            Toast.makeText(getContext(), ToastControll.noViajesReservados(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), TextControll.noViajesReservados(), Toast.LENGTH_SHORT).show();
                         }else{
                             List<Viaje> mostrar;
                             if (pasado){
@@ -101,14 +106,31 @@ public class VerReservas extends Fragment implements RvInterface {
             @Override
             public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public void onItemClick(int position) {
-        // TODO: implement the popup
+        PopupWindow popupWindow = new PopupWindow(getContext());
+        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info, null);
+        popupWindow.setContentView(popupView);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
+        Button closeButton = popupView.findViewById(R.id.close_button);
+        Button submit = popupView.findViewById(R.id.btnreservarM);
+        submit.setText(TextControll.btnAnular());
+        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
 
     }
 }

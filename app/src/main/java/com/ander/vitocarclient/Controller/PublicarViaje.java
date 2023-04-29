@@ -26,7 +26,7 @@ import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
-import com.ander.vitocarclient.Vista.ToastControll;
+import com.ander.vitocarclient.Vista.TextControll;
 
 import java.util.List;
 import java.util.Objects;
@@ -88,7 +88,7 @@ public class PublicarViaje extends Fragment {
             String horaSalida = hora.getText().toString();
             // Check if the precio is introduced
             if(precio.getText().toString().equals("")){
-                Toast.makeText(getContext(),ToastControll.precioVacio(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), TextControll.precioVacio(), Toast.LENGTH_SHORT).show();
             }else{
                 String coste = precio.getText().toString();
                 if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
@@ -111,14 +111,14 @@ public class PublicarViaje extends Fragment {
                         precio.setText("");
                         fecha.setText("");
                         hora.setText("");
-                        Toast.makeText(getContext(), ToastControll.viajePublicado(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), TextControll.viajePublicado(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Viaje> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), ToastControll.errorPublicar() + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), TextControll.errorPublicar() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -136,14 +136,14 @@ public class PublicarViaje extends Fragment {
                             if(viajes.stream().noneMatch(v -> Objects.equals(v.getConductor().getDni(), au.getDNI()))){
                                 publicarViajes(origen,destino,fecha,horaS,coste);
                             }else{
-                                Toast.makeText(getContext(),ToastControll.viajeYaPublicado(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), TextControll.viajeYaPublicado(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
                 }
                 @Override
                 public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
-                    Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

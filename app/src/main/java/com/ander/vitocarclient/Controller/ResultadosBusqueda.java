@@ -25,14 +25,12 @@ import com.ander.vitocarclient.R;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
-import com.ander.vitocarclient.Vista.ToastControll;
+import com.ander.vitocarclient.Vista.TextControll;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,7 +77,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                if(response.isSuccessful()){
                     viajes=response.body();
                     if(viajes == null || viajes.isEmpty()){
-                        Toast.makeText(getContext(), ToastControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
                     }else{
                         /*if(au!=null){
                             viajes = viajes.stream().filter(v-> !Objects.equals(v.getConductor().getDni(), au.getDNI())).collect(Collectors.toList());
@@ -93,7 +91,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             @Override
             public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
                 // return an error message if there is an error
-                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -117,9 +115,5 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                 popupWindow.dismiss();
             }
         });
-
-
-
-
     }
 }

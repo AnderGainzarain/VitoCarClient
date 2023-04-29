@@ -1,6 +1,6 @@
 package com.ander.vitocarclient.Vista;
 
-public class ToastControll {
+public class TextControll {
     // Conection error
     public static String getConectionErrorMsg(){
         return "Ha ocurrido un error de conexion";
@@ -33,4 +33,5 @@ public class ToastControll {
     public static String viajeYaPublicado() { return "Ya has publicado un viaje con ese origen y destino para la misma hora";}
 
 
+    public static String btnAnular() {return "anular";}
 }

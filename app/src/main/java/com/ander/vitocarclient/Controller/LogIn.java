@@ -20,7 +20,7 @@ import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
-import com.ander.vitocarclient.Vista.ToastControll;
+import com.ander.vitocarclient.Vista.TextControll;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,13 +63,13 @@ public class LogIn extends Fragment {
                 public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                     User user = response.body();
                     if(user==null){
-                        Toast.makeText(getContext(), ToastControll.mailIncorrecto(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), TextControll.mailIncorrecto(), Toast.LENGTH_LONG).show();
                         mail.setText("");
                         password.setText("");
                         return;
                     }
                     if(!user.getContraseña().equals(pwd)){
-                        Toast.makeText(getContext(), ToastControll.pwdIncorrecto(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), TextControll.pwdIncorrecto(), Toast.LENGTH_LONG).show();
                         mail.setText("");
                         password.setText("");
                         return;
@@ -78,7 +78,7 @@ public class LogIn extends Fragment {
                 }
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(getContext(), ToastControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), TextControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -107,13 +107,13 @@ public class LogIn extends Fragment {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 User user = response.body();
                 if(user==null){
-                    Toast.makeText(getContext(), ToastControll.mailIncorrecto(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), TextControll.mailIncorrecto(), Toast.LENGTH_SHORT).show();
                     mail.setText("");
                     password.setText("");
                     return;
                 }
                 if(!user.getContraseña().equals(pwd)){
-                    Toast.makeText(getContext(), ToastControll.pwdIncorrecto(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), TextControll.pwdIncorrecto(), Toast.LENGTH_SHORT).show();
                     mail.setText("");
                     password.setText("");
                     return;
@@ -122,7 +122,7 @@ public class LogIn extends Fragment {
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
