@@ -122,6 +122,7 @@ public class LogIn extends Fragment {
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

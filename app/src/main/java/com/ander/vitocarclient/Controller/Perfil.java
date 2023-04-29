@@ -42,12 +42,9 @@ public class Perfil extends Fragment {
         TextView coche = view.findViewById(R.id.coche);
         ImageView foto = view.findViewById(R.id.profilePicture);
         FloatingActionButton logOut = view.findViewById(R.id.btnLogOut);
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActiveUser.logOut();
-                getParentFragmentManager().beginTransaction().replace(R.id.flMain, new LogIn()).commit();
-            }
+        logOut.setOnClickListener(view1 -> {
+            ActiveUser.logOut();
+            getParentFragmentManager().beginTransaction().replace(R.id.flMain, new LogIn()).commit();
         });
         Picasso.get().load(au.getFoto()).into(foto);
         nombre.setText(au.getNombre());

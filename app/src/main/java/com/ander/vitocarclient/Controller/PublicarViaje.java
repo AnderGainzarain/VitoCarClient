@@ -144,7 +144,7 @@ public class PublicarViaje extends Fragment {
                 }
                 @Override
                 public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
-
+                    Toast.makeText(getContext(), ToastControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
         }
