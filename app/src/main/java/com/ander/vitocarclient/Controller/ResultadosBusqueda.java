@@ -1,5 +1,7 @@
 package com.ander.vitocarclient.Controller;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,9 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
@@ -76,9 +81,9 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                     if(viajes == null || viajes.isEmpty()){
                         Toast.makeText(getContext(), ToastControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
                     }else{
-                        if(au!=null){
+                        /*if(au!=null){
                             viajes = viajes.stream().filter(v-> !Objects.equals(v.getConductor().getDni(), au.getDNI())).collect(Collectors.toList());
-                        }
+                        }*/
                         adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }
@@ -96,6 +101,25 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
     @Override
     public void onItemClick(int position) {
         //TODO: create the popup
+        PopupWindow popupWindow = new PopupWindow(getContext());
+        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info, null);
+        popupWindow.setContentView(popupView);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
+        Button closeButton = popupView.findViewById(R.id.close_button);
+        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+
+
+
 
     }
 }

@@ -20,6 +20,6 @@ public class DateManager {
     }
     public static String getMinutes(){
         LocalDateTime now = LocalDateTime.now();
-        return now.getHour() +":"+ (DateAndTimePickers.dateFormat(now.getMinute()+1)) +":"+ DateAndTimePickers.dateFormat(now.getSecond());
+        return now.getHour() +":"+ (DateAndTimePickers.dateFormat(now.getMinute()) +":"+ DateAndTimePickers.dateFormat(now.getSecond()));
     }
 }

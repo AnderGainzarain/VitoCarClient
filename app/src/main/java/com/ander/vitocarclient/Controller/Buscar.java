@@ -61,7 +61,7 @@ public class Buscar extends Fragment {
             // do something when the button is clicked
             String origen = sOrigen.getSelectedItem().toString();
             String destino = sDestino.getSelectedItem().toString();
-            String fechaSalida = fecha.getText().toString().replace("/","-").substring(0,10) + "T" + DateManager.getMinutes();
+            String fechaSalida = fecha.getText().toString().replace("/","-").substring(0,10);
             if(FormValidation.validate(getContext(),origen,destino,fechaSalida).equals(false)) return;
 
             // store the query data
