@@ -6,6 +6,7 @@ import java.util.List;
 import com.ander.vitocarclient.Model.Viaje;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -22,4 +23,6 @@ public interface ApiViaje {
     Call<Viaje> publicarViaje(@Path("dni") int dni, @Body Viaje viaje);
     @POST("api/viajes/reservar/{dni}/{idViaje}")
     Call<Viaje> reservar(@Path("dni") int dni, @Path("idViaje") int idViaje);
+    @DELETE("api/viajes/anular")
+    Call<Void> anularReserva(@Query("dni") int dni, @Query("idViaje") int idViaje);
 }
