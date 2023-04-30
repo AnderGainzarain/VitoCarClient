@@ -26,5 +26,5 @@ public interface ApiViaje {
     @DELETE("api/viajes/anularReserva/{dni}/{idViaje}")
     Call<Void> anularReserva(@Path("dni") int dni, @Path("idViaje") int idViaje);
     @DELETE("api/viajes/{id}")
-    Call<Void> anularViaje(@Path("idViaje") int idViaje);
+    Call<Void> anularViaje(@Path("id") int idViaje);
 }
