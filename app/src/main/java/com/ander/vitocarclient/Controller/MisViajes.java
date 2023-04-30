@@ -129,7 +129,7 @@ public class MisViajes extends Fragment implements RvInterface {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(getContext(), TextControll.reservaRealizada(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), TextControll.viajeAnulado(),Toast.LENGTH_SHORT).show();
                 }
             }
 
