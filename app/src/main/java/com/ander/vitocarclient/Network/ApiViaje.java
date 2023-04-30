@@ -23,8 +23,8 @@ public interface ApiViaje {
     Call<Viaje> publicarViaje(@Path("dni") int dni, @Body Viaje viaje);
     @POST("api/viajes/reservar/{dni}/{idViaje}")
     Call<Viaje> reservar(@Path("dni") int dni, @Path("idViaje") int idViaje);
-    @DELETE("api/viajes/anular")
-    Call<Void> anularReserva(@Query("dni") int dni, @Query("idViaje") int idViaje);
+    @DELETE("api/viajes/anularReserva/{dni}/{idViaje}")
+    Call<Void> anularReserva(@Path("dni") int dni, @Path("idViaje") int idViaje);
     @DELETE("api/viajes/{id}")
     Call<Void> anularViaje(@Path("idViaje") int idViaje);
 }
