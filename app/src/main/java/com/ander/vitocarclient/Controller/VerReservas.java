@@ -43,6 +43,7 @@ public class VerReservas extends Fragment implements RvInterface {
     private ViajeAdapter adapter;
     private final ActiveUser au = ActiveUser.getActiveUser();
     private TabLayout tabLayout;
+    private boolean inPasados;
 
     public VerReservas() {
         // Required empty public constructor
@@ -63,20 +64,24 @@ public class VerReservas extends Fragment implements RvInterface {
         tabLayout=view.findViewById(R.id.tabReservas);
         tabLayout.selectTab(tabLayout.getTabAt(1));
         showReservas(false);
+        inPasados = false;
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 showReservas(tab == tabLayout.getTabAt(0));
+                inPasados = tab == tabLayout.getTabAt(0);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 showReservas(tab == tabLayout.getTabAt(0));
+                inPasados = tab == tabLayout.getTabAt(0);
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 showReservas(tab == tabLayout.getTabAt(0));
+                inPasados = tab == tabLayout.getTabAt(0);
             }
         });
     }
@@ -140,6 +145,10 @@ public class VerReservas extends Fragment implements RvInterface {
         submit.setText(TextControll.btnAnular());
         popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
         closeButton.setOnClickListener(v -> popupWindow.dismiss());
-        submit.setOnClickListener(view -> anularReserva(viajes.get(position).getIdViaje()));
+        if(inPasados){
+            submit.setAlpha(0);
+        }else{
+            submit.setOnClickListener(view -> anularReserva(viajes.get(position).getIdViaje()));
+        }
     }
 }
