@@ -77,9 +77,6 @@ public class MisViajes extends Fragment implements RvInterface {
             public void onTabSelected(TabLayout.Tab tab) {
                 getMisViajes(tab == tabLayout.getTabAt(0));
                 inPasados = tab == tabLayout.getTabAt(0);
-                if (inPasados){
-
-                }
             }
 
             @Override
