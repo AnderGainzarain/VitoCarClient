@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
@@ -33,7 +32,6 @@ import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.Vista.TextControll;
 
-import org.w3c.dom.Text;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +55,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             queryData.put("origen",result.getString("origen"));
             queryData.put("destino", result.getString("destino"));
             queryData.put("fechaSalida",result.getString("fechaSalida"));
+            queryData.put("horaSalida",result.getString("horaSalida"));
             busqueda();
         });
     }
@@ -72,7 +71,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
     private void busqueda(){
-        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), DateManager.parseDate(queryData.get("fechaSalida"),DateManager.getMinutes()));
+        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), DateManager.parseDate(queryData.get("fechaSalida"),queryData.get("horaSalida")));
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
             public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
