@@ -26,4 +26,6 @@ public class TextControll {
     public static String reservaRealizada() {return "Reserva realizada con exito";}
     public static String viajeAnulado() {return "Viaje anulado con exito";}
     public static String reservaAnulada(){return "Reserva anulada con exito";}
+
+    public static String sesionIniciada() {return "Sesion iniciada";}
 }
