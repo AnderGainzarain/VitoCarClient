@@ -14,5 +14,5 @@ public interface ApiUser {
     @GET("api/usuarios/{dni}/viajes")
     Call<List<Viaje>> getMisViajes(@Path("dni") int dni);
     @GET("api/usuarios/mail/{mail}")
-    Call<User> getUserMail(String eMail);
+    Call<User> getUserMail(@Path("mail") String eMail);
 }
