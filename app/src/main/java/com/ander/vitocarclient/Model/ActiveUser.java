@@ -59,10 +59,9 @@ public class ActiveUser {
     }
 
     public static ActiveUser getActiveUser() {
-        if(activeUser==null){
+        /*if(activeUser==null){
             activeUser = new ActiveUser(1111,1,"a@a","a","apellido1","https://www.w3schools.com/howto/img_avatar2.png","coche1");
-
-        }
+        }*/
         return activeUser;
     }
 }
