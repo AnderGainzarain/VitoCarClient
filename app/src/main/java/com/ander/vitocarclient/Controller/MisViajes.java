@@ -45,6 +45,7 @@ public class MisViajes extends Fragment implements RvInterface {
     private ViajeAdapter adapter;
     private final ActiveUser au = ActiveUser.getActiveUser();
     private TabLayout tabLayout;
+    private boolean inPasados;
 
     public MisViajes() {
         // Required empty public constructor
@@ -70,20 +71,27 @@ public class MisViajes extends Fragment implements RvInterface {
         // Set the default tab
         tabLayout.selectTab(tabLayout.getTabAt(1));
         getMisViajes(false);
+        inPasados = false;
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 getMisViajes(tab == tabLayout.getTabAt(0));
+                inPasados = tab == tabLayout.getTabAt(0);
+                if (inPasados){
+
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 getMisViajes(tab == tabLayout.getTabAt(0));
+                inPasados = tab == tabLayout.getTabAt(0);
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 getMisViajes(tab == tabLayout.getTabAt(0));
+                inPasados = tab == tabLayout.getTabAt(0);
             }
         });
     }
@@ -155,6 +163,10 @@ public class MisViajes extends Fragment implements RvInterface {
         submit.setText(TextControll.btnAnular());
         popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
         closeButton.setOnClickListener(v -> popupWindow.dismiss());
-        submit.setOnClickListener(view -> anularViaje(viajes.get(position).getIdViaje()));
+        if(inPasados){
+            submit.setAlpha(0);
+        }else{
+            submit.setOnClickListener(view -> anularViaje(viajes.get(position).getIdViaje()));
+        }
     }
 }
