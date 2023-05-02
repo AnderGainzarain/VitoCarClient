@@ -69,21 +69,21 @@ public class MisViajes extends Fragment implements RvInterface {
         tabLayout = view.findViewById(R.id.tabMisviajes);
         // Set the default tab
         tabLayout.selectTab(tabLayout.getTabAt(1));
-        getMisViajes(true);
+        getMisViajes(false);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                getMisViajes(tab != tabLayout.getTabAt(0));
+                getMisViajes(tab == tabLayout.getTabAt(0));
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                getMisViajes(tab != tabLayout.getTabAt(0));
+                getMisViajes(tab == tabLayout.getTabAt(0));
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                getMisViajes(tab != tabLayout.getTabAt(0));
+                getMisViajes(tab == tabLayout.getTabAt(0));
             }
         });
     }
@@ -99,7 +99,7 @@ public class MisViajes extends Fragment implements RvInterface {
                 if(response.isSuccessful()){
                     viajes=response.body();
                     if (viajes ==null || viajes.isEmpty()){
-                        Toast.makeText(getContext(), TextControll.noViajesReservados(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), TextControll.noViajesPublicados(), Toast.LENGTH_SHORT).show();
                     }else{
                         if(pasado){
                             show = viajes.stream()

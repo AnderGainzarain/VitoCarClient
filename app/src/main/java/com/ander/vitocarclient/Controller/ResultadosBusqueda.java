@@ -100,6 +100,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
     }
     private void reservar(int idViaje){
         Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).reservar(au.getDNI(),idViaje);
+        //todo: sin log in no se reserva
         call.enqueue(new Callback<Viaje>() {
             @Override
             public void onResponse(Call<Viaje> call, Response<Viaje> response) {

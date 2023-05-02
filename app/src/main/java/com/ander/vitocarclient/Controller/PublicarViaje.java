@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
 import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
+import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
 
@@ -124,7 +125,7 @@ public class PublicarViaje extends Fragment {
     }
     private void esViajeValido(String origen, String destino, String fecha, String horaS,int coste){
         if(au.getCoche()!=null){
-            Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(origen,destino, DateManager.parseDate(fecha,horaS));
+            Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(au.getDNI());
             call.enqueue(new Callback<List<Viaje>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
@@ -133,7 +134,10 @@ public class PublicarViaje extends Fragment {
                         if(viajes==null||viajes.isEmpty()){
                             publicarViajes(origen,destino,fecha,horaS,coste);
                         }else {
-                            if(viajes.stream().noneMatch(v -> Objects.equals(v.getConductor().getDni(), au.getDNI()))){
+                            if(viajes.stream().noneMatch(v ->
+                                    Objects.equals(v.getOrigen(),origen) &&
+                                            Objects.equals(v.getDestino(),destino) &&
+                                            Objects.equals(v.getFechaSalida(),fecha + " " + horaS))){
                                 publicarViajes(origen,destino,fecha,horaS,coste);
                             }else{
                                 Toast.makeText(getContext(), TextControll.viajeYaPublicado(), Toast.LENGTH_SHORT).show();

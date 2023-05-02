@@ -28,7 +28,7 @@ public class Buscar extends Fragment {
     private Spinner sDestino;
     private final String[] ciudades = {"Vitoria", "Donostia", "Bilbo"};
     private EditText fecha;
-
+    // todo: añadir hora buscar
     public Buscar() {
         // Required empty public constructor
     }

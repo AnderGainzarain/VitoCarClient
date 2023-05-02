@@ -62,21 +62,21 @@ public class VerReservas extends Fragment implements RvInterface {
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         tabLayout=view.findViewById(R.id.tabReservas);
         tabLayout.selectTab(tabLayout.getTabAt(1));
-        showReservas(true);
+        showReservas(false);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                showReservas(tab != tabLayout.getTabAt(0));
+                showReservas(tab == tabLayout.getTabAt(0));
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                showReservas(tab != tabLayout.getTabAt(0));
+                showReservas(tab == tabLayout.getTabAt(0));
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                showReservas(tab != tabLayout.getTabAt(0));
+                showReservas(tab == tabLayout.getTabAt(0));
             }
         });
     }
