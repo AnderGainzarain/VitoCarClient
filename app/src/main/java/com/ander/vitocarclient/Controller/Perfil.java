@@ -44,6 +44,7 @@ public class Perfil extends Fragment {
         FloatingActionButton logOut = view.findViewById(R.id.btnLogOut);
         logOut.setOnClickListener(view1 -> {
             ActiveUser.logOut();
+            MainActivity.setLogedIn(false);
             getParentFragmentManager().beginTransaction().replace(R.id.flMain, new LogIn()).commit();
         });
         Picasso.get().load(au.getFoto()).into(foto);
