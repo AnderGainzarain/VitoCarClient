@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
-import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.R;
 
