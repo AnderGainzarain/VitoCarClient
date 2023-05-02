@@ -101,12 +101,13 @@ public class LogIn extends Fragment {
     }
 
     private void logIn(String eMail, String pwd){
+        System.out.println("Entra al log in" + "\n" + eMail);
         Call<User> call = ApiClient.getClient().create(ApiUser.class).getUserMail(eMail);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 User user = response.body();
-                if(user==null){
+                if(response.code()==404){
                     Toast.makeText(getContext(), TextControll.mailIncorrecto(), Toast.LENGTH_SHORT).show();
                     mail.setText("");
                     password.setText("");
@@ -119,6 +120,10 @@ public class LogIn extends Fragment {
                     return;
                 }
                 ActiveUser.initialize(user);
+                MainActivity.setLogedIn(true);
+                getParentFragmentManager().beginTransaction().replace(R.id.flMain, new Perfil()).commit();
+                Toast.makeText(getContext(), TextControll.sesionIniciada(), Toast.LENGTH_SHORT).show();
+
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
