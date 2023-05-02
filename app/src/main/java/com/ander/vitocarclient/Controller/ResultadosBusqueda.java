@@ -81,9 +81,6 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                     if(viajes == null || viajes.isEmpty()){
                         Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
                     }else{
-                        /*if(au!=null){
-                            viajes = viajes.stream().filter(v-> !Objects.equals(v.getConductor().getDni(), au.getDNI())).collect(Collectors.toList());
-                        }*/
                         adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }
@@ -99,7 +96,6 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
     }
     private void reservar(int idViaje){
         Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).reservar(au.getDNI(),idViaje);
-        //todo: sin log in no se reserva
         call.enqueue(new Callback<Viaje>() {
             @Override
             public void onResponse(Call<Viaje> call, Response<Viaje> response) {
@@ -117,18 +113,19 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
     }
     @Override
     public void onItemClick(int position) {
-        //TODO: create the popup
-        PopupWindow popupWindow = new PopupWindow(getContext());
-        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info, null);
-        popupWindow.setContentView(popupView);
-        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
-        Button closeButton = popupView.findViewById(R.id.close_button);
-        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-        closeButton.setOnClickListener(v -> popupWindow.dismiss());
-        Button reserva = popupView.findViewById(R.id.btnreservarM);
-        reserva.setOnClickListener(view -> reservar(viajes.get(position).getIdViaje()));
+        if(au!=null){
+            PopupWindow popupWindow = new PopupWindow(getContext());
+            View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info, null);
+            popupWindow.setContentView(popupView);
+            popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+            popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+            popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
+            Button closeButton = popupView.findViewById(R.id.close_button);
+            popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+            closeButton.setOnClickListener(v -> popupWindow.dismiss());
+            Button reserva = popupView.findViewById(R.id.btnreservarM);
+            reserva.setOnClickListener(view -> reservar(viajes.get(position).getIdViaje()));
+        }
     }
 }
