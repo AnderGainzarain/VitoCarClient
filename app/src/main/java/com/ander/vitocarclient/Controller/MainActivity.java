@@ -15,13 +15,11 @@ import com.ander.vitocarclient.Model.ActiveUser;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar tb;
-    private Boolean logedIn;
+    private static Boolean logedIn = false;
     private final ActiveUser au = ActiveUser.getActiveUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Check if the user is loged in
-        logedIn= au != null;
         // Create the fragment so it can listen to the result of the search query
         Buscar buscar = new Buscar();
         setContentView(R.layout.activity_main);
@@ -93,5 +91,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void showViajesNoLogueado(){
         Toast.makeText(this, TextControll.reservasNoLogueado(), Toast.LENGTH_SHORT).show();
+    }
+    public static void setLogedIn(Boolean estado){
+        logedIn = estado;
     }
 }
