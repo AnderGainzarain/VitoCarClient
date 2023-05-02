@@ -50,58 +50,8 @@ public class LogIn extends Fragment {
         Button logIn = view.findViewById(R.id.btnLogIn);
         logIn.setOnClickListener(view1 -> logIn(mail.getText().toString(), password.getText().toString()));
     }
-    private class LogInTask extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            String eMail = params[0];
-            String pwd = params[1];
-
-            Call<User> call = ApiClient.getClient().create(ApiUser.class).getUserMail(eMail);
-            call.enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                    User user = response.body();
-                    if(user==null){
-                        Toast.makeText(getContext(), TextControll.mailIncorrecto(), Toast.LENGTH_LONG).show();
-                        mail.setText("");
-                        password.setText("");
-                        return;
-                    }
-                    if(!user.getContraseña().equals(pwd)){
-                        Toast.makeText(getContext(), TextControll.pwdIncorrecto(), Toast.LENGTH_LONG).show();
-                        mail.setText("");
-                        password.setText("");
-                        return;
-                    }
-                    ActiveUser.initialize(user);
-                }
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(getContext(), TextControll.getConectionErrorMsg(), Toast.LENGTH_LONG).show();
-                }
-            });
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean success) {
-            super.onPostExecute(success);
-
-            // Handle the result of the asynchronous task here, such as showing a Toast message or navigating to a new activity
-            if (success) {
-                Toast.makeText(getContext(), "Log in successful", Toast.LENGTH_SHORT).show();
-                getParentFragmentManager().beginTransaction().replace(R.id.flMain, new Perfil()).commit();
-
-            } else {
-                Toast.makeText(getContext(), "Log in failed", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     private void logIn(String eMail, String pwd){
-        System.out.println("Entra al log in" + "\n" + eMail);
         Call<User> call = ApiClient.getClient().create(ApiUser.class).getUserMail(eMail);
         call.enqueue(new Callback<User>() {
             @Override
