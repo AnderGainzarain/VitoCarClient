@@ -74,4 +74,9 @@ public class Viaje {
         this.destino = destino;
         this.fechaSalida = fechaSalida;
     }
+    public boolean equals(Viaje viaje){
+        return viaje.getOrigen().equals(origen) ||
+                viaje.getDestino().equals(destino) ||
+                viaje.getFechaSalida().equals(fechaSalida);
+    }
 }
