@@ -45,6 +45,7 @@
                 android:id="@+id/tvFechaSalidaM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
                 android:text="Fecha de salida: "
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -98,7 +99,7 @@
                 android:id="@+id/fechaSalidaM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fecha de salida"
+                android:text="2023-01-01 00:00:00"
                 android:textSize="24sp" />
 
             <TextView
