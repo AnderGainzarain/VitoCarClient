@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:text="X" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvOrigenM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Origen: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDestinoM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destino: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFechaSalidaM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text="Fecha de salida: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPrecioM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio: "
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPasajero1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pasajero 1:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPasajero2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pasajero 2:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPasajero3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pasajero 3:"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/origenM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="origen"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/destinoM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="destino"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/fechaSalidaM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023-01-01 00:00:00"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/precioM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="precio"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/pasajero1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="a"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/pasajero2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="b"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/pasajero3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="c"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnreservarM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Reservar" />
+
+</LinearLayout>
