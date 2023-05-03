@@ -25,6 +25,7 @@ import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,11 +84,9 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                 @Override
                 public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
                     if(response.isSuccessful()){
-                        List<Viaje>viajes=response.body();
-                        if(viajes!=null){
-                            misViajes = viajes.parallelStream()
-                                    .filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0,10),v.getFechaSalida().substring(11,19)))
-                                    .collect(Collectors.toList());
+                        List<Viaje>aux=response.body();
+                        if(aux!=null){
+                            misViajes = aux;
                         }
                         busqueda();
                     }
@@ -111,9 +110,27 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                     if(viajes == null || viajes.isEmpty()){
                         Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
                     }else{
+                        System.out.println("viajes: " + viajes.size());
+                        for(Viaje viaje: viajes){
+                            System.out.println(viaje.getIdViaje());
+                        }
                         if(au!=null){
-                            for (Viaje v: misViajes) {
-                                viajes = viajes.stream().filter(viaje->!viaje.equals(v)).collect(Collectors.toList());
+                            System.out.println("MisViajes: "+ misViajes.size());
+                            for(Viaje viaje:misViajes){
+                                System.out.println(viaje.getIdViaje());
+                            }
+                            int cont = 0;
+                            //viajes.removeAll(misViajes);
+                            for(int i = 0; i <viajes.size();i++){
+                                for(int j = 0; j<misViajes.size();j++){
+                                    if(viajes.get(i).equals(misViajes.get(j))){
+                                        viajes.remove(i);
+                                    }
+                                }
+                            }
+                            System.out.println("viajes final: " + viajes.size());
+                            for(Viaje viaje: viajes){
+                                System.out.println(viaje.getIdViaje());
                             }
                         }
                         adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
