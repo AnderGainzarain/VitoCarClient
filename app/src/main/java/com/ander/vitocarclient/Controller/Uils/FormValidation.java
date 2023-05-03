@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.ander.vitocarclient.Vista.TextControll;
 
 public class FormValidation {
-    public static Boolean validate(Context context,String origen, String destino, String fechaSalida){
+    public static Boolean validate(Context context,String origen, String destino, String fechaSalida,String hora){
         // Check if there is fecha salida
         if (fechaSalida.isEmpty()){
             Toast.makeText(context, TextControll.fechaVacia(), Toast.LENGTH_SHORT).show();
@@ -18,15 +18,15 @@ public class FormValidation {
             return false;
         }
         // Check if the date has already passed
-        if(!DateManager.passedDate(fechaSalida)){
+        if(!DateManager.passedDate(fechaSalida,hora)){
             Toast.makeText(context, TextControll.fechaPasada(), Toast.LENGTH_SHORT).show();
 
             return false;
         };
         return true;
     }
-    public static Boolean validate(Context context, String origen, String destino, String fechaSalida, String precio){
-        if (validate(context,origen,destino,fechaSalida).equals(false))
+    public static Boolean validate(Context context, String origen, String destino, String fechaSalida,String horaSalida, String precio){
+        if (validate(context,origen,destino,fechaSalida,horaSalida).equals(false))
             return false;
         else{
             // check if the precio is valid

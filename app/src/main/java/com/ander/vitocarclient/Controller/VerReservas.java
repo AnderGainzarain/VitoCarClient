@@ -98,9 +98,9 @@ public class VerReservas extends Fragment implements RvInterface {
                             Toast.makeText(getContext(), TextControll.noViajesReservados(), Toast.LENGTH_SHORT).show();
                         }else{
                             if (pasado){
-                                viajes = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
+                                viajes = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0, 10),v.getFechaSalida().substring(11,19))).collect(Collectors.toList());
                             }else{
-                                viajes = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
+                                viajes = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0, 10),v.getFechaSalida().substring(11,19))).collect(Collectors.toList());
                             }
                             adapter = new ViajeAdapter(viajes,getContext(),VerReservas.this);
                             rv.setAdapter(adapter);

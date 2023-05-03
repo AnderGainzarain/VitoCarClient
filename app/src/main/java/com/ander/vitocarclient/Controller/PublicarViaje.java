@@ -92,7 +92,7 @@ public class PublicarViaje extends Fragment {
                 Toast.makeText(getContext(), TextControll.precioVacio(), Toast.LENGTH_SHORT).show();
             }else{
                 String coste = precio.getText().toString();
-                if(FormValidation.validate(getContext(),origen,destino,fechaSalida,coste).equals(false)) return;
+                if(FormValidation.validate(getContext(),origen,destino,fechaSalida,horaSalida,coste).equals(false)) return;
 
                 esViajeValido(origen,destino,fechaSalida,horaSalida,Integer.parseInt(coste));
             }

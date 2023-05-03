@@ -21,11 +21,15 @@ import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Model.ActiveUser;
+import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import com.ander.vitocarclient.Model.Viaje;
@@ -41,6 +45,7 @@ import retrofit2.Response;
 public class ResultadosBusqueda extends Fragment implements RvInterface {
 
     private List<Viaje> viajes;
+    private List<Viaje> misViajes;
     private ViajeAdapter adapter;
     private RecyclerView rv;
     private final ActiveUser au = ActiveUser.getActiveUser();
@@ -57,7 +62,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             queryData.put("destino", result.getString("destino"));
             queryData.put("fechaSalida",result.getString("fechaSalida"));
             queryData.put("horaSalida",result.getString("horaSalida"));
-            busqueda();
+            misViajes();
         });
     }
     @Override
@@ -71,6 +76,30 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         rv = view.findViewById(R.id.rvResultadosBusqueda);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
+    private void misViajes(){
+        if(au!=null){
+            Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(au.getDNI());
+            call.enqueue(new Callback<List<Viaje>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
+                    if(response.isSuccessful()){
+                        List<Viaje>viajes=response.body();
+                        if(viajes!=null){
+                            misViajes = viajes.parallelStream()
+                                    .filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0,10),v.getFechaSalida().substring(11,19)))
+                                    .collect(Collectors.toList());
+                        }
+                        busqueda();
+                    }
+                }
+                @Override
+                public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
+                    Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else busqueda();
+
+    }
     private void busqueda(){
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), DateManager.parseDate(queryData.get("fechaSalida"),queryData.get("horaSalida")));
         call.enqueue(new Callback<List<Viaje>>() {
@@ -82,6 +111,11 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                     if(viajes == null || viajes.isEmpty()){
                         Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
                     }else{
+                        if(au!=null){
+                            for (Viaje v: misViajes) {
+                                viajes = viajes.stream().filter(viaje->!viaje.equals(v)).collect(Collectors.toList());
+                            }
+                        }
                         adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }

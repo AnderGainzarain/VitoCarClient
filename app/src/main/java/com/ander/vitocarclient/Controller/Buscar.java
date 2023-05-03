@@ -53,6 +53,7 @@ public class Buscar extends Fragment {
         ImageButton ibHoraSalida = view.findViewById(R.id.ibHoraBuscar);
         // set the current date and time as the default
         fecha.setText(LocalDateTime.now().toString().substring(0,10));
+        hora.setText(LocalDateTime.now().toString().substring(11,19));
         // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
@@ -65,7 +66,7 @@ public class Buscar extends Fragment {
             String destino = sDestino.getSelectedItem().toString();
             String fechaSalida = fecha.getText().toString().replace("/","-").substring(0,10);
             String horaSalida = hora.getText().toString();
-            if(FormValidation.validate(getContext(),origen,destino,fechaSalida).equals(false)) return;
+            if(FormValidation.validate(getContext(),origen,destino,fechaSalida,horaSalida).equals(false)) return;
 
             // store the query data
             Bundle bundle = new Bundle();
