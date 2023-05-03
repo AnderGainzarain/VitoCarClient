@@ -1,6 +1,8 @@
 package com.ander.vitocarclient.Model;
 
 
+import com.ander.vitocarclient.Vista.TextControll;
+
 public class ActiveUser {
     // Atributes
     private final Integer dni;
@@ -20,6 +22,9 @@ public class ActiveUser {
         this.nombre = nombre;
         this.apellido = apellido;
         this.foto = foto;
+        if(coche.equals("")){
+            coche = TextControll.cocheVacio();
+        }
         this.coche = coche;
     }
 
