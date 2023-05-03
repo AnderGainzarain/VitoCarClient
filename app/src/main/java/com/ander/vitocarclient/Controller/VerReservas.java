@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
@@ -96,13 +97,12 @@ public class VerReservas extends Fragment implements RvInterface {
                         if(viajes==null||viajes.isEmpty()){
                             Toast.makeText(getContext(), TextControll.noViajesReservados(), Toast.LENGTH_SHORT).show();
                         }else{
-                            List<Viaje> mostrar;
                             if (pasado){
-                                mostrar = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
+                                viajes = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
                             }else{
-                                mostrar = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
+                                viajes = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0, 10))).collect(Collectors.toList());
                             }
-                            adapter = new ViajeAdapter(mostrar,getContext(),VerReservas.this);
+                            adapter = new ViajeAdapter(viajes,getContext(),VerReservas.this);
                             rv.setAdapter(adapter);
                         }
                 }
@@ -133,6 +133,7 @@ public class VerReservas extends Fragment implements RvInterface {
     }
     @Override
     public void onItemClick(int position) {
+        Viaje viaje = viajes.get(position);
         PopupWindow popupWindow = new PopupWindow(getContext());
         View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info, null);
         popupWindow.setContentView(popupView);
@@ -142,7 +143,21 @@ public class VerReservas extends Fragment implements RvInterface {
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
         Button closeButton = popupView.findViewById(R.id.close_button);
         Button submit = popupView.findViewById(R.id.btnreservarM);
+        TextView origen = popupView.findViewById(R.id.origenM);
+        TextView destino = popupView.findViewById(R.id.destinoM);
+        TextView fecha = popupView.findViewById(R.id.fechaSalidaM);
+        TextView precio = popupView.findViewById(R.id.precioM);
+        TextView conductor = popupView.findViewById(R.id.conductorM);
+        TextView contacto = popupView.findViewById(R.id.contactoM);
+
+        origen.setText(viaje.getOrigen());
+        destino.setText(viaje.getDestino());
+        fecha.setText(viaje.getFechaSalida());
+        precio.setText(String.valueOf(viaje.getPrecio()));
+        conductor.setText("a");
+        contacto.setText("a@a");
         submit.setText(TextControll.btnAnular());
+
         popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
         closeButton.setOnClickListener(v -> popupWindow.dismiss());
         if(inPasados){
