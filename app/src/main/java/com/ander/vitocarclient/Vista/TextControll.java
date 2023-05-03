@@ -26,4 +26,6 @@ public class TextControll {
     public static String reservaAnulada(){return "Reserva anulada con exito";}
 
     public static String sesionIniciada() {return "Sesion iniciada";}
+
+    public static String cocheVacio() {return "No hay coche registrado";}
 }
