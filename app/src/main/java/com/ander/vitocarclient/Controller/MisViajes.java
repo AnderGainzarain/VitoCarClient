@@ -150,7 +150,7 @@ public class MisViajes extends Fragment implements RvInterface {
     public void onItemClick(int position) {
         Viaje viaje = viajes.get(position);
         PopupWindow popupWindow = new PopupWindow(getContext());
-        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_infoP, null);
+        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info_p, null);
         popupWindow.setContentView(popupView);
         popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
