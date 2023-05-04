@@ -125,6 +125,13 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                             getNumReservas(v.getIdViaje(),aux);
                             aux++;
                         }
+                        System.out.println("sale del for de las reservas");
+                        for(Viaje v: viajes){
+                            if(v.getIdViaje()==6){
+                                System.out.println("indice: " + aux);
+                                System.out.println("MUESTRA EL 6");
+                            }
+                        }
                         adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }
@@ -187,6 +194,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         }
     }
     private void getNumReservas(int idViaje, int index){
+        if(idViaje==6) System.out.println("Entra");
         Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
         call.enqueue(new Callback<List<User>>() {
             @Override
@@ -195,6 +203,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                 if(pasajeros == null || pasajeros.isEmpty()){
                     return;
                 }else{
+                    if(idViaje==6) System.out.println("nPasajeros:" + pasajeros.size() + " index: " + index);
                     if(pasajeros.size()==3){
                         viajes.remove(index);
                     }
