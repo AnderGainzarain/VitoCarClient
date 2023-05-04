@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Model.ActiveUser;
+import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
@@ -119,6 +120,11 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                                 }
                             }
                         }
+                        int aux=0;
+                        for (Viaje v: viajes){
+                            getNumReservas(v.getIdViaje(),aux);
+                            aux++;
+                        }
                         adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }
@@ -179,5 +185,26 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             Button reserva = popupView.findViewById(R.id.btnreservarM);
             reserva.setOnClickListener(view -> reservar(viajes.get(position).getIdViaje()));
         }
+    }
+    private void getNumReservas(int idViaje, int index){
+        Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                List<User>pasajeros = response.body();
+                if(pasajeros == null || pasajeros.isEmpty()){
+                    return;
+                }else{
+                    if(pasajeros.size()==3){
+                        viajes.remove(index);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
