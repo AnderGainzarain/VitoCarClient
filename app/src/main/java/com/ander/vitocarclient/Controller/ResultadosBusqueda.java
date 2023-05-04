@@ -111,13 +111,9 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                         Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
                     }else{
                         if(au!=null){
-                            System.out.println("MisViajes: "+ misViajes.size());
-                            for(Viaje viaje:misViajes){
-                                System.out.println(viaje.getIdViaje());
-                            }
                             for(int i = 0; i <viajes.size();i++){
                                 for(int j = 0; j<misViajes.size();j++){
-                                    if(viajes.get(i).equals(misViajes.get(j))){
+                                    if(viajes.get(i).getIdViaje()==misViajes.get(j).getIdViaje()){
                                         viajes.remove(i);
                                     }
                                 }
