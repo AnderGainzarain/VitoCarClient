@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.R;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar tb;
     private static Boolean logedIn = false;
     private final ActiveUser au = ActiveUser.getActiveUser();
+    private static BottomNavigationView bnv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // Get the bnv and toolbar
         tb = findViewById(R.id.toolbar1);
-        BottomNavigationView bnv = findViewById(R.id.bnv);
+         bnv = findViewById(R.id.bnv);
+            MenuItem menuItemReservas = bnv.getMenu().findItem(R.id.bnvReservas);
+            MenuItem menuItemViajes = bnv.getMenu().findItem(R.id.bnvViajesPublicados);
+            MenuItem menuItemPublicar = bnv.getMenu().findItem(R.id.bnvPublicarViaje);
+
+            menuItemReservas.setEnabled(false);
+            menuItemViajes.setEnabled(false);
+            menuItemPublicar.setEnabled(false);
+            menuItemReservas.setVisible(false);
+            menuItemViajes.setVisible(false);
+            menuItemPublicar.setVisible(false);
+
+
+
         // set the toolbar tittle
         tb.setTitle(TextControll.tBuscarViaje());
         // change the action bar with the toolbar
@@ -92,9 +107,28 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, TextControll.reservasNoLogueado(), Toast.LENGTH_SHORT).show();
     }
     private void showViajesNoLogueado(){
-        Toast.makeText(this, TextControll.reservasNoLogueado(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, TextControll.viajesNoLogueado(), Toast.LENGTH_SHORT).show();
     }
     public static void setLogedIn(Boolean estado){
         logedIn = estado;
+        ActiveUser au = ActiveUser.getActiveUser();
+        MenuItem menuItemReservas = bnv.getMenu().findItem(R.id.bnvReservas);
+        MenuItem menuItemViajes = bnv.getMenu().findItem(R.id.bnvViajesPublicados);
+        MenuItem menuItemPublicar = bnv.getMenu().findItem(R.id.bnvPublicarViaje);
+        menuItemReservas.setEnabled(logedIn);
+        menuItemViajes.setEnabled(logedIn);
+        menuItemPublicar.setEnabled(logedIn);
+        menuItemReservas.setVisible(logedIn);
+        menuItemViajes.setVisible(logedIn);
+        menuItemPublicar.setVisible(logedIn);
+        if(au!=null){
+            if(au.getCoche().equals(TextControll.cocheVacio())){
+                menuItemReservas.setEnabled(false);
+                menuItemPublicar.setEnabled(false);
+                menuItemReservas.setVisible(false);
+                menuItemPublicar.setVisible(false);
+            }
+        }
+
     }
 }
