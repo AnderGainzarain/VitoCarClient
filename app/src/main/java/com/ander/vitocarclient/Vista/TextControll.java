@@ -30,4 +30,6 @@ public class TextControll {
     public static String cocheVacio() {return "No hay coche registrado";}
 
     public static String btnReservar() { return "Reservar";}
+
+    public static String noHayPasajeros() { return "Libre";}
 }

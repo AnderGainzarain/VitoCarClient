@@ -135,46 +135,15 @@ public class MisViajes extends Fragment implements RvInterface {
         });
     }
 
-    private void getPasajeros(int idViaje) {
-        System.out.println("Pide Pasajeros");
-        Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                List<User> users = response.body();
-                System.out.println("Recive pasajeros");
-                if(response.code()!=404){
-                    System.out.println("inicializa pasajeros");
-                    pasajeros.clear();
-                    for(User u:users){
-                        pasajeros.add(u.getNombre());
-                        System.out.println(u.getNombre());
-                    }
-                }else{
-                    pasajeros.clear();
-                    pasajeros.add("Libre");
-                    pasajeros.add("Libre");
-                    pasajeros.add("Libre");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public void onItemClick(int position) {
         Viaje viaje = viajes.get(position);
-        getPasajeros(viaje.getIdViaje());
-        System.out.println("Pide pasajeros");
         PopUpController.show(getContext(),R.layout.mas_info_p, getView());
         PopUpController.showDataViaje(viaje.getOrigen(),viaje.getDestino(),viaje.getFechaSalida(),String.valueOf(viaje.getPrecio()));
         PopUpController.submitTextAnular();
-        System.out.println("muestra pasajeros");
-        PopUpController.showPasajeros(pasajeros.get(0),pasajeros.get(1),pasajeros.get(2));
+        PopUpController.showPasajeros(viaje.getIdViaje(),getContext());
 
         if(inPasados){
             PopUpController.hideSubmit();

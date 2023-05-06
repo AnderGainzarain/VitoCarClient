@@ -13,11 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Model.ActiveUser;
+import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Model.Viaje;
 import com.ander.vitocarclient.Network.ApiClient;
+import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.R;
 import com.ander.vitocarclient.Vista.TextControll;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,10 +73,8 @@ public class PopUpController {
         fecha.setText(pFecha);
         precio.setText(pPrecio);
     }
-    public static void showPasajeros(String p1, String p2, String p3){
-        pasajero1.setText(p1);
-        pasajero2.setText(p2);
-        pasajero3.setText(p3);
+    public static void showPasajeros(int idViaje, Context context){
+        getPasajeros(idViaje,context);
     }
     public static void hideSubmit(){
         submit.setAlpha(0);
@@ -152,5 +154,29 @@ public class PopUpController {
 
     public static void submitTextReservar() {
         submit.setText(TextControll.btnReservar());
+    }
+
+    private static void getPasajeros(int idViaje,Context context) {
+        Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                List<User> users = response.body();
+                if(response.code()!=404){
+                    pasajero1.setText(TextControll.noHayPasajeros());
+                    pasajero2.setText(TextControll.noHayPasajeros());
+                    pasajero3.setText(TextControll.noHayPasajeros());
+                }else{
+                    pasajero1.setText(users.get(0).getNombre());
+                    pasajero2.setText(users.get(0).getNombre());
+                    pasajero3.setText(users.get(0).getNombre());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(context, TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
