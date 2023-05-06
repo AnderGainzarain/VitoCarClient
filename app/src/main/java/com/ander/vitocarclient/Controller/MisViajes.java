@@ -20,12 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
+import com.ander.vitocarclient.Controller.Uils.PopUpController;
+import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.R;
 import com.ander.vitocarclient.Vista.TextControll;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +47,7 @@ import retrofit2.Response;
 public class MisViajes extends Fragment implements RvInterface {
 
     private List<Viaje> viajes;
+    private List<String> pasajeros = new ArrayList<>(Arrays.asList("Libre","Libre","Libre"));
     private RecyclerView rv;
     private ViajeAdapter adapter;
     private final ActiveUser au = ActiveUser.getActiveUser();
@@ -128,53 +134,52 @@ public class MisViajes extends Fragment implements RvInterface {
             }
         });
     }
-    public void anularViaje(int idViaje){
-        Call<Void> call = ApiClient.getClient().create(ApiViaje.class).anularViaje(idViaje);
-        call.enqueue(new Callback<Void>() {
+
+    private void getPasajeros(int idViaje) {
+        System.out.println("Pide Pasajeros");
+        Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
+        call.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(getContext(), TextControll.viajeAnulado(),Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                List<User> users = response.body();
+                System.out.println("Recive pasajeros");
+                if(response.code()!=404){
+                    System.out.println("inicializa pasajeros");
+                    pasajeros.clear();
+                    for(User u:users){
+                        pasajeros.add(u.getNombre());
+                        System.out.println(u.getNombre());
+                    }
+                }else{
+                    pasajeros.clear();
+                    pasajeros.add("Libre");
+                    pasajeros.add("Libre");
+                    pasajeros.add("Libre");
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<List<User>> call, Throwable t) {
                 Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
     public void onItemClick(int position) {
         Viaje viaje = viajes.get(position);
-        PopupWindow popupWindow = new PopupWindow(getContext());
-        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info_p, null);
-        popupWindow.setContentView(popupView);
-        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
-        Button closeButton = popupView.findViewById(R.id.close_button);
-        Button submit = popupView.findViewById(R.id.btnreservarM);
-        TextView origen = popupView.findViewById(R.id.origenM);
-        TextView destino = popupView.findViewById(R.id.destinoM);
-        TextView fecha = popupView.findViewById(R.id.fechaSalidaM);
-        TextView precio = popupView.findViewById(R.id.precioM);
+        getPasajeros(viaje.getIdViaje());
+        System.out.println("Pide pasajeros");
+        PopUpController.show(getContext(),R.layout.mas_info_p, getView());
+        PopUpController.showDataViaje(viaje.getOrigen(),viaje.getDestino(),viaje.getFechaSalida(),String.valueOf(viaje.getPrecio()));
+        PopUpController.submitTextAnular();
+        System.out.println("muestra pasajeros");
+        PopUpController.showPasajeros(pasajeros.get(0),pasajeros.get(1),pasajeros.get(2));
 
-        origen.setText(viaje.getOrigen());
-        destino.setText(viaje.getDestino());
-        fecha.setText(viaje.getFechaSalida());
-        precio.setText(String.valueOf(viaje.getPrecio()));
-
-        submit.setText(TextControll.btnAnular());
-        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-        closeButton.setOnClickListener(v -> popupWindow.dismiss());
         if(inPasados){
-            submit.setAlpha(0);
+            PopUpController.hideSubmit();
         }else{
-            submit.setOnClickListener(view -> anularViaje(viajes.get(position).getIdViaje()));
+            PopUpController.submitAnular(viaje.getIdViaje(), getContext());
         }
     }
 }

@@ -20,18 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
+import com.ander.vitocarclient.Controller.Uils.PopUpController;
 import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import com.ander.vitocarclient.Model.Viaje;
@@ -145,52 +142,16 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             }
         });
     }
-    private void reservar(int idViaje){
-        Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).reservar(au.getDNI(),idViaje);
-        call.enqueue(new Callback<Viaje>() {
-            @Override
-            public void onResponse(Call<Viaje> call, Response<Viaje> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(getContext(), TextControll.reservaRealizada(),Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Viaje> call, Throwable t) {
-                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
     @Override
     public void onItemClick(int position) {
         if(au!=null){
             Viaje viaje = viajes.get(position);
-            PopupWindow popupWindow = new PopupWindow(getContext());
-            View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info, null);
-            popupWindow.setContentView(popupView);
-            popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-            popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-            popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
-            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
-            Button closeButton = popupView.findViewById(R.id.close_button);
-            TextView origen = popupView.findViewById(R.id.origenM);
-            TextView destino = popupView.findViewById(R.id.destinoM);
-            TextView fecha = popupView.findViewById(R.id.fechaSalidaM);
-            TextView precio = popupView.findViewById(R.id.precioM);
-            TextView conductor = popupView.findViewById(R.id.conductorM);
-            TextView contacto = popupView.findViewById(R.id.contactoM);
-
-            origen.setText(viaje.getOrigen());
-            destino.setText(viaje.getDestino());
-            fecha.setText(viaje.getFechaSalida());
-            precio.setText(String.valueOf(viaje.getPrecio()));
-            conductor.setText("a");
-            contacto.setText("a@a");
-            popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-            closeButton.setOnClickListener(v -> popupWindow.dismiss());
-            Button reserva = popupView.findViewById(R.id.btnreservarM);
-            reserva.setOnClickListener(view -> reservar(viajes.get(position).getIdViaje()));
+            PopUpController.show(getContext(),R.layout.mas_info,getView());
+            PopUpController.showDataViaje(viaje.getOrigen(),viaje.getDestino(),viaje.getFechaSalida(),String.valueOf(viaje.getPrecio()));
+            PopUpController.showConductor("a","a@a");
+            PopUpController.submitTextReservar();
+            PopUpController.submitReservar(viaje.getIdViaje(), getContext());
         }
     }
     private void getNumReservas(int idViaje, int index){

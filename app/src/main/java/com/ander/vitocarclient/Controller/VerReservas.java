@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
+import com.ander.vitocarclient.Controller.Uils.PopUpController;
 import com.ander.vitocarclient.R;
 
 import java.util.List;
@@ -115,55 +116,19 @@ public class VerReservas extends Fragment implements RvInterface {
             }
         });
     }
-    private void anularReserva(int idViaje){
-        Call<Void> call = ApiClient.getClient().create(ApiViaje.class).anularReserva(au.getDNI(),idViaje);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(getContext(), TextControll.reservaAnulada(),Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
     @Override
     public void onItemClick(int position) {
         Viaje viaje = viajes.get(position);
-        PopupWindow popupWindow = new PopupWindow(getContext());
-        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.mas_info, null);
-        popupWindow.setContentView(popupView);
-        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
-        Button closeButton = popupView.findViewById(R.id.close_button);
-        Button submit = popupView.findViewById(R.id.btnreservarM);
-        TextView origen = popupView.findViewById(R.id.origenM);
-        TextView destino = popupView.findViewById(R.id.destinoM);
-        TextView fecha = popupView.findViewById(R.id.fechaSalidaM);
-        TextView precio = popupView.findViewById(R.id.precioM);
-        TextView conductor = popupView.findViewById(R.id.conductorM);
-        TextView contacto = popupView.findViewById(R.id.contactoM);
+        PopUpController.show(getContext(),R.layout.mas_info,getView());
+        PopUpController.showDataViaje(viaje.getOrigen(),viaje.getDestino(),viaje.getFechaSalida(),String.valueOf(viaje.getPrecio()));
+        PopUpController.showConductor("a","a@a");
+    PopUpController.submitTextAnular();
 
-        origen.setText(viaje.getOrigen());
-        destino.setText(viaje.getDestino());
-        fecha.setText(viaje.getFechaSalida());
-        precio.setText(String.valueOf(viaje.getPrecio()));
-        conductor.setText("a");
-        contacto.setText("a@a");
-        submit.setText(TextControll.btnAnular());
-
-        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-        closeButton.setOnClickListener(v -> popupWindow.dismiss());
         if(inPasados){
-            submit.setAlpha(0);
+            PopUpController.hideSubmit();
         }else{
-            submit.setOnClickListener(view -> anularReserva(viajes.get(position).getIdViaje()));
+            PopUpController.submitAnularreserva(viajes.get(position).getIdViaje(), getContext());
         }
     }
 }
