@@ -47,7 +47,6 @@ import retrofit2.Response;
 public class MisViajes extends Fragment implements RvInterface {
 
     private List<Viaje> viajes;
-    private List<String> pasajeros = new ArrayList<>(Arrays.asList("Libre","Libre","Libre"));
     private RecyclerView rv;
     private ViajeAdapter adapter;
     private final ActiveUser au = ActiveUser.getActiveUser();

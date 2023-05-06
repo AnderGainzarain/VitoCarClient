@@ -162,14 +162,32 @@ public class PopUpController {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 List<User> users = response.body();
-                if(response.code()!=404){
+                if(users ==null || users.isEmpty()){
                     pasajero1.setText(TextControll.noHayPasajeros());
                     pasajero2.setText(TextControll.noHayPasajeros());
                     pasajero3.setText(TextControll.noHayPasajeros());
                 }else{
-                    pasajero1.setText(users.get(0).getNombre());
-                    pasajero2.setText(users.get(0).getNombre());
-                    pasajero3.setText(users.get(0).getNombre());
+                    System.out.println(users.size());
+                    switch (users.size()){
+                        case 1:{
+                            pasajero1.setText(users.get(0).getNombre());
+                            pasajero2.setText(TextControll.noHayPasajeros());
+                            pasajero3.setText(TextControll.noHayPasajeros());
+                            break;
+                        }
+                        case 2:{
+                            pasajero1.setText(users.get(0).getNombre());
+                            pasajero2.setText(users.get(1).getNombre());
+                            pasajero3.setText(TextControll.noHayPasajeros());
+                            break;
+                        }
+                        case 3: {
+                            pasajero1.setText(users.get(0).getNombre());
+                            pasajero2.setText(users.get(1).getNombre());
+                            pasajero3.setText(users.get(2).getNombre());
+                            break;
+                        }
+                    }
                 }
             }
 
