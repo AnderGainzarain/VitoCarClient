@@ -13,6 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.ander.vitocarclient.Model.ActiveUser;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
     private Toolbar tb;
     private static Boolean logedIn = false;
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         tb = findViewById(R.id.toolbar1);
         BottomNavigationView bnv = findViewById(R.id.bnv);
         // set the toolbar tittle
-        tb.setTitle("Buscar Viaje");
+        tb.setTitle(TextControll.tBuscarViaje());
         // change the action bar with the toolbar
         setSupportActionBar(tb);
         // Set buscar viaje as the default option
@@ -36,34 +38,34 @@ public class MainActivity extends AppCompatActivity {
              switch (item.getItemId()){
                  case R.id.bnvBuscarViaje:
                      getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new Buscar()).commit();
-                     tb.setTitle("Buscar Viaje");
+                     tb.setTitle(TextControll.tBuscarViaje());
                      return true;
                  case R.id.bnvPerfil:
                      if(logedIn){
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new Perfil()).commit();
-                         tb.setTitle("Perfil");
+                         tb.setTitle(TextControll.tPerfil());
                      }else{
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
-                         tb.setTitle("Log In");
+                         tb.setTitle(TextControll.tLogIn());
                      }
                      return true;
                  case R.id.bnvPublicarViaje:
                      if (logedIn) {
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new PublicarViaje()).commit();
-                         tb.setTitle("Publicar Viaje");
+                         tb.setTitle(TextControll.tPublicarViaje());
                      }else{
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
-                         tb.setTitle("Log In");
+                         tb.setTitle(TextControll.tLogIn());
                          showPublicarNoLogueado();
                      }
                      return true;
                  case R.id.bnvReservas:
                      if(logedIn){
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new VerReservas()).commit();
-                         tb.setTitle("Viajes Reservados");
+                         tb.setTitle(TextControll.tReservas());
                      }else{
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
-                         tb.setTitle("Log In");
+                         tb.setTitle(TextControll.tLogIn());
                          showReservasNoLogueado();
                      }
 
@@ -71,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
                  case R.id.bnvViajesPublicados:
                      if(logedIn){
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new MisViajes()).commit();
-                         tb.setTitle("Viajes Publicados");
+                         tb.setTitle(TextControll.tViajesPublicados());
                      }else{
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
-                         tb.setTitle("Log In");
+                         tb.setTitle(TextControll.tLogIn());
                          showViajesNoLogueado();
                      }
 

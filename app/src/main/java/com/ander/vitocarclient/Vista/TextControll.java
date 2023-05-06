@@ -32,4 +32,16 @@ public class TextControll {
     public static String btnReservar() { return "Reservar";}
 
     public static String noHayPasajeros() { return "Libre";}
+
+    public static String tBuscarViaje() {return "Buscar Viaje";}
+
+    public static String tPerfil() {return "Perfil";}
+
+    public static String tLogIn() {return "Log In";}
+
+    public static String tViajesPublicados() {return "Mis Viajes";}
+
+    public static String tReservas() {return "Mis Reservas";}
+
+    public static String tPublicarViaje() {return "Publicar Viaje";}
 }
