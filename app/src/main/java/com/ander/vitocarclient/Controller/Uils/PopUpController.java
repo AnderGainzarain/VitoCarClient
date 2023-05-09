@@ -198,19 +198,20 @@ public class PopUpController {
         });
     }
     public static void showDriverData(int idViaje, Context context){
-        Call<User> call = ApiClient.getClient().create(ApiUser.class).getConductorData(idViaje);
-        call.enqueue(new Callback<User>() {
+        Call<List<String>> call = ApiClient.getClient().create(ApiUser.class).getConductorData(idViaje);
+        call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                User driver = response.body();
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                List<String> driver = response.body();
                 if(driver!=null){
-                    conductor.setText(String.valueOf(driver.getDni()));
-                    contacto.setText(driver.getMail());
+                    System.out.println("entra");
+                    conductor.setText(String.valueOf(driver.get(0)));
+                    contacto.setText(driver.get(1));
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<List<String>> call, Throwable t) {
                 Toast.makeText(context, TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
