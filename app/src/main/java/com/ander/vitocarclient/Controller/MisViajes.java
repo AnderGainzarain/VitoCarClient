@@ -1,7 +1,5 @@
 package com.ander.vitocarclient.Controller;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,27 +8,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Controller.Uils.PopUpController;
-import com.ander.vitocarclient.Model.User;
-import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.R;
 import com.ander.vitocarclient.Vista.TextControll;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
