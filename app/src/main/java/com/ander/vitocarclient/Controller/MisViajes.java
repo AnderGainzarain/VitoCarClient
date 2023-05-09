@@ -31,6 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -120,6 +121,8 @@ public class MisViajes extends Fragment implements RvInterface {
                                     .filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10),v.getFechaSalida().substring(11,19)))
                                     .collect(Collectors.toList());
                         }
+                        viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida).thenComparing(Viaje::getOrigen).thenComparing(Viaje::getDestino)).collect(Collectors.toList());
+
                         adapter = new ViajeAdapter(viajes, getContext(),MisViajes.this);
                         rv.setAdapter(adapter);
                     }
