@@ -17,7 +17,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateAndTimePickers;
-import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Controller.Uils.FormValidation;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
@@ -97,8 +96,8 @@ public class PublicarViaje extends Fragment {
                 esViajeValido(origen,destino,fechaSalida,horaSalida,Integer.parseInt(coste));
             }
         });
-        ibFechaSalida.setOnClickListener(view2 -> DateAndTimePickers.mostrarFecha(view2,getContext(),fecha));
-        ibHoraSalida.setOnClickListener(view3 -> DateAndTimePickers.mostrarHora(view3,getContext(),hora));
+        ibFechaSalida.setOnClickListener(view2 -> DateAndTimePickers.mostrarFecha(getContext(),fecha));
+        ibHoraSalida.setOnClickListener(view3 -> DateAndTimePickers.mostrarHora(getContext(),hora));
     }
     private void publicarViajes(String origen, String destino, String fechaSalida, String horaS, int coste) {
         Viaje viaje = new Viaje(coste, origen, destino, fechaSalida + " " + horaS);

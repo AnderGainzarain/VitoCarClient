@@ -78,7 +78,7 @@ public class Buscar extends Fragment {
             // change the fragment
             getParentFragmentManager().beginTransaction().replace(R.id.flMain, new ResultadosBusqueda()).commit();
         });
-        ibFechaSalida.setOnClickListener(view22 -> DateAndTimePickers.mostrarFecha(view22,getContext(),fecha));
-        ibHoraSalida.setOnClickListener(view33 -> DateAndTimePickers.mostrarHora(view33,getContext(),hora));
+        ibFechaSalida.setOnClickListener(view22 -> DateAndTimePickers.mostrarFecha(getContext(),fecha));
+        ibHoraSalida.setOnClickListener(view33 -> DateAndTimePickers.mostrarHora(getContext(),hora));
     }
 }
