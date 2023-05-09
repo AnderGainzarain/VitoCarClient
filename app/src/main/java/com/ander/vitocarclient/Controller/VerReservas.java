@@ -99,7 +99,7 @@ public class VerReservas extends Fragment implements RvInterface {
                                 viajes = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0, 10),v.getFechaSalida().substring(11,19))).collect(Collectors.toList());
                             }
                             viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida).thenComparing(Viaje::getOrigen).thenComparing(Viaje::getDestino)).collect(Collectors.toList());
-                            adapter = new ViajeAdapter(viajes,getContext(),VerReservas.this);
+                            adapter = new ViajeAdapter(viajes,VerReservas.this);
                             rv.setAdapter(adapter);
                         }
                 }

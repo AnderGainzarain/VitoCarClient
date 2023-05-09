@@ -143,7 +143,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                             }
                         }
                         viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida)).collect(Collectors.toList());
-                        adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
+                        adapter = new ViajeAdapter(viajes,ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }
                 }

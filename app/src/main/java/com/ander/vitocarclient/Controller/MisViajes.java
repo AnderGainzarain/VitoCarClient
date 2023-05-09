@@ -60,7 +60,7 @@ public class MisViajes extends Fragment implements RvInterface {
         rv = view.findViewById(R.id.rvMisViajes);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         // Initialize the rv adapter with an empty list
-        adapter = new ViajeAdapter(new ArrayList<>(),getContext(),this);
+        adapter = new ViajeAdapter(new ArrayList<>(),this);
         rv.setAdapter(adapter);
         // Bind the tab layout
         tabLayout = view.findViewById(R.id.tabMisviajes);
@@ -112,7 +112,7 @@ public class MisViajes extends Fragment implements RvInterface {
                         }
                         viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida).thenComparing(Viaje::getOrigen).thenComparing(Viaje::getDestino)).collect(Collectors.toList());
 
-                        adapter = new ViajeAdapter(viajes, getContext(),MisViajes.this);
+                        adapter = new ViajeAdapter(viajes, MisViajes.this);
                         rv.setAdapter(adapter);
                     }
                 }

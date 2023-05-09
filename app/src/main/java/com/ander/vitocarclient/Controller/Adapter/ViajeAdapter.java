@@ -1,6 +1,5 @@
 package com.ander.vitocarclient.Controller.Adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,9 @@ import com.ander.vitocarclient.Model.Viaje;
 public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
     private final RvInterface rvInterface;
     private List<Viaje> viajes;
-    private Context context;
 
-    public ViajeAdapter(List<Viaje> viajes, Context context, RvInterface rvInterface) {
+    public ViajeAdapter(List<Viaje> viajes, RvInterface rvInterface) {
         this.viajes = viajes;
-        this.context = context;
         this.rvInterface = rvInterface;
     }
 
@@ -61,14 +58,11 @@ public class ViajeAdapter extends RecyclerView.Adapter<ViajeAdapter.ViewHolder>{
             fecha = itemView.findViewById(R.id.fecha);
             precio = itemView.findViewById(R.id.precio);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(rvInterface != null){
-                        int pos = getAdapterPosition();
-                        if (pos != RecyclerView.NO_POSITION){
-                            rvInterface.onItemClick(pos);
-                        }
+            itemView.setOnClickListener(view -> {
+                if(rvInterface != null){
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION){
+                        rvInterface.onItemClick(pos);
                     }
                 }
             });
