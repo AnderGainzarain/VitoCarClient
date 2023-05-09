@@ -1,6 +1,5 @@
 package com.ander.vitocarclient.Model;
 
-import java.util.List;
 
 public class User {
     // Atributes
