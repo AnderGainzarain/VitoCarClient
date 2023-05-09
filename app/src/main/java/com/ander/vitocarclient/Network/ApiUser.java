@@ -17,6 +17,6 @@ public interface ApiUser {
     Call<User> getUserMail(@Path("mail") String eMail);
     @GET("api/usuarios/{idViaje}/pasajeros")
     Call<List<User>> getPasajeros(@Path("idViaje") int idViaje);
-    @GET("api/usuarios/{id}")
-    Call<User>getConductorData(@Path("id") int idViaje);
+    @GET("api/usuarios/{idViaje}/conductor")
+    Call<List<String>>getConductorData(@Path("idViaje") int idViaje);
 }
