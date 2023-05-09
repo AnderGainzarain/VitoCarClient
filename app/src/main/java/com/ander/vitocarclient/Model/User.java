@@ -51,4 +51,15 @@ public class User {
     public String getCoche() {
         return coche;
     }
+
+    public User(Integer dni, int telefono, String contraseña, String mail, String nombre, String apellido, String foto, String coche) {
+        this.dni = dni;
+        this.telefono = telefono;
+        this.contraseña = contraseña;
+        this.mail = mail;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.foto = foto;
+        this.coche = coche;
+    }
 }
