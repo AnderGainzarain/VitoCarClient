@@ -149,7 +149,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             Viaje viaje = viajes.get(position);
             PopUpController.show(getContext(),R.layout.mas_info,getView());
             PopUpController.showDataViaje(viaje.getOrigen(),viaje.getDestino(),viaje.getFechaSalida(),String.valueOf(viaje.getPrecio()));
-            PopUpController.showConductor("a","a@a");
+            PopUpController.showDriverData(viaje.getIdViaje(), getContext());
             PopUpController.submitTextReservar();
             PopUpController.submitReservar(viaje.getIdViaje(), getContext());
         }

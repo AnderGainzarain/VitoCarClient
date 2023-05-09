@@ -197,4 +197,23 @@ public class PopUpController {
             }
         });
     }
+    public static void showDriverData(int idViaje, Context context){
+        Call<User> call = ApiClient.getClient().create(ApiUser.class).getConductorData(idViaje);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User driver = response.body();
+                if(driver!=null){
+                    conductor.setText(String.valueOf(driver.getDni()));
+                    contacto.setText(driver.getMail());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(context, TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }
