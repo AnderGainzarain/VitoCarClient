@@ -1,7 +1,5 @@
 package com.ander.vitocarclient.Controller;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,19 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.DateManager;
 import com.ander.vitocarclient.Controller.Uils.PopUpController;
 import com.ander.vitocarclient.Model.ActiveUser;
-import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
@@ -144,28 +137,5 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             PopUpController.submitTextReservar();
             PopUpController.submitReservar(viaje.getIdViaje(), getContext());
         }
-    }
-    private void getNumReservas(int idViaje, int index){
-        if(idViaje==6) System.out.println("Entra");
-        Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                List<User>pasajeros = response.body();
-                if(pasajeros == null || pasajeros.isEmpty()){
-                    return;
-                }else{
-                    if(idViaje==6) System.out.println("nPasajeros:" + pasajeros.size() + " index: " + index);
-                    if(pasajeros.size()==3){
-                        viajes.remove(index);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
