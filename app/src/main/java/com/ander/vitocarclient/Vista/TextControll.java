@@ -16,9 +16,6 @@ public class TextControll {
     public static String errorPublicar() {return "Error al publicar";}
     public static String mailIncorrecto() {return "El mail es incorrecto";}
     public static String pwdIncorrecto() {return "La contraseña es incorrecta";}
-    public static String publicarNoLogueado() { return "Es necesario iniciar sesion para publicar un viaje";}
-    public static String reservasNoLogueado() {return "Es necesario iniciar sesion para ver tus reservas";}
-    public static String viajesNoLogueado() {return "Es necesario iniciar sesion para ver tus viajes publicados";}
     public static String viajeYaPublicado() { return "Ya has publicado un viaje con ese origen y destino para la misma hora";}
     public static String btnAnular() {return "anular";}
     public static String reservaRealizada() {return "Reserva realizada con exito";}
