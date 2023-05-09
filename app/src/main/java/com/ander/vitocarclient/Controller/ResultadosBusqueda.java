@@ -26,9 +26,11 @@ import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
 import com.ander.vitocarclient.Model.Viaje;
@@ -117,6 +119,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                                 }
                             }
                         }
+                        viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida)).collect(Collectors.toList());
                         adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }
