@@ -14,12 +14,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.ander.vitocarclient.Model.ActiveUser;
 
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar tb;
     private static Boolean logedIn = false;
-    private final ActiveUser au = ActiveUser.getActiveUser();
     private static BottomNavigationView bnv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,49 +63,20 @@ public class MainActivity extends AppCompatActivity {
                      }
                      return true;
                  case R.id.bnvPublicarViaje:
-                     if (logedIn) {
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new PublicarViaje()).commit();
                          tb.setTitle(TextControll.tPublicarViaje());
-                     }else{
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
-                         tb.setTitle(TextControll.tLogIn());
-                         showPublicarNoLogueado();
-                     }
                      return true;
                  case R.id.bnvReservas:
-                     if(logedIn){
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new VerReservas()).commit();
                          tb.setTitle(TextControll.tReservas());
-                     }else{
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
-                         tb.setTitle(TextControll.tLogIn());
-                         showReservasNoLogueado();
-                     }
-
                      return true;
                  case R.id.bnvViajesPublicados:
-                     if(logedIn){
                          getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new MisViajes()).commit();
                          tb.setTitle(TextControll.tViajesPublicados());
-                     }else{
-                         getSupportFragmentManager().beginTransaction().replace(R.id.flMain,new LogIn()).commit();
-                         tb.setTitle(TextControll.tLogIn());
-                         showViajesNoLogueado();
-                     }
-
                      return true;
              }
             return false;
         });
-    }
-    private void showPublicarNoLogueado(){
-        Toast.makeText(this, TextControll.publicarNoLogueado(), Toast.LENGTH_SHORT).show();
-    }
-    private void showReservasNoLogueado(){
-        Toast.makeText(this, TextControll.reservasNoLogueado(), Toast.LENGTH_SHORT).show();
-    }
-    private void showViajesNoLogueado(){
-        Toast.makeText(this, TextControll.viajesNoLogueado(), Toast.LENGTH_SHORT).show();
     }
     public static void setLogedIn(Boolean estado){
         logedIn = estado;
