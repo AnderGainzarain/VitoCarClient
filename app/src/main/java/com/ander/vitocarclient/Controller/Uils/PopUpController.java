@@ -12,6 +12,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Model.Viaje;
@@ -28,8 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PopUpController {
-    private static ActiveUser au = ActiveUser.getActiveUser();
-    private static Button closeButton;
+    private static final ActiveUser au = ActiveUser.getActiveUser();
     private static Button submit;
     private static TextView origen;
     private static TextView destino;
@@ -49,7 +50,7 @@ public class PopUpController {
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
-        closeButton = popupView.findViewById(R.id.close_button);
+        Button closeButton = popupView.findViewById(R.id.close_button);
         submit = popupView.findViewById(R.id.btnSubmitM);
         origen = popupView.findViewById(R.id.origenM);
         destino = popupView.findViewById(R.id.destinoM);
@@ -87,22 +88,17 @@ public class PopUpController {
         Call<Void> call = ApiClient.getClient().create(ApiViaje.class).anularViaje(idViaje);
         call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(context, TextControll.viajeAnulado(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 Toast.makeText(context, TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public static void showConductor(String a, String s) {
-        conductor.setText("a");
-        contacto.setText("a@a");
     }
 
     public static void submitReservar(int idViaje,Context context) {
@@ -113,14 +109,14 @@ public class PopUpController {
         Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).reservar(au.getDNI(),idViaje);
         call.enqueue(new Callback<Viaje>() {
             @Override
-            public void onResponse(Call<Viaje> call, Response<Viaje> response) {
+            public void onResponse(@NonNull Call<Viaje> call, @NonNull Response<Viaje> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(context, TextControll.reservaRealizada(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Viaje> call, Throwable t) {
+            public void onFailure(@NonNull Call<Viaje> call, @NonNull Throwable t) {
                 Toast.makeText(context, TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
@@ -139,14 +135,14 @@ public class PopUpController {
         Call<Void> call = ApiClient.getClient().create(ApiViaje.class).anularReserva(au.getDNI(),idViaje);
         call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(context, TextControll.reservaAnulada(),Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 Toast.makeText(context, TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
@@ -160,7 +156,7 @@ public class PopUpController {
         Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
         call.enqueue(new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 List<User> users = response.body();
                 if(users ==null || users.isEmpty()){
                     pasajero1.setText(TextControll.noHayPasajeros());
@@ -192,7 +188,7 @@ public class PopUpController {
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
                 Toast.makeText(context, TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
@@ -201,7 +197,7 @@ public class PopUpController {
         Call<List<String>> call = ApiClient.getClient().create(ApiUser.class).getConductorData(idViaje);
         call.enqueue(new Callback<List<String>>() {
             @Override
-            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+            public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
                 List<String> driver = response.body();
                 if(driver!=null){
                     System.out.println("entra");
@@ -211,7 +207,7 @@ public class PopUpController {
             }
 
             @Override
-            public void onFailure(Call<List<String>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
                 Toast.makeText(context, TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
