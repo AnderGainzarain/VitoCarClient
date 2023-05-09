@@ -18,8 +18,4 @@ public class DateManager {
             return fecha.isAfter(now);
         }
     }
-    public static String getMinutes(){
-        LocalDateTime now = LocalDateTime.now();
-        return now.getHour() +":"+ (DateAndTimePickers.dateFormat(now.getMinute()) +":"+ DateAndTimePickers.dateFormat(now.getSecond()));
-    }
 }
