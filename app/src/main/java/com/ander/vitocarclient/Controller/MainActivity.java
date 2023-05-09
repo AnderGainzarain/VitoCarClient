@@ -123,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
         menuItemPublicar.setVisible(logedIn);
         if(au!=null){
             if(au.getCoche().equals(TextControll.cocheVacio())){
-                menuItemReservas.setEnabled(false);
                 menuItemPublicar.setEnabled(false);
-                menuItemReservas.setVisible(false);
                 menuItemPublicar.setVisible(false);
+                menuItemViajes.setEnabled(false);
+                menuItemViajes.setVisible(false);
             }
         }
 
