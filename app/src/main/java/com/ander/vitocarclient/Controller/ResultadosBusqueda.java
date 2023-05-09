@@ -117,18 +117,6 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                                 }
                             }
                         }
-                        int aux=0;
-                        for (Viaje v: viajes){
-                            getNumReservas(v.getIdViaje(),aux);
-                            aux++;
-                        }
-                        System.out.println("sale del for de las reservas");
-                        for(Viaje v: viajes){
-                            if(v.getIdViaje()==6){
-                                System.out.println("indice: " + aux);
-                                System.out.println("MUESTRA EL 6");
-                            }
-                        }
                         adapter = new ViajeAdapter(viajes,getContext(),ResultadosBusqueda.this);
                         rv.setAdapter(adapter);
                     }
