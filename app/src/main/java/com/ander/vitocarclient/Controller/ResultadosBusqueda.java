@@ -40,6 +40,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
 
     private List<Viaje> viajes;
     private List<Viaje> misViajes;
+    private List<Viaje> misReservas;
     private ViajeAdapter adapter;
     private RecyclerView rv;
     private final ActiveUser au = ActiveUser.getActiveUser();
@@ -56,7 +57,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             queryData.put("destino", result.getString("destino"));
             queryData.put("fechaSalida",result.getString("fechaSalida"));
             queryData.put("horaSalida",result.getString("horaSalida"));
-            misViajes();
+            misReservas();
         });
     }
     @Override
@@ -69,6 +70,28 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         super.onViewCreated(view, savedInstanceState);
         rv = view.findViewById(R.id.rvResultadosBusqueda);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    }
+    private void misReservas(){
+        if(au!=null){
+            Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(au.getDNI());
+            call.enqueue(new Callback<List<Viaje>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
+                    if(response.isSuccessful()){
+                        List<Viaje>aux=response.body();
+                        if(aux!=null){
+                            misReservas = aux;
+                        }
+                        misViajes();
+                    }
+                }
+                @Override
+                public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
+                    Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else misViajes();
+
     }
     private void misViajes(){
         if(au!=null){
@@ -107,6 +130,13 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                             for(int i = 0; i <viajes.size();i++){
                                 for(int j = 0; j<misViajes.size();j++){
                                     if(viajes.get(i).getIdViaje()==misViajes.get(j).getIdViaje()){
+                                        viajes.remove(i);
+                                    }
+                                }
+                            }
+                            for(int i = 0; i <viajes.size();i++){
+                                for(int j = 0; j<misReservas.size();j++){
+                                    if(viajes.get(i).getIdViaje()==misReservas.get(j).getIdViaje()){
                                         viajes.remove(i);
                                     }
                                 }
