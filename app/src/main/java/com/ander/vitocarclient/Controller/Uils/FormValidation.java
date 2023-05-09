@@ -22,7 +22,7 @@ public class FormValidation {
             Toast.makeText(context, TextControll.fechaPasada(), Toast.LENGTH_SHORT).show();
 
             return false;
-        };
+        }
         return true;
     }
     public static Boolean validate(Context context, String origen, String destino, String fechaSalida,String horaSalida, String precio){
