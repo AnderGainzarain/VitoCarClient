@@ -66,8 +66,10 @@ public class MisViajes extends Fragment implements RvInterface {
         tabLayout = view.findViewById(R.id.tabMisviajes);
         // Set the default tab
         tabLayout.selectTab(tabLayout.getTabAt(1));
-        getMisViajes(false);
+        // show the proper viajes for that tab
         inPasados = false;
+        getMisViajes(false);
+        // change the shown viajes if the tab is changed
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -98,9 +100,11 @@ public class MisViajes extends Fragment implements RvInterface {
                 // Show the viajes in the recycler view
                 if(response.isSuccessful()){
                     viajes=response.body();
+                    // notify the user if there are not published viajes
                     if (viajes ==null || viajes.isEmpty()){
                         Toast.makeText(getContext(), TextControll.noViajesPublicados(), Toast.LENGTH_SHORT).show();
                     }else{
+                        // delete the viajes that are not necesary for the tab
                         if(pasado){
                             viajes = viajes.stream()
                                     .filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0,10),v.getFechaSalida().substring(11,19)))
@@ -110,8 +114,9 @@ public class MisViajes extends Fragment implements RvInterface {
                                     .filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0,10),v.getFechaSalida().substring(11,19)))
                                     .collect(Collectors.toList());
                         }
+                        // Sort the viajes
                         viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida).thenComparing(Viaje::getOrigen).thenComparing(Viaje::getDestino)).collect(Collectors.toList());
-
+                        //show the viajes
                         adapter = new ViajeAdapter(viajes, MisViajes.this);
                         rv.setAdapter(adapter);
                     }
@@ -130,12 +135,17 @@ public class MisViajes extends Fragment implements RvInterface {
 
     @Override
     public void onItemClick(int position) {
+        // get the selected viaje
         Viaje viaje = viajes.get(position);
+        // Show the popup
         PopUpController.show(getContext(),R.layout.mas_info_p, getView());
+        // Show the viaje data for the selected viaje
         PopUpController.showDataViaje(viaje.getOrigen(),viaje.getDestino(),viaje.getFechaSalida(),String.valueOf(viaje.getPrecio()));
+        // Set the text for the submit button
         PopUpController.submitTextAnular();
+        // Show the names of the pasajeros
         PopUpController.showPasajeros(viaje.getIdViaje(),getContext());
-
+        // If the viaje is pasado hide the anular button, if not set it to anular a viaje
         if(inPasados){
             PopUpController.hideSubmit();
         }else{
