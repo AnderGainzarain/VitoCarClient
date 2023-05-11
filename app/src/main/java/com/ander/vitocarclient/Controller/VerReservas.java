@@ -56,12 +56,15 @@ public class VerReservas extends Fragment implements RvInterface {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        // bind the recycler view and the tab layout
         rv = view.findViewById(R.id.rvVerReservas);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
         tabLayout=view.findViewById(R.id.tabReservas);
         tabLayout.selectTab(tabLayout.getTabAt(1));
+        // show the reservas for the tab
         showReservas(false);
         inPasados = false;
+        // update the shown reservas if the tab is changed
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -83,6 +86,7 @@ public class VerReservas extends Fragment implements RvInterface {
         });
     }
     private void showReservas(boolean pasado){
+        // get the reservas for the user
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(au.getDNI());
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
@@ -91,14 +95,18 @@ public class VerReservas extends Fragment implements RvInterface {
                 if(response.isSuccessful()){
                         viajes=response.body();
                         if(viajes==null||viajes.isEmpty()){
+                            // notify the user if there are not reservas
                             Toast.makeText(getContext(), TextControll.noViajesReservados(), Toast.LENGTH_SHORT).show();
                         }else{
+                            // get the correct reservas for the current tab
                             if (pasado){
                                 viajes = viajes.stream().filter(v -> !DateManager.passedDate(v.getFechaSalida().substring(0, 10),v.getFechaSalida().substring(11,19))).collect(Collectors.toList());
                             }else{
                                 viajes = viajes.stream().filter(v -> DateManager.passedDate(v.getFechaSalida().substring(0, 10),v.getFechaSalida().substring(11,19))).collect(Collectors.toList());
                             }
+                            // sort the reservas
                             viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida).thenComparing(Viaje::getOrigen).thenComparing(Viaje::getDestino)).collect(Collectors.toList());
+                            // show the reservas
                             adapter = new ViajeAdapter(viajes,VerReservas.this);
                             rv.setAdapter(adapter);
                         }
@@ -115,12 +123,17 @@ public class VerReservas extends Fragment implements RvInterface {
 
     @Override
     public void onItemClick(int position) {
+        // get the selected viaje
         Viaje viaje = viajes.get(position);
+        // show the pop up
         PopUpController.show(getContext(),R.layout.mas_info,getView());
+        // Show the data for the selected viaje
         PopUpController.showDataViaje(viaje.getOrigen(),viaje.getDestino(),viaje.getFechaSalida(),String.valueOf(viaje.getPrecio()));
+        // Shwo the driver data for the selected viaje
         PopUpController.showDriverData(viaje.getIdViaje(),getContext());
-    PopUpController.submitTextAnular();
-
+        // Set the submit text to anular
+        PopUpController.submitTextAnular();
+        // if the shown viajes are pasados hide the submit button, if not set an on clic listener to anular the viaje
         if(inPasados){
             PopUpController.hideSubmit();
         }else{
