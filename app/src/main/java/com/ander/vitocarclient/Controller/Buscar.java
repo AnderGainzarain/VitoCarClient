@@ -48,6 +48,7 @@ public class Buscar extends Fragment {
         // get the date from the xml
         fecha = view.findViewById(R.id.etFechaBuscar);
         hora = view.findViewById(R.id.etHoraBuscar);
+        // Get the buttons from the xml
         Button buscar = view.findViewById(R.id.btnBuscar);
         ImageButton ibFechaSalida = view.findViewById(R.id.ibFechaBuscar);
         ImageButton ibHoraSalida = view.findViewById(R.id.ibHoraBuscar);
@@ -59,13 +60,17 @@ public class Buscar extends Fragment {
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
         sDestino.setAdapter(adaptador);
+        // Create the on click events to show the data and time pickers
+        ibFechaSalida.setOnClickListener(view22 -> DateAndTimePickers.mostrarFecha(getContext(),fecha));
+        ibHoraSalida.setOnClickListener(view33 -> DateAndTimePickers.mostrarHora(getContext(),hora));
         // Set the event listener to buscar
         buscar.setOnClickListener(view1 -> {
-            // do something when the button is clicked
+            // save the search query
             String origen = sOrigen.getSelectedItem().toString();
             String destino = sDestino.getSelectedItem().toString();
             String fechaSalida = fecha.getText().toString().replace("/","-").substring(0,10);
             String horaSalida = hora.getText().toString();
+             // validate the query data
             if(FormValidation.validate(getContext(),origen,destino,fechaSalida,horaSalida).equals(false)) return;
 
             // store the query data
@@ -78,7 +83,6 @@ public class Buscar extends Fragment {
             // change the fragment
             getParentFragmentManager().beginTransaction().replace(R.id.flMain, new ResultadosBusqueda()).commit();
         });
-        ibFechaSalida.setOnClickListener(view22 -> DateAndTimePickers.mostrarFecha(getContext(),fecha));
-        ibHoraSalida.setOnClickListener(view33 -> DateAndTimePickers.mostrarHora(getContext(),hora));
+
     }
 }
