@@ -35,6 +35,7 @@ public class Perfil extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+        // Bind the fields to show the user data and the log out button
         TextView nombre = view.findViewById(R.id.nombre);
         TextView apellido = view.findViewById(R.id.apellido);
         TextView mail = view.findViewById(R.id.mail);
@@ -42,11 +43,13 @@ public class Perfil extends Fragment {
         TextView coche = view.findViewById(R.id.coche);
         ImageView foto = view.findViewById(R.id.profilePicture);
         FloatingActionButton logOut = view.findViewById(R.id.btnLogOut);
+        // Set the log out function to execute on click
         logOut.setOnClickListener(view1 -> {
             ActiveUser.logOut();
             MainActivity.setLogedIn(false);
             getParentFragmentManager().beginTransaction().replace(R.id.flMain, new LogIn()).commit();
         });
+        // Load the user data into the text views
         Picasso.get().load(au.getFoto()).into(foto);
         nombre.setText(au.getNombre());
         apellido.setText(au.getApellido());
