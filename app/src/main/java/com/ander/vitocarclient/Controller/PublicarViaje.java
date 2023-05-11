@@ -78,6 +78,9 @@ public class PublicarViaje extends Fragment {
         // Load the contents into the spinners
         sOrigen.setAdapter(adaptador);
         sDestino.setAdapter(adaptador);
+        // set a listener to show the date and time pickers
+        ibFechaSalida.setOnClickListener(view2 -> DateAndTimePickers.mostrarFecha(getContext(),fecha));
+        ibHoraSalida.setOnClickListener(view3 -> DateAndTimePickers.mostrarHora(getContext(),hora));
         // Set the event listener to publicar
         Button publicar = view.findViewById(R.id.btnPublicar);
         publicar.setOnClickListener(view1 -> {
@@ -88,24 +91,27 @@ public class PublicarViaje extends Fragment {
             String horaSalida = hora.getText().toString();
             // Check if the precio is introduced
             if(precio.getText().toString().equals("")){
+                // notify if there is no precio introduced
                 Toast.makeText(getContext(), TextControll.precioVacio(), Toast.LENGTH_SHORT).show();
             }else{
+                // validate the viaje data
                 String coste = precio.getText().toString();
                 if(FormValidation.validate(getContext(),origen,destino,fechaSalida,horaSalida,coste).equals(false)) return;
 
                 esViajeValido(origen,destino,fechaSalida,horaSalida,Integer.parseInt(coste));
             }
         });
-        ibFechaSalida.setOnClickListener(view2 -> DateAndTimePickers.mostrarFecha(getContext(),fecha));
-        ibHoraSalida.setOnClickListener(view3 -> DateAndTimePickers.mostrarHora(getContext(),hora));
+
     }
     private void publicarViajes(String origen, String destino, String fechaSalida, String horaS, int coste) {
+        // Create a viaje with the viaje data
         Viaje viaje = new Viaje(coste, origen, destino, fechaSalida + " " + horaS);
         Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).publicarViaje(au.getDNI(), viaje);
         call.enqueue(new Callback<Viaje>() {
             @Override
             public void onResponse(@NonNull Call<Viaje> call, @NonNull Response<Viaje> response) {
                 if(response.isSuccessful()){
+                    // if the request is succesfull empty the form and notify the viaje has been published
                     Viaje viaje = response.body();
                     if (viaje!=null){
                         precio.setText("");
@@ -123,6 +129,7 @@ public class PublicarViaje extends Fragment {
         });
     }
     private void esViajeValido(String origen, String destino, String fecha, String horaS,int coste){
+        // if the user has a car check if the viaje can be published
         if(au.getCoche()!=null){
             Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(au.getDNI());
             call.enqueue(new Callback<List<Viaje>>() {
@@ -130,15 +137,18 @@ public class PublicarViaje extends Fragment {
                 public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
                     if(response.isSuccessful()){
                         List<Viaje>viajes=response.body();
+                        // if the user has not published any viaje publish it
                         if(viajes==null||viajes.isEmpty()){
                             publicarViajes(origen,destino,fecha,horaS,coste);
                         }else {
+                            // if the user has published some viajes check if there is another with the same data
                             if(viajes.stream().noneMatch(v ->
                                     Objects.equals(v.getOrigen(),origen) &&
                                             Objects.equals(v.getDestino(),destino) &&
                                             Objects.equals(v.getFechaSalida(),fecha + " " + horaS))){
                                 publicarViajes(origen,destino,fecha,horaS,coste);
                             }else{
+                                // if there is a viaje with that data notify it
                                 Toast.makeText(getContext(), TextControll.viajeYaPublicado(), Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -150,6 +160,5 @@ public class PublicarViaje extends Fragment {
                 }
             });
         }
-
     }
 }
