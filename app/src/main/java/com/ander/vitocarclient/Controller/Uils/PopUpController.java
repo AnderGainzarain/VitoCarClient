@@ -53,6 +53,7 @@ public class PopUpController {
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setAnimationStyle(androidx.appcompat.R.style.Animation_AppCompat_Dialog);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.rgb(225,225,225)));
+        popupWindow.setFocusable(true);
         // bind the contents of the pop up window
         Button closeButton = popupView.findViewById(R.id.close_button);
         submit = popupView.findViewById(R.id.btnSubmitM);
