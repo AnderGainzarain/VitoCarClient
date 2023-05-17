@@ -41,4 +41,6 @@ public class TextControll {
     public static String tReservas() {return "Mis Reservas";}
 
     public static String tPublicarViaje() {return "Publicar Viaje";}
+
+    public static String needLogIn() { return "Necesitas iniciar sesion para ver los detalles del viaje";}
 }

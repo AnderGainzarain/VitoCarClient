@@ -212,6 +212,9 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             PopUpController.submitTextReservar();
             // add an on click listener to the submit button to execute a reserva
             PopUpController.submitReservar(viaje.getIdViaje(), getContext());
+        }else{
+            Toast.makeText(getContext(), TextControll.needLogIn(),Toast.LENGTH_SHORT).show();
+
         }
     }
 }
