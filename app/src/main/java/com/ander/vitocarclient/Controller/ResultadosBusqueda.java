@@ -161,6 +161,11 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                         for(int k = 0; k < viajes.size(); k++){
                             getNumReservas(viajes.get(k).getIdViaje(),k);
                         }
+                        // Notify if there are no viajes with the query data
+                        if(viajes.size()==0){
+                            Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
+                        }
+
                         // Short the viajes and show them
                         viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida)).collect(Collectors.toList());
                         adapter = new ViajeAdapter(viajes,ResultadosBusqueda.this);
