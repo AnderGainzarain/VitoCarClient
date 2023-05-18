@@ -5,23 +5,23 @@ import com.ander.vitocarclient.Vista.TextControll;
 
 public class ActiveUser {
     // Atributes
-    private final Integer dni;
-    private final int telefono;
-    private final String mail;
-    private final String nombre;
-    private final String apellido;
-    private final String foto;
+    private static Integer dni;
+    private static int telefono;
+    private static String mail;
+    private static String nombre;
+    private static String apellido;
+    private static String foto;
     private final String coche;
     private static ActiveUser activeUser;
 
     //Constructor
     private ActiveUser(Integer dni, int telefono, String mail, String nombre, String apellido, String foto, String coche){
-        this.dni = dni;
-        this.telefono = telefono;
-        this.mail = mail;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.foto = foto;
+        ActiveUser.dni = dni;
+        ActiveUser.telefono = telefono;
+        ActiveUser.mail = mail;
+        ActiveUser.nombre = nombre;
+        ActiveUser.apellido = apellido;
+        ActiveUser.foto = foto;
         if(coche.equals("")){
             coche = TextControll.cocheVacio();
         }
@@ -33,6 +33,12 @@ public class ActiveUser {
     }
     public static void logOut(){
         activeUser = null;
+        dni = null;
+        telefono = 0;
+        mail = null;
+        nombre = null;
+        apellido = null;
+        foto = null;
     }
 
     public Integer getDNI() {
