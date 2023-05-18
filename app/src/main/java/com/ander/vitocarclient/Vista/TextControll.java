@@ -43,4 +43,8 @@ public class TextControll {
     public static String tPublicarViaje() {return "Publicar Viaje";}
 
     public static String needLogIn() { return "Necesitas iniciar sesion para ver los detalles del viaje";}
+
+    public static String mailVacio() { return "Introduzca mail";}
+
+    public static String pwdVacia() {return "Introduzca contraseña";}
 }

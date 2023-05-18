@@ -49,7 +49,15 @@ public class LogIn extends Fragment {
         password = view.findViewById(R.id.etPasswordLogIn);
         Button logIn = view.findViewById(R.id.btnLogIn);
         // Set an on click listener to te log in button to log in
-        logIn.setOnClickListener(view1 -> logIn(mail.getText().toString(), password.getText().toString()));
+        logIn.setOnClickListener(view1 -> {
+            if(mail.getText().toString().equals("")){
+                Toast.makeText(getContext(), TextControll.mailVacio(), Toast.LENGTH_SHORT).show();
+            }else if (password.getText().toString().equals("")){
+                Toast.makeText(getContext(), TextControll.pwdVacia(), Toast.LENGTH_SHORT).show();
+            }else{
+                logIn(mail.getText().toString(), password.getText().toString());
+            }
+        });
     }
 
     private void logIn(String eMail, String pwd){
