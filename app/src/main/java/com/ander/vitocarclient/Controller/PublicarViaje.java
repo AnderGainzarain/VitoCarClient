@@ -28,6 +28,7 @@ import com.ander.vitocarclient.Network.ApiClient;
 import com.ander.vitocarclient.Network.ApiViaje;
 import com.ander.vitocarclient.Vista.TextControll;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,6 +74,9 @@ public class PublicarViaje extends Fragment {
         // Get the fecha and hora salida image buttons
         ImageButton ibFechaSalida = view.findViewById(R.id.ibCalendarPublicar);
         ImageButton ibHoraSalida = view.findViewById(R.id.ibTimePublicar);
+        // set the current date and time as the default
+        fecha.setText(LocalDateTime.now().toString().substring(0,10));
+        hora.setText(LocalDateTime.now().toString().substring(11,19));
        // Create the contents of the spinners
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, ciudades);
         // Load the contents into the spinners
