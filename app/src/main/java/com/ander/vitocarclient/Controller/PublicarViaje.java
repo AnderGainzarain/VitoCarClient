@@ -119,8 +119,8 @@ public class PublicarViaje extends Fragment {
                     Viaje viaje = response.body();
                     if (viaje!=null){
                         precio.setText("");
-                        fecha.setText("");
-                        hora.setText("");
+                        fecha.setText(LocalDateTime.now().toString().substring(0,10));
+                        hora.setText(LocalDateTime.now().toString().substring(11,19));
                         Toast.makeText(getContext(), TextControll.viajePublicado(), Toast.LENGTH_SHORT).show();
                     }
                 }
