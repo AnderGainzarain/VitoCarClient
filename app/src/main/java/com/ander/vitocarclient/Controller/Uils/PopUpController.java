@@ -110,6 +110,7 @@ public class PopUpController {
                 if(response.isSuccessful()){
                     Toast.makeText(context, TextControll.viajeAnulado(),Toast.LENGTH_SHORT).show();
                 }
+                popupWindow.dismiss();
             }
 
             @Override
@@ -133,6 +134,7 @@ public class PopUpController {
                 if(response.isSuccessful()){
                     Toast.makeText(context, TextControll.reservaRealizada(),Toast.LENGTH_SHORT).show();
                 }
+                popupWindow.dismiss();
             }
 
             @Override
@@ -160,6 +162,7 @@ public class PopUpController {
                 if(response.isSuccessful()){
                     Toast.makeText(context, TextControll.reservaAnulada(),Toast.LENGTH_SHORT).show();
                 }
+                popupWindow.dismiss();
             }
 
             @Override
