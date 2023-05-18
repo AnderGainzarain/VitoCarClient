@@ -125,7 +125,6 @@ public class PopUpController {
     }
     /*reservar a viaje*/
     private static void reservar(int idViaje, Context context){
-        System.out.println("DNI: " + au.getDNI() + " IdViaje: " + idViaje);
         Call<Viaje> call = ApiClient.getClient().create(ApiViaje.class).reservar(au.getDNI(),idViaje);
         call.enqueue(new Callback<Viaje>() {
             @Override

@@ -181,7 +181,6 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         });
     }
     private void getNumReservas(int idViaje, int index){
-        System.out.println("Entra");
         Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
         call.enqueue(new Callback<List<User>>() {
             @Override
@@ -191,7 +190,6 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
                     return;
                 }else{
                     if(pasajeros.size()==3){
-                        System.out.println("Pasajeros: " + pasajeros.size() + " index: " + idViaje);
                         viajes.remove(index);
                         System.out.println(viajes.remove(index));
                     }
