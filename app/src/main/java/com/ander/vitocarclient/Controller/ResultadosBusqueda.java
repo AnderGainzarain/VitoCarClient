@@ -1,5 +1,6 @@
 package com.ander.vitocarclient.Controller;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,16 +15,19 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.PopUpController;
+import com.ander.vitocarclient.Controller.Uils.ShowViajes;
 import com.ander.vitocarclient.Model.ActiveUser;
 import com.ander.vitocarclient.Model.User;
 import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
@@ -39,10 +43,7 @@ import retrofit2.Response;
 
 public class ResultadosBusqueda extends Fragment implements RvInterface {
 
-    private List<Viaje> viajes;
-    private List<Viaje> misViajes;
-    private List<Viaje> misReservas;
-    private ViajeAdapter adapter;
+    private List<Viaje> viajes = new ArrayList<>();
     private RecyclerView rv;
     private final ActiveUser au = ActiveUser.getActiveUser();
     private final Map<String,String> queryData = new HashMap<>();
@@ -60,8 +61,8 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             queryData.put("destino", result.getString("destino"));
             queryData.put("fechaSalida",result.getString("fechaSalida"));
             queryData.put("horaSalida",result.getString("horaSalida"));
-            // start the process to show the found viajes
-            misReservas();
+            // show viajes
+            ShowViajes.showSearchResults(getContext(),queryData,rv,ResultadosBusqueda.this);
         });
     }
     @Override
@@ -76,132 +77,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         rv = view.findViewById(R.id.rvResultadosBusqueda);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
-    private void misReservas(){
-        // if the user is logged in get their reservas
-        if(au!=null){
-            Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(au.getDNI());
-            call.enqueue(new Callback<List<Viaje>>() {
-                @Override
-                public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
-                    if(response.isSuccessful()){
-                        List<Viaje>aux=response.body();
-                        if(aux!=null){
-                            misReservas = aux;
-                        }
-                        // continue the process to show the viajes
-                        misViajes();
-                    }
-                }
-                @Override
-                public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
-                    Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-            // if the user is not logged in continue with the process to show the viajes
-        }else misViajes();
 
-    }
-    private void misViajes(){
-        // if the user is logged in get the viajes they are offering
-        if(au!=null){
-            Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(au.getDNI());
-            call.enqueue(new Callback<List<Viaje>>() {
-                @Override
-                public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
-                    if(response.isSuccessful()){
-                        List<Viaje>aux=response.body();
-                        if(aux!=null){
-                            misViajes = aux;
-                        }
-                        // continue with the process to show the viajes
-                        busqueda();
-                    }
-                }
-                @Override
-                public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
-                    Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-            // continue with the process to show the viajes
-        }else busqueda();
-
-    }
-    private void busqueda(){
-        // get all the viajes that match the query data
-        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), LocalDateTime.parse(queryData.get("fechaSalida") + "T" + queryData.get("horaSalida")));
-        call.enqueue(new Callback<List<Viaje>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
-               if(response.isSuccessful()){
-                    viajes=response.body();
-                    // notify the user if there are not viajes that match the query data
-                    if(viajes == null || viajes.isEmpty()){
-                        Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
-                    }else{
-                        if(au!=null){
-                            // if the user is logged in delete the viajes they have published
-                            for(int i = 0; i <viajes.size();i++){
-                                for(int j = 0; j<misViajes.size();j++){
-                                    if(viajes.get(i).getIdViaje()==misViajes.get(j).getIdViaje()){
-                                        viajes.remove(i);
-                                    }
-                                }
-                            }
-                            // if the user is logged in delete the viajes they have already booked
-                            for(int i = 0; i <viajes.size();i++){
-                                for(int j = 0; j<misReservas.size();j++){
-                                    if(viajes.get(i).getIdViaje()==misReservas.get(j).getIdViaje()){
-                                        viajes.remove(i);
-                                    }
-                                }
-                            }
-                        }
-                        // don't show the viajes with 3 reservas
-                        System.out.println(viajes.size());
-                        for(int k = 0; k < viajes.size(); k++){
-                            getNumReservas(viajes.get(k).getIdViaje(),k);
-                        }
-                        // Notify if there are no viajes with the query data
-                        if(viajes.size()==0){
-                            Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
-                        }
-
-                        // Short the viajes and show them
-                        viajes =viajes.stream().sorted(Comparator.comparing(Viaje::getFechaSalida)).collect(Collectors.toList());
-                        adapter = new ViajeAdapter(viajes,ResultadosBusqueda.this);
-                        rv.setAdapter(adapter);
-                    }
-                }
-            }
-            @Override
-            public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
-                // return an error message if there is an error
-                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-    private void getNumReservas(int idViaje, int index){
-        Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(idViaje);
-        call.enqueue(new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                List<User>pasajeros = response.body();
-                if(pasajeros == null || pasajeros.isEmpty()){
-                    return;
-                }else{
-                    if(pasajeros.size()==3){
-                        viajes.remove(index);
-                        System.out.println(viajes.remove(index));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public void onItemClick(int position) {
@@ -225,3 +101,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         }
     }
 }
+
+
+
+
