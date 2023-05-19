@@ -62,7 +62,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             queryData.put("fechaSalida",result.getString("fechaSalida"));
             queryData.put("horaSalida",result.getString("horaSalida"));
             // show viajes
-            ShowViajes.showSearchResults(getContext(),queryData,rv,ResultadosBusqueda.this);
+            viajes = ShowViajes.showSearchResults(getContext(),queryData,rv,ResultadosBusqueda.this);
         });
     }
     @Override
