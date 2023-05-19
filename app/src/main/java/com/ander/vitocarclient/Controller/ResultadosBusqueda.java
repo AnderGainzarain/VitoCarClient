@@ -43,7 +43,7 @@ import retrofit2.Response;
 
 public class ResultadosBusqueda extends Fragment implements RvInterface {
 
-    private List<Viaje> viajes = new ArrayList<>();
+    private static List<Viaje> viajes = new ArrayList<>();
     private RecyclerView rv;
     private final ActiveUser au = ActiveUser.getActiveUser();
     private final Map<String,String> queryData = new HashMap<>();
@@ -55,6 +55,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // retrieve the query data from the buscar fragment
+        System.out.println("viajes guardados: " + viajes.size());
         getParentFragmentManager().setFragmentResultListener("query", this, (requestKey, result) -> {
             // store the query data in a class atribute
             queryData.put("origen",result.getString("origen"));
@@ -77,7 +78,6 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         rv = view.findViewById(R.id.rvResultadosBusqueda);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
-
 
     @Override
     public void onItemClick(int position) {
