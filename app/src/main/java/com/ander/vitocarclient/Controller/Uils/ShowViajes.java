@@ -29,7 +29,7 @@ import retrofit2.Response;
 
 public class ShowViajes {
     private static List<Viaje> viajes = new ArrayList<>();
-    private static ActiveUser au = ActiveUser.getActiveUser();
+    private static ActiveUser au;
     public static List<Viaje> showSearchResults(Context context, Map<String,String> queryData, RecyclerView rv, RvInterface rvInterface){
         viajes.clear();
         au = ActiveUser.getActiveUser();
@@ -43,7 +43,6 @@ public class ShowViajes {
             call.enqueue(new Callback<List<Viaje>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
-                    System.out.println("Search Call");
                     if(response.isSuccessful()){
                         List<Viaje> busqueda=response.body();
                         // notify the user if there are not viajes that match the query data
@@ -53,10 +52,8 @@ public class ShowViajes {
                             viajes.addAll(busqueda);
                         }
                         if(au!=null){
-                            System.out.println("search logged in");
                             hideMisViajes(context, rv, rvInterface);
                         }else{
-                            System.out.println("search not logged in");
                             hideFullViajes(context, rv, rvInterface);
                         }
                     }
@@ -78,7 +75,6 @@ public class ShowViajes {
                 call.enqueue(new Callback<List<Viaje>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
-                        System.out.println("Hide reservas call");
                         if (response.isSuccessful()) {
                             List<Viaje> reservas = response.body();
                             // delete the reservas from the results
@@ -110,7 +106,6 @@ public class ShowViajes {
                 call.enqueue(new Callback<List<Viaje>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
-                        System.out.println("Hide viajes call");
                         if(response.isSuccessful()){
                             List<Viaje>misViajes=response.body();
                             // remove the published viajes from the result
@@ -140,19 +135,17 @@ public class ShowViajes {
                 call.enqueue(new Callback<List<User>>() {
                     @Override
                     public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                        System.out.println("Hide full viajes call");
                         List<User>pasajeros = response.body();
-                        if(pasajeros == null || !pasajeros.isEmpty()) {
-                            return;
-                        }else{
-                            System.out.println(pasajeros.size());
+                        if(pasajeros!=null && !pasajeros.isEmpty()){
                             // delete the full viajes from the result
                             if(pasajeros.size()==3){
                                 viajes.remove(finalI);
                             }
-                            show(rv, rvInterface, context);
                         }
-                    }
+                            if(finalI==viajes.size()-1){
+                                show(rv, rvInterface, context);
+                            }
+                        }
 
                     @Override
                     public void onFailure(Call<List<User>> call, Throwable t) {
