@@ -6,7 +6,7 @@ import com.ander.vitocarclient.Vista.TextControll;
 public class ActiveUser {
     // Atributes
     private static Integer dni;
-    private static int telefono;
+    private static Integer telefono;
     private static String mail;
     private static String nombre;
     private static String apellido;
@@ -34,7 +34,7 @@ public class ActiveUser {
     public static void logOut(){
         activeUser = null;
         dni = null;
-        telefono = 0;
+        telefono = null;
         mail = null;
         nombre = null;
         apellido = null;
