@@ -32,30 +32,31 @@ public class ShowViajes {
     private static ActiveUser au = ActiveUser.getActiveUser();
     public static List<Viaje> showSearchResults(Context context, Map<String,String> queryData, RecyclerView rv, RvInterface rvInterface){
         viajes.clear();
+        au = ActiveUser.getActiveUser();
         search(context,queryData,rv,rvInterface);
         return viajes;
     }
     private static void search(Context context, Map<String, String> queryData, RecyclerView rv, RvInterface rvInterface){
         {
-            System.out.println("Search");
             // get all the viajes that match the query data
             Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), LocalDateTime.parse(queryData.get("fechaSalida") + "T" + queryData.get("horaSalida")));
             call.enqueue(new Callback<List<Viaje>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
+                    System.out.println("Search Call");
                     if(response.isSuccessful()){
                         List<Viaje> busqueda=response.body();
                         // notify the user if there are not viajes that match the query data
                         if(busqueda == null || busqueda.isEmpty()){
                             Toast.makeText(context, TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
                         }else{
-                            System.out.println("Initial size: " + viajes.size());
                             viajes.addAll(busqueda);
-                            System.out.println("Final size: " + viajes.size());
                         }
                         if(au!=null){
+                            System.out.println("search logged in");
                             hideMisViajes(context, rv, rvInterface);
                         }else{
+                            System.out.println("search not logged in");
                             hideFullViajes(context, rv, rvInterface);
                         }
                     }
@@ -71,19 +72,17 @@ public class ShowViajes {
 
     private static void hideMisReservas(Context context, RecyclerView rv, RvInterface rvInterface){
         {
-            System.out.println("hideMisReservas");
-
             // if the user is logged in get their reservas
             if (au != null) {
                 Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getMisReservas(au.getDNI());
                 call.enqueue(new Callback<List<Viaje>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
+                        System.out.println("Hide reservas call");
                         if (response.isSuccessful()) {
                             List<Viaje> reservas = response.body();
                             // delete the reservas from the results
                             if (reservas != null) {
-                                System.out.println("inicial: " + viajes.size());
                                 for(int i = 0; i < viajes.size()-1; i++){
                                     for(int j = 0; j < reservas.size(); j++){
                                         if(viajes.get(i).getIdViaje()==reservas.get(j).getIdViaje()){
@@ -91,7 +90,6 @@ public class ShowViajes {
                                         }
                                     }
                                 }
-                                System.out.println("final: " + viajes.size());
                             }
                             hideFullViajes(context,rv,rvInterface);
                         }
@@ -106,18 +104,17 @@ public class ShowViajes {
         }
     }
     private static void hideMisViajes(Context context, RecyclerView rv, RvInterface rvInterface){
-            System.out.println("hideMisViajes");
             // if the user is logged in get the viajes they are offering
             if(au!=null){
                 Call<List<Viaje>> call = ApiClient.getClient().create(ApiUser.class).getMisViajes(au.getDNI());
                 call.enqueue(new Callback<List<Viaje>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
+                        System.out.println("Hide viajes call");
                         if(response.isSuccessful()){
                             List<Viaje>misViajes=response.body();
                             // remove the published viajes from the result
                             if(misViajes!=null){
-                                System.out.println("Inicial: " + viajes.size());
                                 for(int i = 0; i < viajes.size()-1; i++){
                                     for(int j = 0; j < misViajes.size(); j++){
                                         if(viajes.get(i).getIdViaje()==misViajes.get(j).getIdViaje()){
@@ -125,7 +122,6 @@ public class ShowViajes {
                                         }
                                     }
                                 }
-                                System.out.println("final: " + viajes.size());
                             }
                             hideMisReservas(context, rv, rvInterface);
                         }
@@ -138,23 +134,21 @@ public class ShowViajes {
             }
     }
     private static void hideFullViajes(Context context, RecyclerView rv, RvInterface rvInterface){
-            System.out.println("HideFullViajes");
-
             for(int i = 0; i<viajes.size();i++){
                 Call<List<User>> call = ApiClient.getClient().create(ApiUser.class).getPasajeros(viajes.get(i).getIdViaje());
                 int finalI = i;
                 call.enqueue(new Callback<List<User>>() {
                     @Override
                     public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                        System.out.println("Hide full viajes call");
                         List<User>pasajeros = response.body();
                         if(pasajeros == null || !pasajeros.isEmpty()) {
                             return;
                         }else{
+                            System.out.println(pasajeros.size());
                             // delete the full viajes from the result
                             if(pasajeros.size()==3){
-                                System.out.println("Inicial: " + viajes.size());
                                 viajes.remove(finalI);
-                                System.out.println("final: " + viajes.size());
                             }
                             show(rv, rvInterface, context);
                         }
@@ -169,7 +163,6 @@ public class ShowViajes {
     }
     private static void show(RecyclerView rv, RvInterface rvInterface, Context context){
         // sort the viajes
-        System.out.println("show: " + viajes.size());
         if(viajes== null || viajes.isEmpty()){
             Toast.makeText(context, TextControll.noHayBusqueda(),Toast.LENGTH_SHORT).show();
 
