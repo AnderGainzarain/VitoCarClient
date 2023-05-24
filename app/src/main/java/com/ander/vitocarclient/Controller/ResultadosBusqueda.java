@@ -62,7 +62,8 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             queryData.put("fechaSalida",result.getString("fechaSalida"));
             queryData.put("horaSalida",result.getString("horaSalida"));
             // show viajes
-            viajes = ShowViajes.showSearchResults(getContext(),queryData,rv,ResultadosBusqueda.this);
+            //viajes = ShowViajes.showSearchResults(getContext(),queryData,rv,ResultadosBusqueda.this);
+            showResults();
         });
     }
     @Override
@@ -76,6 +77,37 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         // bind the recycler view and create an adapter
         rv = view.findViewById(R.id.rvResultadosBusqueda);
         rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    }
+    private void showResults(){
+        Integer dni;
+        if(au!=null) {
+            dni = au.getDNI();
+        }else{
+            dni = 0;
+        }
+        Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), LocalDateTime.parse(queryData.get("fechaSalida") + "T" + queryData.get("horaSalida")), dni);
+        call.enqueue(new Callback<List<Viaje>>() {
+            @Override
+            public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
+                List<Viaje> results = response.body();
+                if(results != null && !results.isEmpty()){
+                    viajes = results.stream().sorted(Comparator.comparing(Viaje::getFechaSalida)
+                            .thenComparing(Viaje::getOrigen)
+                            .thenComparing(Viaje::getDestino)
+                            .thenComparing(Viaje::getPrecio)).collect(Collectors.toList());
+                    ViajeAdapter adapter = new ViajeAdapter(viajes, ResultadosBusqueda.this);
+                    rv.setAdapter(adapter);
+                }else{
+                    Toast.makeText(getContext(), TextControll.noHayBusqueda(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Viaje>> call, Throwable t) {
+                Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

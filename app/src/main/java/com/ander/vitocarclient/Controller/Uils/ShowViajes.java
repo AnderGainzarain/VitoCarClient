@@ -39,7 +39,7 @@ public class ShowViajes {
     private static void search(Context context, Map<String, String> queryData, RecyclerView rv, RvInterface rvInterface){
         {
             // get all the viajes that match the query data
-            Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), LocalDateTime.parse(queryData.get("fechaSalida") + "T" + queryData.get("horaSalida")));
+            Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), LocalDateTime.parse(queryData.get("fechaSalida") + "T" + queryData.get("horaSalida")), au.getDNI());
             call.enqueue(new Callback<List<Viaje>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
@@ -110,7 +110,7 @@ public class ShowViajes {
                             List<Viaje>misViajes=response.body();
                             // remove the published viajes from the result
                             if(misViajes!=null){
-                                for(int i = 0; i < viajes.size()-1; i++){
+                                for(int i = 0; i < viajes.size(); i++){
                                     for(int j = 0; j < misViajes.size(); j++){
                                         if(viajes.get(i).getIdViaje()==misViajes.get(j).getIdViaje()){
                                             viajes.remove(i);
