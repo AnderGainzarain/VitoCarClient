@@ -1,6 +1,5 @@
 package com.ander.vitocarclient.Controller;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,10 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ander.vitocarclient.Controller.Uils.PopUpController;
-import com.ander.vitocarclient.Controller.Uils.ShowViajes;
 import com.ander.vitocarclient.Model.ActiveUser;
-import com.ander.vitocarclient.Model.User;
-import com.ander.vitocarclient.Network.ApiUser;
 import com.ander.vitocarclient.R;
 
 import java.time.LocalDateTime;
@@ -27,7 +23,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
 import com.ander.vitocarclient.Controller.Adapter.ViajeAdapter;
@@ -88,7 +83,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
         Call<List<Viaje>> call = ApiClient.getClient().create(ApiViaje.class).getViajeConcreto(queryData.get("origen"),queryData.get("destino"), LocalDateTime.parse(queryData.get("fechaSalida") + "T" + queryData.get("horaSalida")), dni);
         call.enqueue(new Callback<List<Viaje>>() {
             @Override
-            public void onResponse(Call<List<Viaje>> call, Response<List<Viaje>> response) {
+            public void onResponse(@NonNull Call<List<Viaje>> call, @NonNull Response<List<Viaje>> response) {
                 List<Viaje> results = response.body();
                 if(results != null && !results.isEmpty()){
                     viajes = results.stream().sorted(Comparator.comparing(Viaje::getFechaSalida)
@@ -104,7 +99,7 @@ public class ResultadosBusqueda extends Fragment implements RvInterface {
             }
 
             @Override
-            public void onFailure(Call<List<Viaje>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Viaje>> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), TextControll.getConectionErrorMsg() + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
